@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4018.5">
+	<DataTypes/>
+	<Project ProjectGUID="{2D8E86F6-0C93-4EFE-B3AD-F3131799D8E2}" Target64Bit="true">
+		<System>
+			<Tasks>
+				<Task Id="4" Priority="20" CycleTime="100000" AmsPort="350">
+					<Name>PlcTask</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Motion>
+			<NC>
+				<SafTask Priority="4" CycleTime="20000" AmsPort="501" IoAtBegin="true">
+					<Name>NC-Task 1 SAF</Name>
+					<Vars VarGrpType="1" InsertType="1">
+						<Name>Inputs</Name>
+					</Vars>
+					<Vars VarGrpType="2" InsertType="1">
+						<Name>Outputs</Name>
+					</Vars>
+					<Image Id="1" AddrType="1" ImageType="1">
+						<Name>Image</Name>
+					</Image>
+				</SafTask>
+				<SvbTask Priority="8" CycleTime="100000" AmsPort="511">
+					<Name>NC-Task 1 SVB</Name>
+				</SvbTask>
+			</NC>
+		</Motion>
+		<Plc>
+			<Project GUID="{2A75CAC0-60C3-40C7-995E-9D012B92C918}" Name="RobotArmPLC" PrjFilePath="RobotArmPLC\RobotArmPLC.plcproj" TmcFilePath="RobotArmPLC\RobotArmPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010020" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>RobotArmPLC Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+				</Instance>
+			</Project>
+		</Plc>
+		<Safety>
+			<Project GUID="{08C111C4-EC90-48DE-B246-65AB9358D04D}" Name="init" PrjFilePath="init\init.splcProj" TmcFilePath="init\init.tmc" GeneralArchiveSettings="#x000f" TargetArchiveSettings="#x0007" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010010">
+					<Name>init Instance</Name>
+					<TmcDesc GUID="{72A6D5B8-E98C-4604-8B90-09D1F8AB38A9}">
+						<Name>Safety</Name>
+						<InitSequence>PO</InitSequence>
+						<Contexts>
+							<Context>
+								<Id>1</Id>
+								<Name>Default</Name>
+							</Context>
+						</Contexts>
+					</TmcDesc>
+				</Instance>
+			</Project>
+		</Safety>
+		<Cpp>
+			<Project GUID="{CA7800D7-C68D-4006-92A0-6AA015D36DD4}" Name="RobotArmCPP" PrjFilePath="RobotArmCPP\RobotArmCPP.vcxproj" TmcFilePath="RobotArmCPP\RobotArmCPP.tmc"/>
+		</Cpp>
+	</Project>
+</TcSmProject>
