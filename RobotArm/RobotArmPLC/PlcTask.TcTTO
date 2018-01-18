@@ -7,6 +7,15 @@
     <PouCall>
       <Name>MAIN</Name>
     </PouCall>
+    <PouCall>
+      <Name>ShoudlerInit</Name>
+    </PouCall>
+    <PouCall>
+      <Name>ShoulderLevelShift</Name>
+    </PouCall>
+    <PouCall>
+      <Name>ShoulderRotate</Name>
+    </PouCall>
     <TaskFBGuid>{17de8d80-807c-4c27-957c-8137c08ae231}</TaskFBGuid>
     <Fb_init>{5a5901de-105e-474c-b83b-ea846ef6dd68}</Fb_init>
     <Fb_exit>{796f0526-bcef-4c25-a038-96feee164c55}</Fb_exit>

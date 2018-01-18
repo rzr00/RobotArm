@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
+  <POU Name="ShoudlerInit" Id="{583c3a0b-f07b-4d15-bdf1-bfd299ce60d7}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ShoudlerInit
+VAR
+	InitPosLevelShift: LREAL := 0;			//平移自由度.初始化位置
+	InitStatusLevelShift: INT := 0;			//平移自由度.初始化状态变量	
+	InitFinishLevelShift: BOOL := FALSE;	//平移自由度.初始化完成标志量
+	
+	InitPosRotate: LREAL := 0;				//旋转自由度.初始化位置
+	InitStatusRotate: INT := 0;				//旋转自由度.初始化状态变量	
+	InitFinishRotate: BOOL := FALSE;		//旋转自由度.初始化完成标志量
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//肩关节初始化
+
+//平移自由度
+MC_PowerLevelShift(
+	Axis:= AxisLevelShift,
+	Enable_Positive:= TRUE,
+	Enable_Negative:= TRUE, );
+	
+MC_MoveAbsoluteLevelShift(
+	Axis:= AxisLevelShift, );
+
+CASE InitStatusLevelShift OF
+	0://init 初始化
+		MC_PowerLevelShift.Enable := FALSE;
+		MC_MoveAbsoluteLevelShift.Execute := FALSE;
+		InitStatusLevelShift := 1;
+	1://power 使能
+		MC_PowerLevelShift.Enable := TRUE;
+		IF MC_PowerLevelShift.Status THEN
+			InitStatusLevelShift := 2;
+		END_IF
+	2://move 移动到初始位置
+		MC_MoveAbsoluteLevelShift.Position := InitPosLevelShift;
+		MC_MoveAbsoluteLevelShift.Velocity := 2;
+		MC_MoveAbsoluteLevelShift.Execute := TRUE;
+		IF MC_MoveAbsoluteLevelShift.Done THEN
+			MC_MoveAbsoluteLevelShift.Execute := FALSE;
+			InitStatusLevelShift := 3;
+		END_IF
+	3://finishInit 初始化完成
+		InitFinishLevelShift := TRUE;
+END_CASE
+
+
+//旋转自由度
+MC_PowerRotate(
+	Axis:= AxisRotate,
+	Enable_Positive:= TRUE,
+	Enable_Negative:= TRUE, );
+	
+MC_MoveAbsoluteRotate(
+	Axis:= AxisRotate, );
+
+CASE InitStatusRotate OF
+	0://init 初始化
+		MC_PowerRotate.Enable := FALSE;
+		MC_MoveAbsoluteRotate.Execute := FALSE;
+		InitStatusRotate := 1;
+	1://power 使能
+		MC_PowerRotate.Enable := TRUE;
+		IF MC_PowerRotate.Status THEN
+			InitStatusRotate := 2;
+		END_IF
+	2://move 移动到初始位置
+		MC_MoveAbsoluteRotate.Position := InitPosLevelShift;
+		MC_MoveAbsoluteRotate.Velocity := 2;
+		MC_MoveAbsoluteRotate.Execute := TRUE;
+		IF MC_MoveAbsoluteRotate.Done THEN
+			MC_MoveAbsoluteRotate.Execute := FALSE;
+			InitStatusRotate := 3;
+		END_IF
+	3://finishInit 初始化完成
+		InitFinishRotate := TRUE;
+END_CASE
+		
+IF InitFinishLevelShift AND InitFinishRotate THEN
+	InitFinish := TRUE;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

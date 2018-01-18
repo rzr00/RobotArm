@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
+  <GVL Name="GVL" Id="{c819cee9-86d1-40d0-b09c-53bb05b91413}">
+    <Declaration><![CDATA[VAR_GLOBAL
+	//运动公共变量
+	PlcCycleTime: LREAL := 0.01;										//PLC循环时间
+	EachTime: LREAL := 2;												//距离曲线离散后,时间间隔T
+	
+	//肩关节水平移动自由度变量
+	AxisLevelShift: AXIS_REF;											//运动轴
+	MC_PowerLevelShift: MC_Power;										//电源模块
+	MC_MoveAbsoluteLevelShift: MC_MoveAbsolute;							//绝对运动模块
+	PosLevelShift AT%Q* : LREAL;										//平移运动位置.输出给C++
+	
+	//肩关节旋转移动自由度变量
+	AxisRotate: AXIS_REF;												//运动轴
+	MC_PowerRotate: MC_Power;											//电源模块
+	MC_MoveAbsoluteRotate: MC_MoveAbsolute;								//绝对运动模块
+	MC_ExtSetPointGenDisableRotate: MC_ExtSetPointGenDisable;			//外部给定运动禁止
+	MC_ExtSetPointGenEnableRotate: MC_ExtSetPointGenEnable;				//外部给定运动使能
+	PosRotate AT%Q* : LREAL;											//旋转移动位置.输出给C++
+	
+	//肩关节初始化完成标志量
+	InitFinish: BOOL := FALSE;
+	
+	//PLC时间
+	Timer AT%Q*: LREAL := 0;											//时间 
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

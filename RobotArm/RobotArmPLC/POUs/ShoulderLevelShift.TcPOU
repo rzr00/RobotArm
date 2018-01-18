@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
+  <POU Name="ShoulderLevelShift" Id="{7e12a5ca-0dda-4be5-a447-23746d639124}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ShoulderLevelShift
+VAR
+	MC_ExtSetPointGenDisableLevelShift: MC_ExtSetPointGenDisable;		//外部给定运动禁止
+	MC_ExtSetPointGenEnableLevelShift: MC_ExtSetPointGenEnable;			//外部给定运动使能
+	
+	//TODO: C++将目标角度转换为目标位置
+	TarPosLevelShift AT%I* : LREAL := 0;								//平移目标位置，C++给定
+	ErrPosLevelShift: LREAL := 0;										//目标角度和实际角度误差
+	
+	StatusLevelShift: INT := 0;											//状态变量
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//肩关节水平移动自由度
+
+//电机外部给定运动模块参数设置
+MC_ExtSetPointGenDisableLevelShift(
+	Axis:= AxisLevelShift, );
+	
+MC_ExtSetPointGenEnableLevelShift(
+	Axis:= AxisLevelShift, );
+
+CASE StatusLevelShift OF
+	0:	//判断是否完成初始化
+		IF InitFinish = 0 THEN
+			StatusLevelShift := 1;
+		END_IF
+	1:	//外部给定模块使能给低电平
+		MC_ExtSetPointGenEnableLevelShift.Execute := FALSE;
+		MC_ExtSetPointGenDisableLevelShift.Execute := FALSE;
+		StatusLevelShift := 2;
+	2:	//判断目标移动是否有问题
+		ErrPosLevelShift := TarPosLevelShift - AxisLevelShift.NcToPlc.ActPos;//误差:目标角度减去实际角度
+		IF ABS(ErrPosLevelShift) < 1E-8 THEN		//移动距离过小认为不移动
+			//不移动
+		ELSIF ABS(ErrPosLevelShift) > 0.05 THEN	
+			//安全保护。单次移动距离过大，即移动速度过快，停止运动。
+			//|maxV| = 5 mm/s; |maxv| = 0.05 mm / 0.01s;
+			StatusLevelShift := 4;					//跳转到错误处理状态
+		ELSE										//按照给定移动
+			StatusLevelShift := 3;					//目标移动没有问题，跳转到运动控制状态
+		END_IF
+	3:	//使能外部位置给定发生器
+		MC_ExtSetPointGenEnableLevelShift.Execute := TRUE;
+		IF MC_ExtSetPointGenEnableLevelShift.Enabled THEN
+			MC_ExtSetPointGenFeed(
+				Position:= TarPosLevelShift,		//给定位置
+				Velocity:= 0, 						//速度和加速度可设为0，让plc自己计算
+				Acceleration:= 0, 
+				Direction:= 1, 
+				Axis:= AxisLevelShift);
+		END_IF
+		StatusLevelShift := 2;
+	4:	//Error处理
+		MC_ExtSetPointGenEnableLevelShift.Execute := FALSE;	//关闭外部位置给定
+		MC_ExtSetPointGenDisableLevelShift.Execute := TRUE;
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
+  <POU Name="ShoulderRotate" Id="{dc5554e3-c605-46d6-989f-55141eb357ec}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ShoulderRotate
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//肩关节旋转移动自由度]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
