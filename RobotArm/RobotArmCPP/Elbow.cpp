@@ -7,7 +7,7 @@ Elbow::Elbow() : pi(3.14159)
 	m2 = 0;
 	angle = 0;
 	rad = 0;
-	maxout = 2;
+	maxout = 3;
 	minout = 0;
 
 	//肘关节PID初始化参数
@@ -61,7 +61,8 @@ void Elbow::SetTargetRad(double tarR)
 
 void Elbow::SetTargetAngle(double tarA)
 {
-	tarRad = tarA / 180.0 * pi;
+	tarAngle = tarA;
+	tarRad = tarAngle / 180.0 * pi;
 }
 
 void Elbow::run()
@@ -88,6 +89,16 @@ double Elbow::ShowM1()
 double Elbow::ShowM2()
 {
 	return m2;
+}
+
+double Elbow::ShowTarRad()
+{
+	return tarRad;
+}
+
+double Elbow::ShowTarAngle()
+{
+	return tarAngle;
 }
 
 /* 下面的代码是放在CycleUpdate函数所在的类里的 */

@@ -185,7 +185,8 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 		//m_CppToPlc.TarPosLevelShift = 3 * m_PlcToCpp.Timer;
 		m_CppToPlc.TarPosLevelShift = 0;
 
-		double SetElbowAngle = 30;
+		//double SetElbowAngle = abs(50 * sin_(timer));
+		double SetElbowAngle = -5;
 		elbow.SetTargetAngle(SetElbowAngle);
 		elbow.run();
 	}
@@ -218,7 +219,7 @@ void CRobotArmMain::ElbowUpdateOutputs()
 {
 	/* 输出给EL4004，用来控制比例压力阀。压力阀接收电压为0-10V */
 	//电压转换为（0-10V）->（0-32767）
-	if ((elbow.ShowM1() <= 2) && (elbow.ShowM2() <= 2))
+	if ((elbow.ShowM1() <= 3) && (elbow.ShowM2() <= 3))
 	{
 		m_Outputs.ElbowOutM1 = static_cast<int>(elbow.ShowM1() / 10.0 * 32767.0);
 		m_Outputs.ElbowOutM1 = static_cast<int>(elbow.ShowM2() / 10.0 * 32767.0);
@@ -230,8 +231,11 @@ void CRobotArmMain::ElbowUpdateOutputs()
 	}
 
 	///* 输出个PLC用来观察的 */
-	//m_Outputs.rad = elbow.ShowRad();
-	//m_Outputs.tarrad = SetRad;
+	//if (elbow.ShowAngle() > 0)
+	{
+		m_CppToPlc.ElbowTarAngle = elbow.ShowTarAngle();
+		m_CppToPlc.ElbowAngle = elbow.ShowAngle();
+	}
 	//m_Outputs.m1v = elbow.ShowM1();
 	//m_Outputs.m2v = elbow.ShowM2();
 }

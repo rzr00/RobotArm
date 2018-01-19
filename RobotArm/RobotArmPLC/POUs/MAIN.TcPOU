@@ -3,10 +3,12 @@
   <POU Name="MAIN" Id="{29a53d6f-2791-434c-ac0e-95c286c60a9e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-END_VAR
-]]></Declaration>
+	TarAngle AT%I* : LREAL;
+	Angle AT%I* : LREAL;
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Timer := Timer + 0.01;]]></ST>
+      <ST><![CDATA[Timer := Timer + 0.01;
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
