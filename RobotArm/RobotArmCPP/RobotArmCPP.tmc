@@ -71,36 +71,13 @@
           <AreaNo AreaType="InputDst">0</AreaNo>
           <Name>Inputs</Name>
           <ContextId>1</ContextId>
-          <Symbol>
-            <Name>Value</Name>
-            <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-          </Symbol>
-          <Symbol>
-            <Name>Status</Name>
-            <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-          </Symbol>
-          <Symbol>
-            <Name>Data</Name>
-            <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-          </Symbol><Symbol><Name>test</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol>
         </DataArea>
         <DataArea>
           <AreaNo AreaType="OutputSrc">1</AreaNo>
           <Name>Outputs</Name>
           <ContextId>1</ContextId>
-          <Symbol>
-            <Name>Value</Name>
-            <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-          </Symbol>
-          <Symbol>
-            <Name>Control</Name>
-            <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-          </Symbol>
-          <Symbol>
-            <Name>Data</Name>
-            <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-          </Symbol>
-        </DataArea><DataArea><AreaNo AreaType="InputDst">2</AreaNo><Name>PlcToCpp</Name><ContextId>1</ContextId><Symbol><Name>PosLevelShift</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>PosRotate</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>Timer</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol></DataArea><DataArea><AreaNo AreaType="OutputSrc">3</AreaNo><Name>CppToPlc</Name><ContextId>1</ContextId><Symbol><Name>TarPosLevelShift</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol></DataArea>
+          <Symbol><Name>ElbowOutM1</Name><BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType></Symbol><Symbol><Name>ElbowOutM2</Name><BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType></Symbol>
+        </DataArea><DataArea><AreaNo AreaType="InputDst">2</AreaNo><Name>PlcToCpp</Name><ContextId>1</ContextId><Symbol><Name>PosLevelShift</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>PosRotate</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>Timer</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>ShoudlerInitFinish</Name><BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType></Symbol><Symbol><Name>ElbowAngle</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol></DataArea><DataArea><AreaNo AreaType="OutputSrc">3</AreaNo><Name>CppToPlc</Name><ContextId>1</ContextId><Symbol><Name>TarPosLevelShift</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol></DataArea>
       </DataAreas>
       <InterfacePointers>
         <InterfacePointer>

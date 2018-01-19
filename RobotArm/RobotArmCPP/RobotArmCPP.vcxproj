@@ -36,6 +36,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Elbow.h" />
     <ClInclude Include="PID_Position.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RobotArmMain.h" />
@@ -47,6 +48,7 @@
     <ClInclude Include="RobotArmCPPServices.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Elbow.cpp" />
     <ClCompile Include="PID_Position.cpp" />
     <ClCompile Include="RobotArmMain.cpp" />
     <ClCompile Include="TcPch.cpp">

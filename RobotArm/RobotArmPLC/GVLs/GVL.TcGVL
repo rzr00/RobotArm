@@ -21,10 +21,12 @@
 	PosRotate AT%Q* : LREAL;											//旋转移动位置.输出给C++
 	
 	//肩关节初始化完成标志量
-	InitFinish: BOOL := FALSE;
+	InitFinish AT%Q*: BOOL := FALSE;
 	
 	//PLC时间
 	Timer AT%Q*: LREAL := 0;											//时间 
+	
+	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

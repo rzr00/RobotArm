@@ -27,26 +27,25 @@ typedef struct _RobotArmMainParameter
 #pragma pack(push,1)
 typedef struct _RobotArmMainInputs
 {
-	ULONG Value;
-	ULONG Status;
-	ULONG Data;
-	double test;
 } RobotArmMainInputs, *PRobotArmMainInputs;
 #pragma pack(pop)
 
 typedef struct _RobotArmMainOutputs
 {
-	ULONG Value;
-	ULONG Control;
-	ULONG Data;
+	SHORT ElbowOutM1;
+	SHORT ElbowOutM2;
 } RobotArmMainOutputs, *PRobotArmMainOutputs;
 
+#pragma pack(push,1)
 typedef struct _RobotArmMainPlcToCpp
 {
 	double PosLevelShift;
 	double PosRotate;
 	double Timer;
+	bool ShoudlerInitFinish;
+	double ElbowAngle;
 } RobotArmMainPlcToCpp, *PRobotArmMainPlcToCpp;
+#pragma pack(pop)
 
 typedef struct _RobotArmMainCppToPlc
 {
