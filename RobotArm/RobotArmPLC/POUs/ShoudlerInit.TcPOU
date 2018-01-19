@@ -34,6 +34,9 @@ CASE InitStatusLevelShift OF
 		IF MC_PowerLevelShift.Status THEN
 			InitStatusLevelShift := 2;
 		END_IF
+		IF AxisLevelShift.Status.Error THEN
+			InitStatusLevelShift := 4;
+		END_IF
 	2://move 移动到初始位置
 		MC_MoveAbsoluteLevelShift.Position := InitPosLevelShift;
 		MC_MoveAbsoluteLevelShift.Velocity := 2;
@@ -44,6 +47,8 @@ CASE InitStatusLevelShift OF
 		END_IF
 	3://finishInit 初始化完成
 		InitFinishLevelShift := TRUE;
+	4://error
+		
 END_CASE
 
 

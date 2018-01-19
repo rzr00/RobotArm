@@ -177,9 +177,10 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 	HRESULT hr = S_OK;
 
 	// TODO: Replace the sample with your cyclic code
-	if ((m_PlcToCpp.Timer > 1) && (m_PlcToCpp.Timer < 10))
+	double timerr = m_PlcToCpp.Timer;
+	if ((m_PlcToCpp.Timer > 0) && (m_PlcToCpp.Timer < 30))
 	{
-		m_CppToPlc.TarPosLevelShift = m_PlcToCpp.Timer;
+		m_CppToPlc.TarPosLevelShift = 0.1 * m_PlcToCpp.Timer;
 	}
 
 	return hr;

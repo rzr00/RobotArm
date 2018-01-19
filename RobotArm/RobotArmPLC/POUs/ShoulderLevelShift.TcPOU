@@ -25,7 +25,7 @@ MC_ExtSetPointGenEnableLevelShift(
 
 CASE StatusLevelShift OF
 	0:	//判断是否完成初始化
-		IF InitFinish = 0 THEN
+		IF InitFinish THEN
 			StatusLevelShift := 1;
 		END_IF
 	1:	//外部给定模块使能给低电平
@@ -33,28 +33,33 @@ CASE StatusLevelShift OF
 		MC_ExtSetPointGenDisableLevelShift.Execute := FALSE;
 		StatusLevelShift := 2;
 	2:	//判断目标移动是否有问题
-		ErrPosLevelShift := TarPosLevelShift - AxisLevelShift.NcToPlc.ActPos;//误差:目标角度减去实际角度
-		IF ABS(ErrPosLevelShift) < 1E-8 THEN		//移动距离过小认为不移动
-			//不移动
-		ELSIF ABS(ErrPosLevelShift) > 0.05 THEN	
-			//安全保护。单次移动距离过大，即移动速度过快，停止运动。
-			//|maxV| = 5 mm/s; |maxv| = 0.05 mm / 0.01s;
-			StatusLevelShift := 4;					//跳转到错误处理状态
-		ELSE										//按照给定移动
-			StatusLevelShift := 3;					//目标移动没有问题，跳转到运动控制状态
+		Timer := Timer + 0.01;
+		IF Timer < 30 THEN
+			//ErrPosLevelShift := Timer - AxisLevelShift.NcToPlc.ActPos;//误差:目标角度减去实际角度
+			ErrPosLevelShift := TarPosLevelShift - AxisLevelShift.NcToPlc.ActPos;//误差:目标角度减去实际角度
+			IF ABS(ErrPosLevelShift) < 1E-8 THEN		//移动距离过小认为不移动
+				//不移动
+			ELSIF ABS(ErrPosLevelShift) > 0.05 THEN	
+				//安全保护。单次移动距离过大，即移动速度过快，停止运动。
+				//|maxV| = 5 mm/s; |maxv| = 0.05 mm / 0.01s;
+				StatusLevelShift := 3;					//跳转到错误处理状态
+			ELSE										//按照给定移动
+				//StatusLevelShift := 3;					//目标移动没有问题，跳转到运动控制状态
+				MC_ExtSetPointGenEnableLevelShift.Execute := TRUE;
+				IF MC_ExtSetPointGenEnableLevelShift.Enabled THEN
+					MC_ExtSetPointGenFeed(
+						//Position:= Timer,		//给定位置
+						Position:= TarPosLevelShift,		//给定位置
+						Velocity:= 0, 						//速度和加速度可设为0，让plc自己计算
+						Acceleration:= 0, 
+						Direction:= 1, 
+						Axis:= AxisLevelShift);
+				END_IF
+			END_IF
 		END_IF
-	3:	//使能外部位置给定发生器
-		MC_ExtSetPointGenEnableLevelShift.Execute := TRUE;
-		IF MC_ExtSetPointGenEnableLevelShift.Enabled THEN
-			MC_ExtSetPointGenFeed(
-				Position:= TarPosLevelShift,		//给定位置
-				Velocity:= 0, 						//速度和加速度可设为0，让plc自己计算
-				Acceleration:= 0, 
-				Direction:= 1, 
-				Axis:= AxisLevelShift);
-		END_IF
-		StatusLevelShift := 2;
-	4:	//Error处理
+	//3:	//使能外部位置给定发生器
+	//	StatusLevelShift := 2;
+	3:	//Error处理
 		MC_ExtSetPointGenEnableLevelShift.Execute := FALSE;	//关闭外部位置给定
 		MC_ExtSetPointGenDisableLevelShift.Execute := TRUE;
 END_CASE]]></ST>
