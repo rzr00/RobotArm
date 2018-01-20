@@ -69,5 +69,7 @@ protected:
 	bool ShoulderInitFinish;
 
 	Elbow elbow;
-	Polynomial _3rd;
+	Polynomial ShoulderLevelShiftPolynomial;	//肩关节平移角度多项式
+	Polynomial ElbowPolynomial;					//肘关节角度多项式
+	Polynomial WristPolynomial;					//腕关节角度多项式
 };

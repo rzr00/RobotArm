@@ -38,7 +38,7 @@ CASE StatusLevelShift OF
 			StatusLevelShift := 3;
 		END_IF
 	3:	//判断目标移动是否有问题
-		Timer := Timer + 0.01;
+		//Timer := Timer + 0.01;
 		IF TarPosLevelShift > 25 OR TarPosLevelShift < -3 THEN
 			StatusLevelShift := 4;						//跳转到错误处理状态
 		END_IF

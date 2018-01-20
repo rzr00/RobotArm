@@ -2057,7 +2057,7 @@ External Setpoint Generation:
 								<AreaNo AreaType="InputDst">2</AreaNo>
 								<Name>PlcToCpp</Name>
 								<ContextId>1</ContextId>
-								<ByteSize>33</ByteSize>
+								<ByteSize>34</ByteSize>
 								<Symbol>
 									<Name>PosLevelShift</Name>
 									<BitSize>64</BitSize>
@@ -2087,6 +2087,12 @@ External Setpoint Generation:
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<BitOffs>200</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>PlcStarted</Name>
+									<BitSize>8</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+									<BitOffs>264</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
@@ -4363,8 +4369,8 @@ External Setpoint Generation:
 		<MappingInfo Identifier="{00000000-0021-0101-2000-010160000403}" Id="#x03070060"/>
 		<OwnerA Name="TIID^Device 1 (EtherCAT)">
 			<OwnerB Name="TIXC^RobotArmCPP^RobotArmCPP_Obj1 (CRobotArmMain)">
-				<Link VarA="Term 1 (EK1200)^Term 11 (EL4102)^Channel 1^Output" VarB="Outputs^ElbowOutM2"/>
-				<Link VarA="Term 1 (EK1200)^Term 11 (EL4102)^Channel 2^Output" VarB="Outputs^ElbowOutM1"/>
+				<Link VarA="Term 1 (EK1200)^Term 11 (EL4102)^Channel 1^Output" VarB="Outputs^ElbowOutM1"/>
+				<Link VarA="Term 1 (EK1200)^Term 11 (EL4102)^Channel 2^Output" VarB="Outputs^ElbowOutM2"/>
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
