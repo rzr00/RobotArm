@@ -5,6 +5,7 @@
 #include "RobotArmCPPInterfaces.h"
 #include "PID_Position.h"
 #include "Elbow.h"
+#include "3rdinterpolate.h"
 
 class CRobotArmMain 
 	: public ITComObject
@@ -68,4 +69,5 @@ protected:
 	bool ShoulderInitFinish;
 
 	Elbow elbow;
+	Polynomial _3rd;
 };

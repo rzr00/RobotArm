@@ -58,7 +58,7 @@ public:
 
 	Polynomial()
 	{
-		_plannedProfile = false;
+	//	_plannedProfile = false;
 	}
 
 	~Polynomial()
@@ -81,6 +81,9 @@ public:
 
 	// 定时
 	void plan3rdProfileT(double t0, double tf, double p0, double pf, double v0, double vf);
+
+	//返回多项式参数
+	void Show_coefficient(double* coe);
 
 private:
 
@@ -186,8 +189,6 @@ public:
 	bool planProfile();
 
 	bool plan3rdProfileT(double t0, double tf, double p0,double pf, double v0, double vf);
-
-
 
 private:
 	

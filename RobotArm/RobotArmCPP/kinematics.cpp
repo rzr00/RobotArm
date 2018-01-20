@@ -142,7 +142,7 @@ void kinematics_inverse(double x, double y, double phi, double* Ajoint)    //ÇóÄ
 
 	if (AngleDSum[0] < AngleDSum[1])
 	{
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			Ajoint[i] = joint[i];
 		}

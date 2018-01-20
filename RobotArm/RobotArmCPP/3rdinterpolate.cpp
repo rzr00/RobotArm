@@ -112,6 +112,14 @@ void Polynomial::plan3rdProfileT( double t0, double tf,double p0,double pf, doub
 	_plannedProfile = true;
 }
 
+void Polynomial::Show_coefficient(double* coe)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		coe[i] = _coefficient[2 + i];
+	}
+}
+
 double Polynomial::scaleToDuration(double newDuration)
 {
 	if (_pType == polynomial_3rd_T)
