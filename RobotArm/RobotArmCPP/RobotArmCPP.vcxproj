@@ -36,7 +36,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3rdinterpolate.h" />
     <ClInclude Include="Elbow.h" />
+    <ClInclude Include="kinematics.h" />
     <ClInclude Include="PID_Position.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RobotArmMain.h" />
@@ -48,7 +50,9 @@
     <ClInclude Include="RobotArmCPPServices.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rdinterpolate.cpp" />
     <ClCompile Include="Elbow.cpp" />
+    <ClCompile Include="kinematics.cpp" />
     <ClCompile Include="PID_Position.cpp" />
     <ClCompile Include="RobotArmMain.cpp" />
     <ClCompile Include="TcPch.cpp">
