@@ -186,7 +186,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 		m_CppToPlc.TarPosLevelShift = 0;
 
 		//double SetElbowAngle = abs(50 * sin_(timer));
-		double SetElbowAngle = -5;
+		double SetElbowAngle = 30;
 		elbow.SetTargetAngle(SetElbowAngle);
 		elbow.run();
 	}
@@ -209,7 +209,14 @@ void CRobotArmMain::UpdateOutputs()
 
 void CRobotArmMain::ElbowUpdateInputs()
 {
-	elbow.GetActualAngle(m_PlcToCpp.ElbowAngle - 261);//不受力状态时，角度为261，减去，角度会增大//旧的肘
+	if (m_PlcToCpp.ElbowAngle < 200)//旧的肘会出现过零点状况
+	{
+		elbow.GetActualAngle(m_PlcToCpp.ElbowAngle + 360 - 261);
+	}
+	else if (m_PlcToCpp.ElbowAngle >= 200)
+	{
+		elbow.GetActualAngle(m_PlcToCpp.ElbowAngle - 261);//不受力状态时，角度为261，减去，角度会增大//旧的肘
+	}
 
 	//elbow.GetActualAngle(350 - m_Inputs.Angle);//不受力状态时，角度为350，减去，角度会减少//新的肘
 
