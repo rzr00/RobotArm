@@ -222,12 +222,12 @@ void CRobotArmMain::ElbowUpdateOutputs()
 	if ((elbow.ShowM1() <= 3) && (elbow.ShowM2() <= 3))
 	{
 		m_Outputs.ElbowOutM1 = static_cast<int>(elbow.ShowM1() / 10.0 * 32767.0);
-		m_Outputs.ElbowOutM1 = static_cast<int>(elbow.ShowM2() / 10.0 * 32767.0);
+		m_Outputs.ElbowOutM2 = static_cast<int>(elbow.ShowM2() / 10.0 * 32767.0);
 	}
 	else
 	{
 		m_Outputs.ElbowOutM1 = 0;
-		m_Outputs.ElbowOutM1 = 0;
+		m_Outputs.ElbowOutM2 = 0;
 	}
 
 	///* 输出个PLC用来观察的 */
