@@ -191,40 +191,54 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 	UpdateInputs();
 	if (timer > 1)
 	{
-		switch (status)
+		for (int i = 0; i < 3; i++)
 		{
-			case 0: //计算参数
-				for (int i = 0; i < 3; i++)
-				{
-					kinematics_inverse(KinematicsData[i][0], KinematicsData[i][1], KinematicsData[i][2], PositionData[i]);			//反解角度
-				}
-				for (int i = 0; i < 2; i++)
-				{
-					_3rd.plan3rdProfileT(PolynomialData[i][4], PolynomialData[i][5], PositionData[0][0], PositionData[1][0], 0, 0);	//算出参数
-					//_3rd.plan3rdProfileT(t0, t1, PositionData[0][0], PositionData[1][0], 0, 0);	//算出参数
-					_3rd.Show_coefficient(PolynomialData[i]);																		//从对象私有变量复制参数
-				}
-				status = 1;
-				break;
-			case 1:	//运动
-				while (num < size)
-				{
-					if ((timer > PolynomialData[num][4]) && (timer < PolynomialData[num][5]))
-					{
-						double SetElbowAngle = PolynomialData[num][0] * pow_(timer, 3)
-												+ PolynomialData[num][1] * pow_(timer, 2)
-												+ PolynomialData[num][2] * pow_(timer, 1)
-												+ PolynomialData[num][3];
-						elbow.SetTargetAngle(SetElbowAngle);
-					}
-					else if (timer > PolynomialData[num][5])
-					{
-						num++;
-					}
-				}
-				//elbow.run();
-				break;
+			kinematics_inverse(KinematicsData[i][0], KinematicsData[i][1], KinematicsData[i][2], PositionData[i]);			//反解角度
 		}
+		for (int i = 0; i < 2; i++)
+		{
+			_3rd.plan3rdProfileT(PolynomialData[i][4], PolynomialData[i][5], PositionData[i][0], PositionData[i+1][0], 0, 0);	//算出参数
+			//_3rd.plan3rdProfileT(PolynomialData[i][4], PolynomialData[i][5], PositionData[0][0], PositionData[1][0], 0, 0);	//算出参数
+			//_3rd.plan3rdProfileT(t0, t1, PositionData[0][0], PositionData[1][0], 0, 0);	//算出参数
+			_3rd.Show_coefficient(PolynomialData[i]);																		//从对象私有变量复制参数
+		}
+
+		//switch (status)
+		//{
+		//	case 0: //计算参数
+		//		for (int i = 0; i < 3; i++)
+		//		{
+		//			kinematics_inverse(KinematicsData[i][0], KinematicsData[i][1], KinematicsData[i][2], PositionData[i]);			//反解角度
+		//		}
+		//		for (int i = 0; i < 2; i++)
+		//		{
+		//			_3rd.plan3rdProfileT(PolynomialData[i][4], PolynomialData[i][5], PositionData[0][0], PositionData[1][0], 0, 0);	//算出参数
+		//			//_3rd.plan3rdProfileT(t0, t1, PositionData[0][0], PositionData[1][0], 0, 0);	//算出参数
+		//			_3rd.Show_coefficient(PolynomialData[i]);																		//从对象私有变量复制参数
+		//		}
+		//		status = 1;
+		//		break;
+		//	case 1:	//运动
+		//		while (num < size)
+		//		{
+		//			if ((timer > PolynomialData[num][4]) && (timer < PolynomialData[num][5]))
+		//			{
+		//				double SetElbowAngle = PolynomialData[num][0] * pow_(timer, 3)
+		//										+ PolynomialData[num][1] * pow_(timer, 2)
+		//										+ PolynomialData[num][2] * pow_(timer, 1)
+		//										+ PolynomialData[num][3];
+		//				elbow.SetTargetAngle(SetElbowAngle);
+		//			}
+		//			else if (timer > PolynomialData[num][5])
+		//			{
+		//				num++;
+		//			}
+		//		}
+		//		//elbow.run();
+		//		break;
+		//	default:
+		//		break;
+		//}
 	}
 	UpdateOutputs();
 
