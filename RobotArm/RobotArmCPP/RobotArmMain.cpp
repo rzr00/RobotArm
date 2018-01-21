@@ -180,7 +180,7 @@ double KinematicsData[3][5] = { { 681, 0, 0, 1, 1 },
 								{ 681, 0, 0, 19, 1e4 } };				//反解数据值：Ax, Ay, Aphi, t0, tf
 double CurrentPositionData[3] = { 0 };									//当前的反解角度值: 肩、肘、腕
 double NextPositionData[3] = { 0 };										//下一个位置的反解角度值: 肩、肘、腕
-//double PolynomialData[2][6] = { { 0, 0, 0, 0, 0, 6 }, { 0, 0, 0, 0, 11, 19 } };				//插值公式参数：三次项系数，二次项系数，一次项系数，零次项系数，T0, Tf
+//double PolynomialData[2][6] = { { 0, 0, 0, 0, 0, 6 }, { 0, 0, 0, 0, 11, 19 } };			//插值公式参数：三次项系数，二次项系数，一次项系数，零次项系数，T0, Tf
 int PositionSize = 3 - 1;
 int PositionNum = 0;
 int PositionStatus = 0;
@@ -196,7 +196,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 	//TODO:初始化肘关节，位置初始化，角度初始化
 	if ((m_PlcToCpp.PlcStarted == true) && (m_PlcToCpp.ShoudlerInitFinish == true) && (m_PlcToCpp.LevelShiftExtEnabled == true))
 	{
-		if ((timer > 0.5) && (timer < 1))
+		if ((timer > 0.5) && (timer < 1))      //肘关节初始化
 		{
 			elbow.SetTargetAngle(0);
 			elbow.run();
@@ -210,6 +210,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 				case 0:	//反解角度，计算插值函数
 					if (PositionNum == 0)
 					{
+						//初始状态逆解
 						kinematics_inverse(
 							KinematicsData[0][0],
 							KinematicsData[0][1],
@@ -221,12 +222,14 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 						KinematicsData[PositionNum + 1][1],
 						KinematicsData[PositionNum + 1][2],
 						NextPositionData);
+					//肘关节平移
 					ElbowPolynomial.plan3rdProfileT(
 						KinematicsData[PositionNum][4],
 						KinematicsData[PositionNum + 1][3],
 						CurrentPositionData[1],
 						NextPositionData[1],
 						0, 0);
+					//肩关节平移
 					ShoulderLevelShiftPolynomial.plan3rdProfileT(
 						KinematicsData[PositionNum][4],
 						KinematicsData[PositionNum + 1][3],
@@ -261,6 +264,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 								CurrentPositionData[i] = NextPositionData[i];
 							}
 						}
+						//TODO:验证其他关节是否达到期望位置
 					}
 					break;
 				case 3://错误处理
