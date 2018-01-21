@@ -1789,6 +1789,10 @@ External Setpoint Generation:
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
+							<Name>ShoulderRotate.TarPosRotate</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
 							<Name>GVL.AxisLevelShift.NcToPlc</Name>
 							<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
@@ -1912,6 +1916,20 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>GVL.ExtEnabledLevelShift</Name>
+							<Comment>
+								<![CDATA[平移外部给定模块已使能]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.ExtEnabledRotate</Name>
+							<Comment>
+								<![CDATA[旋转外部给定模块已使能]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL.AxisLevelShift.PlcToNc</Name>
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
@@ -1939,20 +1957,6 @@ External Setpoint Generation:
 								<![CDATA[时间 ]]>
 							</Comment>
 							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.ExtEnabledLevelShift</Name>
-							<Comment>
-								<![CDATA[平移外部给定模块已使能]]>
-							</Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.ExtEnabledRotate</Name>
-							<Comment>
-								<![CDATA[旋转外部给定模块已使能]]>
-							</Comment>
-							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 				</Instance>
@@ -2123,7 +2127,7 @@ External Setpoint Generation:
 								<AreaNo AreaType="OutputSrc">3</AreaNo>
 								<Name>CppToPlc</Name>
 								<ContextId>1</ContextId>
-								<ByteSize>24</ByteSize>
+								<ByteSize>32</ByteSize>
 								<Symbol>
 									<Name>TarPosLevelShift</Name>
 									<BitSize>64</BitSize>
@@ -2131,16 +2135,22 @@ External Setpoint Generation:
 									<BitOffs>0</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>ElbowTarAngle</Name>
+									<Name>TarPosRotate</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<BitOffs>64</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>ElbowAngle</Name>
+									<Name>ElbowTarAngle</Name>
 									<BitSize>64</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 									<BitOffs>128</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>ElbowAngle</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<BitOffs>192</BitOffs>
 								</Symbol>
 							</DataArea>
 						</DataAreas>
@@ -4490,6 +4500,7 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Inputs^MAIN.Angle" VarB="CppToPlc^ElbowAngle"/>
 				<Link VarA="PlcTask Inputs^MAIN.TarAngle" VarB="CppToPlc^ElbowTarAngle"/>
 				<Link VarA="PlcTask Inputs^ShoulderLevelShift.TarPosLevelShift" VarB="CppToPlc^TarPosLevelShift"/>
+				<Link VarA="PlcTask Inputs^ShoulderRotate.TarPosRotate" VarB="CppToPlc^TarPosRotate"/>
 				<Link VarA="PlcTask Outputs^GVL.ExtEnabledLevelShift" VarB="PlcToCpp^LevelShiftExtEnabled"/>
 				<Link VarA="PlcTask Outputs^GVL.InitFinish" VarB="PlcToCpp^ShoudlerInitFinish"/>
 				<Link VarA="PlcTask Outputs^GVL.PosLevelShift" VarB="PlcToCpp^PosLevelShift"/>

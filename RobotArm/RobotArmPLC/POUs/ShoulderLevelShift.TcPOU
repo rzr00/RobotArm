@@ -8,7 +8,7 @@ VAR
 	
 	//TODO: C++将目标角度转换为目标位置
 	TarPosLevelShift AT%I* : LREAL := 0;								//平移目标位置，C++给定
-	ErrPosLevelShift: LREAL := 0;										//目标角度和实际角度误差
+	ErrPosLevelShift: LREAL := 0;										//目标位置和实际位置误差
 	
 	StatusLevelShift: INT := 0;											//状态变量
 	
@@ -24,6 +24,8 @@ MC_ExtSetPointGenDisableLevelShift(
 	
 MC_ExtSetPointGenEnableLevelShift(
 	Axis:= AxisLevelShift, );
+	
+PosLevelShift := AxisLevelShift.NcToPlc.ActPos;
 
 CASE StatusLevelShift OF
 	0:	//判断是否完成初始化

@@ -19,6 +19,8 @@ public:
 	double ShowAngle();
 	double ShowM1();
 	double ShowM2();
+	void SetM1(double m1c);
+	void SetM2(double m2c);
 	double ShowTarRad();
 	double ShowTarAngle();
 

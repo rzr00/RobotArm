@@ -57,6 +57,7 @@ typedef struct _RobotArmMainPlcToCpp
 typedef struct _RobotArmMainCppToPlc
 {
 	double TarPosLevelShift;
+	double TarPosRotate;
 	double ElbowTarAngle;
 	double ElbowAngle;
 } RobotArmMainCppToPlc, *PRobotArmMainCppToPlc;

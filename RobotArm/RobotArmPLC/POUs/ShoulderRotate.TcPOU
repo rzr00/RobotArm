@@ -6,8 +6,8 @@ VAR
 	MC_ExtSetPointGenDisableRotate: MC_ExtSetPointGenDisable;
 	MC_ExtSetPointGenEnable: MC_ExtSetPointGenEnable;
 	
-	TarPosRotate: LREAL := 0;
-	ErrPosRotate: LREAL := 0;										//目标角度和实际角度误差
+	TarPosRotate AT%I* : LREAL := 0;
+	ErrPosRotate: LREAL := 0;										//目标位置和实际位置误差
 	
 	StatusRotate: INT := 0;											//状态变量
 
@@ -22,6 +22,8 @@ MC_ExtSetPointGenDisableRotate(
 	
 MC_ExtSetPointGenEnableRotate(
 	Axis:= AxisRotate, );
+	
+PosRotate := AxisRotate.NcToPlc.ActPos;
 
 CASE StatusRotate OF
 	0:	//判断是否完成初始化
@@ -40,7 +42,7 @@ CASE StatusRotate OF
 		END_IF
 	3:	//判断目标移动是否有问题
 		//Timer := Timer + 0.01;
-		IF TarPosRotate > 25 OR TarPosRotate < -15 THEN
+		IF TarPosRotate > 15 OR TarPosRotate < -15 THEN
 			ErrorCode := 1011;
 			ErrorTime := Timer;
 			StatusRotate := 4;						//跳转到错误处理状态

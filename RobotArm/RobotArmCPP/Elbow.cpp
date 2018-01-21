@@ -91,6 +91,16 @@ double Elbow::ShowM2()
 	return m2;
 }
 
+void Elbow::SetM1(double m1c)
+{
+	m1 = m1c;
+}
+
+void Elbow::SetM2(double m2c)
+{
+	m2 = m2c;
+}
+
 double Elbow::ShowTarRad()
 {
 	return tarRad;
