@@ -1,12 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <POU Name="ShoulderRotate" Id="{dc5554e3-c605-46d6-989f-55141eb357ec}" SpecialFunc="None">
+  <POU Name="ShoulderRotate" Id="{9bd5770b-0aea-48d6-bcd6-18af5cf533d9}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM ShoulderRotate
 VAR
+	MC_ExtSetPointGenDisableRotate: MC_ExtSetPointGenDisable;
+	MC_ExtSetPointGenEnable: MC_ExtSetPointGenEnable;
+	
+	TarPosRotate: LREAL := 0;
+	ErrPosRotate: LREAL := 0;										//目标角度和实际角度误差
+	
+	StatusRotate: INT := 0;											//状态变量
+
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//肩关节旋转移动自由度]]></ST>
+      <ST><![CDATA[//肩关节旋转移动自由度
+
+//电机外部给定运动模块参数设置
+MC_ExtSetPointGenDisableRotate(
+	Axis:= AxisRotate, );
+	
+MC_ExtSetPointGenEnableRotate(
+	Axis:= AxisRotate, );
+
+CASE StatusRotate OF
+	0:	//判断是否完成初始化
+		IF InitFinish THEN
+			StatusRotate := 1;
+		END_IF
+	1:	//外部给定模块使能给低电平
+		MC_ExtSetPointGenEnableRotate.Execute := FALSE;
+		MC_ExtSetPointGenDisableRotate.Execute := FALSE;
+		StatusRotate := 2;
+	2:
+		MC_ExtSetPointGenEnableRotate.Execute := TRUE;
+		IF MC_ExtSetPointGenEnableRotate.Enabled THEN
+			StatusRotate := 3;
+			ExtEnabledRotate := TRUE;
+		END_IF
+	3:	//判断目标移动是否有问题
+		//Timer := Timer + 0.01;
+		IF TarPosRotate > 25 OR TarPosRotate < -15 THEN
+			ErrorCode := 1011;
+			ErrorTime := Timer;
+			StatusRotate := 4;						//跳转到错误处理状态
+		END_IF
+		ErrPosRotate := TarPosRotate - AxisRotate.NcToPlc.ActPos;//误差:目标角度减去实际角度
+		IF ABS(ErrPosRotate) < 1E-8 THEN			//移动距离过小认为不移动
+			//不移动
+		ELSIF ABS(ErrPosRotate) > 0.15 THEN
+			//安全保护。单次移动距离过大，即移动速度过快，停止运动。
+			//|maxV| = 15 mm/s; |maxv| = 0.15 mm / 0.01s;
+			ErrorCode := 1012;
+			ErrorTime := Timer;
+			ErrorTarPosRotate := TarPosRotate;
+			StatusRotate := 4;						//跳转到错误处理状态
+		ELSE											//按照给定移动
+			IF MC_ExtSetPointGenEnableRotate.Enabled THEN
+				MC_ExtSetPointGenFeed(
+					//Position:= Timer,		//给定位置
+					Position:= TarPosRotate,		//给定位置
+					Velocity:= 0, 						//速度和加速度可设为0，让plc自己计算
+					Acceleration:= 0, 
+					Direction:= 1, 
+					Axis:= AxisRotate);
+			END_IF
+		END_IF
+	4:	//Error处理
+		MC_ExtSetPointGenEnableRotate.Execute := FALSE;	//关闭外部位置给定
+		MC_ExtSetPointGenDisableRotate.Execute := TRUE;
+END_CASE]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

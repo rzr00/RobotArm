@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <POU Name="ShoudlerInit" Id="{583c3a0b-f07b-4d15-bdf1-bfd299ce60d7}" SpecialFunc="None">
+  <POU Name="ShoudlerInit" Id="{ce7de579-4c89-491a-8f08-2b8813b1c241}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM ShoudlerInit
 VAR
 	InitPosLevelShift: LREAL := 0;			//平移自由度.初始化位置

@@ -3,7 +3,7 @@
   <Vendor>
     <Name>C++ Module Vendor</Name>
   </Vendor>
-  <DataTypes />
+  <DataTypes ><DataType><Name GUID="{C04A2A0C-C567-4688-A5BA-A713A4D7E6D8}" TcBaseType="true">OSHDLCS</Name><BitSize X64="64">32</BitSize><BaseType GUID="{18071995-0000-0000-0000-000000000018}">PVOID</BaseType></DataType></DataTypes>
   <Groups>
     <Group SortOrder="701">
       <Name>C++</Name>
@@ -11,9 +11,9 @@
     </Group>
   </Groups>
   <Modules>
-    <Module GUID="{27f5ff18-2fce-4487-acbf-a22eb375755b}" Group="C++">
+    <Module GUID="{1392ff5c-890d-4d06-802b-d07beff93e9c}" Group="C++">
       <Name>CRobotArmMain</Name>
-      <CLSID ClassFactory="RobotArmCPP">{27f5ff18-2fce-4487-acbf-a22eb375755b}</CLSID>
+      <CLSID ClassFactory="RobotArmCPP">{1392ff5c-890d-4d06-802b-d07beff93e9c}</CLSID>
       <Licenses>
         <License>
           <LicenseId>{304D006A-8299-4560-AB79-438534B50288}</LicenseId>
@@ -75,8 +75,7 @@
         <DataArea>
           <AreaNo AreaType="OutputSrc">1</AreaNo>
           <Name>Outputs</Name>
-          <ContextId>1</ContextId>
-          <Symbol><Name>ElbowOutM1</Name><BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType></Symbol><Symbol><Name>ElbowOutM2</Name><BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType></Symbol>
+          <ContextId>1</ContextId><Symbol><Name>ElbowOutM1</Name><BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType></Symbol><Symbol><Name>ElbowOutM2</Name><BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType></Symbol>
         </DataArea><DataArea><AreaNo AreaType="InputDst">2</AreaNo><Name>PlcToCpp</Name><ContextId>1</ContextId><Symbol><Name>PosLevelShift</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>PosRotate</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>Timer</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>ShoudlerInitFinish</Name><BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType></Symbol><Symbol><Name>ElbowAngle</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>PlcStarted</Name><BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType></Symbol><Symbol><Name>LevelShiftExtEnabled</Name><BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType></Symbol></DataArea><DataArea><AreaNo AreaType="OutputSrc">3</AreaNo><Name>CppToPlc</Name><ContextId>1</ContextId><Symbol><Name>TarPosLevelShift</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>ElbowTarAngle</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol><Symbol><Name>ElbowAngle</Name><BaseType GUID="{18071995-0000-0000-0000-00000000000e}">LREAL</BaseType></Symbol></DataArea>
       </DataAreas>
       <InterfacePointers>

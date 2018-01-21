@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{08c111c4-ec90-48de-b246-65ab9358d04d}</ProjectGuid>
+    <ProjectGuid>{b424761e-2757-436a-936c-8dff8c25f1e3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>TwinCAT3SafePlcProject</RootNamespace>
     <AssemblyName>TwinCAT3SafePlcProject</AssemblyName>
@@ -14,7 +14,7 @@
     <OldToolsVersion>2.0</OldToolsVersion>
     <TargetSystem>EL6900</TargetSystem>
     <ProgrammingLanguage>Graphical Editor</ProgrammingLanguage>
-    <Worker>robot2</Worker>
+    <Worker>huipengly</Worker>
     <IntProjName></IntProjName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -24,18 +24,8 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="TwinSafeGroup1\TwinSafeGroup1.sal" />
-    <None Include="TwinSafeGroup1\TwinSafeGroup1.sal.diagram">
-      <DependentUpon>TwinSafeGroup1\TwinSafeGroup1.sal</DependentUpon>
-      <Visible>false</Visible>
-    </None>
     <None Include="TargetSystemConfig.xml">
       <Visible>false</Visible>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TwinSafeGroup1" />
-    <Folder Include="TwinSafeGroup1\Alias Devices" />
-    <None Include="TwinSafeGroup1\Alias Devices\ErrorAcknowledgement.sds" />
   </ItemGroup>
 </Project>

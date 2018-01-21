@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <POU Name="MAIN" Id="{29a53d6f-2791-434c-ac0e-95c286c60a9e}" SpecialFunc="None">
+  <POU Name="MAIN" Id="{7789a14b-f04a-4336-890e-139d67d8cc44}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	TarAngle AT%I* : LREAL;
@@ -9,7 +9,7 @@ VAR
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[PlcStarted := TRUE;
-IF LevelShiftExtEnabled AND InitFinish THEN
+IF ExtEnabledLevelShift AND InitFinish THEN
 	Timer := Timer + 0.01;
 END_IF]]></ST>
     </Implementation>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <Task Name="PlcTask" Id="{447ee09e-4e79-4631-adc5-ed75cb2af8a0}">
+  <Task Name="PlcTask" Id="{47ae8fdb-709e-4ad4-b3ad-ee1ec7dcf388}">
     <!--CycleTime in micro seconds.-->
     <CycleTime>10000</CycleTime>
     <Priority>20</Priority>
@@ -19,10 +19,10 @@
     <PouCall>
       <Name>ShoulderRotate</Name>
     </PouCall>
-    <TaskFBGuid>{17de8d80-807c-4c27-957c-8137c08ae231}</TaskFBGuid>
-    <Fb_init>{5a5901de-105e-474c-b83b-ea846ef6dd68}</Fb_init>
-    <Fb_exit>{796f0526-bcef-4c25-a038-96feee164c55}</Fb_exit>
-    <CycleUpdate>{d226e372-a79c-4fc2-ac9e-b9fb75275ea6}</CycleUpdate>
-    <PostCycleUpdate>{a2d965ed-e972-4ad6-99dc-8a89099bda1d}</PostCycleUpdate>
+    <TaskFBGuid>{e9c0ffbb-bc19-4d21-a8af-9e83943d3275}</TaskFBGuid>
+    <Fb_init>{5e76b0f8-2aba-4b08-940c-b8358b0d03f8}</Fb_init>
+    <Fb_exit>{a4cf1d5a-38a4-41f9-8a19-10255497f2b4}</Fb_exit>
+    <CycleUpdate>{160b747c-8833-4559-a042-e3b78b31e341}</CycleUpdate>
+    <PostCycleUpdate>{9e606048-39dc-4066-b6d1-8216518f38c8}</PostCycleUpdate>
   </Task>
 </TcPlcObject>

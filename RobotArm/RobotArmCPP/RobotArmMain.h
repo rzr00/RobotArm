@@ -6,6 +6,7 @@
 #include "PID_Position.h"
 #include "Elbow.h"
 #include "3rdinterpolate.h"
+#include "kinematics.h"
 
 class CRobotArmMain 
 	: public ITComObject

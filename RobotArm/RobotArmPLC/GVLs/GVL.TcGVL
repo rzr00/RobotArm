@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <GVL Name="GVL" Id="{c819cee9-86d1-40d0-b09c-53bb05b91413}">
+  <GVL Name="GVL" Id="{e94d4da4-2ecf-4111-ac55-19058514cf77}">
     <Declaration><![CDATA[VAR_GLOBAL
 	//运动公共变量
 	PlcCycleTime: LREAL := 0.01;										//PLC循环时间
@@ -22,12 +22,24 @@
 	
 	//肩关节初始化完成标志量
 	InitFinish AT%Q*: BOOL := FALSE;
-	LevelShiftExtEnabled AT%Q* : BOOL := False;
+	ExtEnabledLevelShift AT%Q* : BOOL := FALSE;							//平移外部给定模块已使能
+	ExtEnabledRotate AT%Q* : BOOL := FALSE;								//旋转外部给定模块已使能
 	
 	//PLC时间
 	Timer AT%Q*: LREAL := 0;											//时间 
 	
-	
+	//错误记录
+	ErrorCode: INT := 0;												
+	ErrorTime: LREAL := 0;												//错误发生的时间，共4位
+																		//第一位无意义，第二位表示关节（0-3：肩、肘、腕、手）
+																		//第三位表示关节自由度（例如肩关节0表示平移自由度，1表示旋转自由度）
+																		//第四位表示错误信息
+																		//1001：肩关节平移自由度位置超过限制
+																		//1002：肩关节平移自由度速度超过限制
+																		//1011：肩关节旋转自由度位置超过限制
+																		//1012：肩关节平移自由度速度超过限制
+	ErrorTarPosLevelShift : LREAL := 0;									//错误发生时平移期望位置
+	ErrorTarPosRotate : LREAL := 0;										//错误发生时旋转期望位置
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

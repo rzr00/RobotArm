@@ -2,19 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{83df69a6-3e58-4de0-9094-62ee9d0ad443}</UniqueIdentifier>
+      <UniqueIdentifier>{e213af31-e595-4fbe-8c0b-07c349027f31}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{33d5e845-0e9a-494b-bf54-0df96e2e92f3}</UniqueIdentifier>
+      <UniqueIdentifier>{85c8e375-eb92-4aa4-89a7-bb85857bba5d}</UniqueIdentifier>
     </Filter>
     <Filter Include="TwinCAT UM Files">
-      <UniqueIdentifier>{9ff901cd-93e7-4421-b9be-8823c65b1d82}</UniqueIdentifier>
+      <UniqueIdentifier>{886b6a10-07bf-4c26-bd9f-5316aeb3ce51}</UniqueIdentifier>
     </Filter>
     <Filter Include="TwinCAT RT Files">
-      <UniqueIdentifier>{7f5d4652-49e7-42cb-8605-52b5ba0923a3}</UniqueIdentifier>
+      <UniqueIdentifier>{c3eaa85d-dcd7-4c4c-9af7-b13889cd6050}</UniqueIdentifier>
     </Filter>
     <Filter Include="TMC Files">
-      <UniqueIdentifier>{8041bd65-c71c-470d-a5d9-76c975bc64f1}</UniqueIdentifier>
+      <UniqueIdentifier>{19eb74d9-b1a2-4289-8ced-d8d19513f300}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,16 +42,16 @@
     <ClInclude Include="RobotArmMain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PID_Position.h">
+    <ClInclude Include="3rdinterpolate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Elbow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="3rdinterpolate.h">
+    <ClInclude Include="kinematics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="kinematics.h">
+    <ClInclude Include="PID_Position.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,16 +74,16 @@
     <ClCompile Include="RobotArmMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PID_Position.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Elbow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="3rdinterpolate.cpp">
+    <ClCompile Include="kinematics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="kinematics.cpp">
+    <ClCompile Include="PID_Position.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdinterpolate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

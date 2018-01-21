@@ -101,7 +101,7 @@
     </Midl>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{ca7800d7-c68d-4006-92a0-6aa015d36dd4}</ProjectGuid>
+    <ProjectGuid>{2c84d413-fa48-44e2-9b42-a32381d63f0a}</ProjectGuid>
     <RootNamespace>RobotArmCPP</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -178,9 +178,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|TwinCAT UM (x86)'">
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|TwinCAT RT (x86)'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|TwinCAT RT (x86)'">
     <ClCompile>
@@ -192,14 +189,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|TwinCAT UM (x64)'">
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|TwinCAT RT (x64)'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|TwinCAT RT (x64)'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

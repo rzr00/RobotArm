@@ -4,8 +4,6 @@
 #pragma hdrstop
 
 #include "RobotArmMain.h"
-#include "3rdinterpolate.h"
-#include "kinematics.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -175,8 +173,8 @@ HRESULT CRobotArmMain::SetObjStateSP()
 
 //运动规划测试数据
 //TODO:将数组改为结构体，提高程序可读性
-double KinematicsData[3][5] = { { 681, 0, 0, 1, 1 }, 
-								{ 455.4320, 474.8313, 90, 6, 11 }, 
+double KinematicsData[3][5] = { { 681, 0, 0, 1, 1 },
+								{ 455.4320, 474.8313, 90, 6, 11 },
 								{ 681, 0, 0, 19, 1e4 } };				//反解数据值：Ax, Ay, Aphi, t0, tf
 double CurrentPositionData[3] = { 0 };									//当前的反解角度值: 肩、肘、腕
 double NextPositionData[3] = { 0 };										//下一个位置的反解角度值: 肩、肘、腕
@@ -199,7 +197,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 		if ((timer > 0.5) && (timer < 1))      //肘关节初始化
 		{
 			elbow.SetTargetAngle(0);
-			elbow.run();
+			//elbow.run();
 		}
 		else
 		{
@@ -251,11 +249,11 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 					else if (timer > KinematicsData[PositionNum + 1][3])
 					{
 						/*单步调试结束，取消下面判断的注释*/
-						if (fabs_(elbow.ShowAngle() - NextPositionData[1]) > 0.1)		//判断是否走到期望位置，若没有，报错。
+						if (fabs_(elbow.ShowAngle() - NextPositionData[1]) > 1)		//判断是否走到期望位置，若没有，报错。
 						{
 							PositionStatus = 3;
 						}
-						else if (fabs_(elbow.ShowAngle() - NextPositionData[1]) < 0.1)	//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
+						else if (fabs_(elbow.ShowAngle() - NextPositionData[1]) < 1)	//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
 						{
 							PositionStatus = 0;
 							PositionNum++;
@@ -303,7 +301,7 @@ void CRobotArmMain::ElbowUpdateInputs()
 	//}
 	//else if (m_PlcToCpp.ElbowAngle >= 200)
 	//{
-		elbow.GetActualAngle(m_PlcToCpp.ElbowAngle - 261);//不受力状态时，角度为261，减去，角度会增大//旧的肘
+	elbow.GetActualAngle(m_PlcToCpp.ElbowAngle - 261);//不受力状态时，角度为261，减去，角度会增大//旧的肘
 	//}
 
 	//elbow.GetActualAngle(350 - m_Inputs.Angle);//不受力状态时，角度为350，减去，角度会减少//新的肘
