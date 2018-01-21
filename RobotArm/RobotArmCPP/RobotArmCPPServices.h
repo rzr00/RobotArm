@@ -45,6 +45,7 @@ typedef struct _RobotArmMainPlcToCpp
 	bool ShoudlerInitFinish;
 	double ElbowAngle;
 	bool PlcStarted;
+	bool LevelShiftExtEnabled;
 } RobotArmMainPlcToCpp, *PRobotArmMainPlcToCpp;
 #pragma pack(pop)
 

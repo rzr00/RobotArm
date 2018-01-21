@@ -1890,6 +1890,10 @@ External Setpoint Generation:
 					<Vars VarGrpType="2">
 						<Name>PlcTask Outputs</Name>
 						<Var>
+							<Name>MAIN.PlcStarted</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>SerialRecieve.EL6_22Bout_PC1</Name>
 							<Type GUID="{D9F4AC3C-9E19-4D2B-9EDE-0F21C904C4AC}" Namespace="Tc2_SerialCom">KL6outData22B</Type>
 						</Var>
@@ -1905,6 +1909,10 @@ External Setpoint Generation:
 							<Comment>
 								<![CDATA[肩关节初始化完成标志量]]>
 							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.LevelShiftExtEnabled</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -2057,7 +2065,7 @@ External Setpoint Generation:
 								<AreaNo AreaType="InputDst">2</AreaNo>
 								<Name>PlcToCpp</Name>
 								<ContextId>1</ContextId>
-								<ByteSize>34</ByteSize>
+								<ByteSize>35</ByteSize>
 								<Symbol>
 									<Name>PosLevelShift</Name>
 									<BitSize>64</BitSize>
@@ -2093,6 +2101,12 @@ External Setpoint Generation:
 									<BitSize>8</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
 									<BitOffs>264</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>LevelShiftExtEnabled</Name>
+									<BitSize>8</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+									<BitOffs>272</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
@@ -4467,9 +4481,11 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Inputs^MAIN.TarAngle" VarB="CppToPlc^ElbowTarAngle"/>
 				<Link VarA="PlcTask Inputs^ShoulderLevelShift.TarPosLevelShift" VarB="CppToPlc^TarPosLevelShift"/>
 				<Link VarA="PlcTask Outputs^GVL.InitFinish" VarB="PlcToCpp^ShoudlerInitFinish"/>
+				<Link VarA="PlcTask Outputs^GVL.LevelShiftExtEnabled" VarB="PlcToCpp^LevelShiftExtEnabled"/>
 				<Link VarA="PlcTask Outputs^GVL.PosLevelShift" VarB="PlcToCpp^PosLevelShift"/>
 				<Link VarA="PlcTask Outputs^GVL.PosRotate" VarB="PlcToCpp^PosRotate"/>
 				<Link VarA="PlcTask Outputs^GVL.Timer" VarB="PlcToCpp^Timer"/>
+				<Link VarA="PlcTask Outputs^MAIN.PlcStarted" VarB="PlcToCpp^PlcStarted"/>
 				<Link VarA="PlcTask Outputs^SerialRecieve.JIAODU" VarB="PlcToCpp^ElbowAngle"/>
 			</OwnerB>
 		</OwnerA>

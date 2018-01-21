@@ -194,33 +194,44 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 
 	UpdateInputs();
 	//TODO:初始化肘关节，位置初始化，角度初始化
-	if (m_PlcToCpp.PlcStarted == true)
+	if ((m_PlcToCpp.PlcStarted == true) && (m_PlcToCpp.ShoudlerInitFinish == true) && (m_PlcToCpp.LevelShiftExtEnabled == true))
 	{
 		if ((timer > 0.5) && (timer < 1))
 		{
 			elbow.SetTargetAngle(0);
 			elbow.run();
 		}
-		if (PositionNum < PositionSize)
+		else
 		{
-			switch (PositionStatus)
+			if (PositionNum < PositionSize)
 			{
+				switch (PositionStatus)
+				{
 				case 0:	//反解角度，计算插值函数
 					if (PositionNum == 0)
 					{
-						kinematics_inverse(KinematicsData[0][0],
+						kinematics_inverse(
+							KinematicsData[0][0],
 							KinematicsData[0][1],
 							KinematicsData[0][2],
 							CurrentPositionData);
 					}
-					kinematics_inverse(KinematicsData[PositionNum + 1][0],
+					kinematics_inverse(
+						KinematicsData[PositionNum + 1][0],
 						KinematicsData[PositionNum + 1][1],
 						KinematicsData[PositionNum + 1][2],
 						NextPositionData);
-					ElbowPolynomial.plan3rdProfileT(KinematicsData[PositionNum][4],
+					ElbowPolynomial.plan3rdProfileT(
+						KinematicsData[PositionNum][4],
 						KinematicsData[PositionNum + 1][3],
 						CurrentPositionData[1],
 						NextPositionData[1],
+						0, 0);
+					ShoulderLevelShiftPolynomial.plan3rdProfileT(
+						KinematicsData[PositionNum][4],
+						KinematicsData[PositionNum + 1][3],
+						CurrentPositionData[0],
+						NextPositionData[0],
 						0, 0);
 					PositionStatus = 1;
 					//这里不需要加break，计算完插值表达式后就进入case1，给定角度。
@@ -230,15 +241,18 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 						double SetElbowAngle = ElbowPolynomial.pos(timer);
 						elbow.SetTargetAngle(SetElbowAngle);
 						elbow.run();
+
+						TarPosLevelShift = ShoulderLevelShiftPolynomial.pos(timer) / 90.0 * 23.0;
+
 					}
 					else if (timer > KinematicsData[PositionNum + 1][3])
 					{
 						/*单步调试结束，取消下面判断的注释*/
-						if (abs(elbow.ShowAngle() - NextPositionData[1]) > 0.1)		//判断是否走到期望位置，若没有，报错。
+						if (fabs_(elbow.ShowAngle() - NextPositionData[1]) > 0.1)		//判断是否走到期望位置，若没有，报错。
 						{
 							PositionStatus = 3;
 						}
-						else if (abs(elbow.ShowAngle() - NextPositionData[1]) < 0.1)	//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
+						else if (fabs_(elbow.ShowAngle() - NextPositionData[1]) < 0.1)	//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
 						{
 							PositionStatus = 0;
 							PositionNum++;
@@ -253,6 +267,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 					break;
 				default:
 					break;
+				}
 			}
 		}
 		UpdateOutputs();
@@ -265,11 +280,15 @@ void CRobotArmMain::UpdateInputs()
 {
 	timer = m_PlcToCpp.Timer;
 	ElbowUpdateInputs();
+
+	ShoulderElbowUpdateInputs();
 }
 
 void CRobotArmMain::UpdateOutputs()
 {
 	ElbowUpdateOutputs();
+
+	ShoulderUpdateOutputs();
 }
 
 void CRobotArmMain::ElbowUpdateInputs()

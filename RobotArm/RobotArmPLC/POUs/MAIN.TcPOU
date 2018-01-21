@@ -8,9 +8,10 @@ VAR
 	PlcStarted AT%Q* : BOOL := FALSE;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Timer := Timer + 0.01;
-PlcStarted := TRUE;
-]]></ST>
+      <ST><![CDATA[PlcStarted := TRUE;
+IF LevelShiftExtEnabled AND InitFinish THEN
+	Timer := Timer + 0.01;
+END_IF]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -22,6 +22,7 @@
 	
 	//肩关节初始化完成标志量
 	InitFinish AT%Q*: BOOL := FALSE;
+	LevelShiftExtEnabled AT%Q* : BOOL := False;
 	
 	//PLC时间
 	Timer AT%Q*: LREAL := 0;											//时间 

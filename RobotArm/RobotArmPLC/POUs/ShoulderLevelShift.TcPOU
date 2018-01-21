@@ -11,6 +11,8 @@ VAR
 	ErrPosLevelShift: LREAL := 0;										//目标角度和实际角度误差
 	
 	StatusLevelShift: INT := 0;											//状态变量
+	
+	test : LREAL := 0;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -36,6 +38,7 @@ CASE StatusLevelShift OF
 		MC_ExtSetPointGenEnableLevelShift.Execute := TRUE;
 		IF MC_ExtSetPointGenEnableLevelShift.Enabled THEN
 			StatusLevelShift := 3;
+			LevelShiftExtEnabled := TRUE;
 		END_IF
 	3:	//判断目标移动是否有问题
 		//Timer := Timer + 0.01;
@@ -49,6 +52,7 @@ CASE StatusLevelShift OF
 			//安全保护。单次移动距离过大，即移动速度过快，停止运动。
 			//|maxV| = 5 mm/s; |maxv| = 0.05 mm / 0.01s;
 			StatusLevelShift := 4;						//跳转到错误处理状态
+			test := TarPosLevelShift;
 		ELSE											//按照给定移动
 			IF MC_ExtSetPointGenEnableLevelShift.Enabled THEN
 				MC_ExtSetPointGenFeed(
