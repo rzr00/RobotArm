@@ -40,6 +40,8 @@
 																		//1012：肩关节平移自由度速度超过限制
 	ErrorTarPosLevelShift : LREAL := 0;									//错误发生时平移期望位置
 	ErrorTarPosRotate : LREAL := 0;										//错误发生时旋转期望位置
+	
+	StopElbow AT%Q* : BOOL := FALSE;											//气动放气标志量，手动在plc里设置
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
