@@ -6,6 +6,22 @@ VAR
 	TarAngle AT%I* : LREAL;
 	Angle AT%I* : LREAL;
 	PlcStarted AT%Q* : BOOL := FALSE;
+	
+	wrist_pwm_out AT%I*: LREAL;
+	wrist_angle AT%I*: LREAL;
+	wrist_error AT%I*: LREAL;
+	flag_plc AT%Q*: BOOL;
+///////////////腕关节变量监测/////
+	
+	hand_one_temp AT%I*: INT;
+	hand_two_temp AT%I*: INT;
+	hand_three_temp AT%I*: INT;
+	hand_four_temp AT%I*: INT;
+	hand_onepwm AT%I*: INT;
+	hand_two_pwm AT%I*: INT;
+	hand_three_pwm AT%I*: INT;
+	hand_four_pwm AT%I*: INT;
+/////////////手部变量监测/////////
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[PlcStarted := TRUE;
@@ -13,8 +29,9 @@ END_VAR]]></Declaration>
 IF InitFinish AND ExtEnabledLevelShift AND ExtEnabledRotate THEN
 	Timer := Timer + 0.01;
 END_IF
+//Timer := Timer + 0.01;
 
-//Timer := Timer + 0.01;]]></ST>
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
