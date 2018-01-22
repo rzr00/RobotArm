@@ -9,9 +9,12 @@ VAR
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[PlcStarted := TRUE;
-IF ExtEnabledLevelShift AND InitFinish THEN
+
+IF InitFinish AND ExtEnabledLevelShift AND ExtEnabledRotate THEN
 	Timer := Timer + 0.01;
-END_IF]]></ST>
+END_IF
+
+//Timer := Timer + 0.01;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

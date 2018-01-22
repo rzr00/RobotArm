@@ -198,8 +198,8 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 		if ((timer > 0) && (timer < 5))      //肘关节初始化
 		{
 			//TODO：初始化函数有问题
-			elbow.SetM1(3 / 5 * timer);
-			elbow.SetM2(0.2 / 5 * timer);
+			elbow.SetM1(3.0 / 5.0 * timer);
+			elbow.SetM2(0.2 / 5.0 * timer);
 		}
 		else if (timer > 5)
 		{
@@ -246,7 +246,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 						elbow.run();
 
 						double SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(timer);
-						//ShoulderSetTarAngle(SetShoulderLevelShiftAngle, 0);
+						ShoulderSetTarAngle(1.5 * SetShoulderLevelShiftAngle, SetShoulderLevelShiftAngle);
 					}
 					else if (timer > KinematicsData[PositionNum + 1][3])
 					{
