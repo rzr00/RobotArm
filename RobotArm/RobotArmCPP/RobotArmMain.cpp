@@ -111,6 +111,7 @@ HRESULT CRobotArmMain::SetObjStatePS(PTComInitDataHdr pInitData)
 	IMPLEMENT_ITCOMOBJECT_EVALUATE_INITDATA(pInitData);
 
 	// TODO: Add initialization code
+	ErrorCode = 0;
 
 	m_Trace.Log(tlVerbose, FLEAVEA "hr=0x%08x", hr);
 	return hr;
@@ -173,12 +174,13 @@ HRESULT CRobotArmMain::SetObjStateSP()
 
 //运动规划测试数据
 //TODO:将数组改为结构体，提高程序可读性
-double KinematicsData[3][5] = { { 681, 0, 0, 5, 5 },
-								{ 455.4320, 474.8313, 90, 11, 13 },
-								{ 681, 0, 0, 23, 1e4 } };				//反解数据值：Ax, Ay, Aphi, t0, tf
+double KinematicsForwardData[3][5] = { { 0, 0, 0, 5, 5 }, { 20, 15, 10, 11, 13 }, { 0, 0, 0, 23, 1e4 } };	//正解数据值:肩、肘、腕角度、到达时间、离开时间
+double KinematicsInverseData[3][5] = { 0 };																//反解数据值：Ax, Ay, Aphi, t0, tf
+//double KinematicsInverseData[3][5] = { { 681, 0, 0, 5, 5 },
+//{ 455.4320, 474.8313, 90, 11, 13 },
+//{ 681, 0, 0, 23, 1e4 } };				//反解数据值：Ax, Ay, Aphi, t0, tf --- 0-30-0
 double CurrentPositionData[3] = { 0 };									//当前的反解角度值: 肩、肘、腕
 double NextPositionData[3] = { 0 };										//下一个位置的反解角度值: 肩、肘、腕
-//double PolynomialData[2][6] = { { 0, 0, 0, 0, 0, 6 }, { 0, 0, 0, 0, 11, 19 } };			//插值公式参数：三次项系数，二次项系数，一次项系数，零次项系数，T0, Tf
 int PositionSize = 3 - 1;
 int PositionNum = 0;
 int PositionStatus = 0;
@@ -200,8 +202,8 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 	{
 		if ((timer > 0) && (timer < 5))      //肘关节初始化
 		{
-			//elbow.SetM1(3.0 / 5.0 * timer);
-			//elbow.SetM2(0.2 / 5.0 * timer);
+			elbow.SetM1(3.5 / 5.0 * timer);
+			elbow.SetM2(0.2 / 5.0 * timer);
 		}
 		else if (timer > 5)
 		{
@@ -212,45 +214,66 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 				case 0:	//反解角度，计算插值函数
 					if (PositionNum == 0)
 					{
+						//初始状态正解
+						kinematics_forward(
+							KinematicsInverseData[0],
+							KinematicsForwardData[0]);
 						//初始状态逆解
 						kinematics_inverse(
-							KinematicsData[0][0],
-							KinematicsData[0][1],
-							KinematicsData[0][2],
+							KinematicsInverseData[0][0],
+							KinematicsInverseData[0][1],
+							KinematicsInverseData[0][2],
 							CurrentPositionData);
+						//拷贝时间
+						KinematicsInverseData[0][3] = KinematicsForwardData[0][3];
+						KinematicsInverseData[0][4] = KinematicsForwardData[0][4];
 					}
+					kinematics_forward(
+						KinematicsInverseData[PositionNum + 1],
+						KinematicsForwardData[PositionNum + 1]);
+					//拷贝时间
+					KinematicsInverseData[PositionNum + 1][3] = KinematicsForwardData[PositionNum + 1][3];
+					KinematicsInverseData[PositionNum + 1][4] = KinematicsForwardData[PositionNum + 1][4];
 					kinematics_inverse(
-						KinematicsData[PositionNum + 1][0],
-						KinematicsData[PositionNum + 1][1],
-						KinematicsData[PositionNum + 1][2],
+						KinematicsInverseData[PositionNum + 1][0],
+						KinematicsInverseData[PositionNum + 1][1],
+						KinematicsInverseData[PositionNum + 1][2],
 						NextPositionData);
+					//肩关节平移
+					ShoulderLevelShiftPolynomial.plan3rdProfileT(
+						KinematicsInverseData[PositionNum][4],
+						KinematicsInverseData[PositionNum + 1][3],
+						CurrentPositionData[0],
+						NextPositionData[0],
+						0, 0);
 					//肘关节平移
 					ElbowPolynomial.plan3rdProfileT(
-						KinematicsData[PositionNum][4],
-						KinematicsData[PositionNum + 1][3],
+						KinematicsInverseData[PositionNum][4],
+						KinematicsInverseData[PositionNum + 1][3],
 						CurrentPositionData[1],
 						NextPositionData[1],
 						0, 0);
-					//肩关节平移
-					ShoulderLevelShiftPolynomial.plan3rdProfileT(
-						KinematicsData[PositionNum][4],
-						KinematicsData[PositionNum + 1][3],
-						CurrentPositionData[0],
-						NextPositionData[0],
+					//腕关节平移//*现在实际测试是肘关节旋转。
+					WristPolynomial.plan3rdProfileT(
+						KinematicsInverseData[PositionNum][4],
+						KinematicsInverseData[PositionNum + 1][3],
+						CurrentPositionData[2],
+						NextPositionData[2],
 						0, 0);
 					PositionStatus = 1;
 					//这里不需要加break，计算完插值表达式后就进入case1，给定角度。
 				case 1:
-					if ((timer > KinematicsData[PositionNum][4]) && (timer < KinematicsData[PositionNum + 1][3]))
+					if ((timer > KinematicsInverseData[PositionNum][4]) && (timer < KinematicsInverseData[PositionNum + 1][3]))
 					{
 						double SetElbowAngle = ElbowPolynomial.pos(timer);
 						elbow.SetTargetAngle(SetElbowAngle);
-						//elbow.run();
+						elbow.run();
 
 						double SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(timer);
-						ShoulderSetTarAngle(SetShoulderLevelShiftAngle, 0);
+						double SetShoulderRotateAngle = WristPolynomial.pos(timer);
+						ShoulderSetTarAngle(SetShoulderLevelShiftAngle, SetShoulderRotateAngle);
 					}
-					else if (timer > KinematicsData[PositionNum + 1][3])
+					else if (timer > KinematicsInverseData[PositionNum + 1][3])
 					{
 						//验证所有关节是否达到期望位置
 						if ((fabs_(AngleLevelShift - NextPositionData[0]) > 5))				//肩关节平移
@@ -258,17 +281,17 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 							ErrorCode = 1;
 							PositionStatus = 3;
 						}
-						//else if ((fabs_(AngleRotate - NextPositionData[1]) > 5))			//肩关节旋转
-						//{
-						//	ErrorCode = 2;
-						//	PositionStatus = 3;
-						//}
+						else if ((fabs_(AngleRotate - NextPositionData[2]) > 5))			//肩关节旋转
+						{
+							ErrorCode = 2;
+							PositionStatus = 3;
+						}
 						//if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))		//肘关节
-						//else if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))		//肘关节
-						//{
-						//	ErrorCode = 2;
-						//	PositionStatus = 3;
-						//}
+						else if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))		//肘关节
+						{
+							ErrorCode = 3;
+							PositionStatus = 3;
+						}
 						else  																//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
 						{
 							PositionStatus = 0;
@@ -361,7 +384,7 @@ void CRobotArmMain::ElbowUpdateInputs()
 	//elbow.GetActualAngle(m_PlcToCpp.ElbowAngle - 261);//不受力状态时，角度为261，减去，角度会增大//旧的肘
 	//}
 
-	elbow.GetActualAngle(350 - m_PlcToCpp.ElbowAngle);//不受力状态时，角度为350，减去，角度会减少//新的肘
+	elbow.GetActualAngle(351 - m_PlcToCpp.ElbowAngle);//不受力状态时，角度为350，减去，角度会减少//新的肘
 
 }
 
@@ -369,10 +392,18 @@ void CRobotArmMain::ElbowUpdateOutputs()
 {
 	/* 输出给EL4004，用来控制比例压力阀。压力阀接收电压为0-10V */
 	//电压转换为（0-10V）->（0-32767）
-	if ((elbow.ShowM1() <= 3) && (elbow.ShowM2() <= 3))
+	if ((elbow.ShowM1() <= 3.5) && (elbow.ShowM2() <= 3.5))
 	{
 		m_Outputs.ElbowOutM1 = static_cast<int>(elbow.ShowM1() / 10.0 * 32767.0);
 		m_Outputs.ElbowOutM2 = static_cast<int>(elbow.ShowM2() / 10.0 * 32767.0);
+	}
+	else if (elbow.ShowM1() > 3.5)
+	{
+		m_Outputs.ElbowOutM1 = static_cast<int>(3.0 / 10.0 * 32767.0);
+	}
+	else if (elbow.ShowM2() > 3.5)
+	{
+		m_Outputs.ElbowOutM2 = static_cast<int>(3.0 / 10.0 * 32767.0);
 	}
 	else
 	{

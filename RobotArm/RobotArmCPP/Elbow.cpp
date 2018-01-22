@@ -7,7 +7,7 @@ Elbow::Elbow() : pi(3.14159)
 	m2 = 0;
 	angle = 0;
 	rad = 0;
-	maxout = 3;
+	maxout = 3.5;
 	minout = 0;
 
 	//肘关节PID初始化参数

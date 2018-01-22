@@ -1348,7 +1348,7 @@ External Setpoint Generation:
 				<Axis CreateSymbols="true" AxisType="1" Id="1">
 					<Name>Axis 1</Name>
 					<AxisPara>
-						<Velo SlowManual="0.5" FastManual="8" Maximum="13"/>
+						<Velo SlowManual="0.5" FastManual="2" Maximum="13"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 						<ParameterChanged>9</ParameterChanged>
 					</AxisPara>

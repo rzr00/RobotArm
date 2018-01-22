@@ -18,13 +18,12 @@ double L2 = 367;
 
 ***************************************************************/
 
-double kinematics_forward(double* pos, double* R, double* r)
+void kinematics_forward(double* pos, double* r)
 {
-	int i;
-
-	for (i = 0; i<3; i++)
+	double R[9] = { 0 };
+	for (int i = 0; i<3; i++)
 	{
-
+		//角度化为弧度
 		r[i] = r[i] * PI / 180;
 	}
 
@@ -36,9 +35,9 @@ double kinematics_forward(double* pos, double* R, double* r)
 	double t24 = L1*s1 + L2*(c1*s2 + c2*s1);
 	double t34 = 0;
 
-	pos[0] = t14;
-	pos[1] = t24;
-	pos[2] = t34;
+	//pos[0] = t14;		//Ax
+	//pos[1] = t24;		//Ay
+	//pos[2] = t34;		//Aphi
 
 	double t11 = -c3*(s1*s2 - c1*c2) - s3*(c1*s2 + c2*s1);
 	double t12 = s3*(s1*s2 - c1*c2) - c3*(c1*s2 + c2*s1);
@@ -56,7 +55,9 @@ double kinematics_forward(double* pos, double* R, double* r)
 	R[3] = t21;	R[4] = t22;	R[5] = t23;
 	R[6] = t31;	R[7] = t32;	R[8] = t33;
 
-	return 0;
+	pos[0] = t14;							//Ax
+	pos[1] = t24;							//Ay
+	pos[2] = acos_(R[0]) * 180 / PI;		//Aphi
 }
 
 /* *************************************************************
