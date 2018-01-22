@@ -246,17 +246,17 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 						elbow.run();
 
 						double SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(timer);
-						ShoulderSetTarAngle(1.5 * SetShoulderLevelShiftAngle, SetShoulderLevelShiftAngle);
+						ShoulderSetTarAngle(SetShoulderLevelShiftAngle, SetShoulderLevelShiftAngle);
 					}
 					else if (timer > KinematicsData[PositionNum + 1][3])
 					{
 						//验证所有关节是否达到期望位置
-						if ((fabs_(AngleLevelShift - NextPositionData[0]) > 1))
+						if ((fabs_(AngleLevelShift - NextPositionData[0]) > 5))//
 						{
 							ErrorCode = 1;
 							PositionStatus = 3;
 						}
-						else if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 1))		//判断是否走到期望位置，若没有，报错。
+						else if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))		//判断是否走到期望位置，若没有，报错。
 						{
 							ErrorCode = 2;
 							PositionStatus = 3;
@@ -302,8 +302,8 @@ void CRobotArmMain::UpdateOutputs()
 
 void CRobotArmMain::ShoulderElbowUpdateInputs()
 {
-	AngleLevelShift = m_PlcToCpp.PosLevelShift / 23.0 * 90.0;
-	AngleRotate = m_PlcToCpp.PosRotate / 23.0 * 90.0;
+	AngleRotate = -m_PlcToCpp.PosRotate / 23.0 * 90.0;
+	AngleLevelShift = m_PlcToCpp.PosLevelShift / 23.0 * 90.0 + 0.5 * (AngleRotate);
 	ShoulderInitFinish = m_PlcToCpp.ShoudlerInitFinish;
 }
 
