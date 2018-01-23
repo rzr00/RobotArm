@@ -85,7 +85,7 @@ protected:
 
 	//运动规划测试数据
 	//TODO:将数组改为结构体，提高程序可读性
-	double KinematicsInverseData[3][5];																		//反解数据值：Ax, Ay, Aphi, t0, tf
+	double KinematicsInverseData[4][5];																		//反解数据值：Ax, Ay, Aphi, t0, tf
 	double CurrentPositionData[3];									//当前的反解角度值: 肩、肘、腕
 	double NextPositionData[3];										//下一个位置的反解角度值: 肩、肘、腕
 	int PositionSize;

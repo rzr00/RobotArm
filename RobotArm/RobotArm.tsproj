@@ -1791,6 +1791,10 @@ External Setpoint Generation:
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.wrist_tarAngle</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.wrist_error</Name>
 							<Type>LREAL</Type>
 						</Var>
@@ -2295,7 +2299,7 @@ External Setpoint Generation:
 								<AreaNo AreaType="OutputSrc">3</AreaNo>
 								<Name>CppToPlc</Name>
 								<ContextId>1</ContextId>
-								<ByteSize>72</ByteSize>
+								<ByteSize>80</ByteSize>
 								<Symbol>
 									<Name>TarPosLevelShift</Name>
 									<BitSize>64</BitSize>
@@ -2385,6 +2389,12 @@ External Setpoint Generation:
 									<BitSize>16</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
 									<BitOffs>560</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>wrist_tarAngle</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<BitOffs>576</BitOffs>
 								</Symbol>
 							</DataArea>
 						</DataAreas>
@@ -5938,6 +5948,7 @@ Bit1: Value bigger/equal Limit2]]>
 				<Link VarA="PlcTask Inputs^MAIN.wrist_angle" VarB="CppToPlc^wrist_angle"/>
 				<Link VarA="PlcTask Inputs^MAIN.wrist_error" VarB="CppToPlc^wrist_error"/>
 				<Link VarA="PlcTask Inputs^MAIN.wrist_pwm_out" VarB="CppToPlc^wrist_pwm"/>
+				<Link VarA="PlcTask Inputs^MAIN.wrist_tarAngle" VarB="CppToPlc^wrist_tarAngle"/>
 				<Link VarA="PlcTask Inputs^ShoulderLevelShift.TarPosLevelShift" VarB="CppToPlc^TarPosLevelShift"/>
 				<Link VarA="PlcTask Inputs^ShoulderRotate.TarPosRotate" VarB="CppToPlc^TarPosRotate"/>
 				<Link VarA="PlcTask Outputs^GVL.ExtEnabledLevelShift" VarB="PlcToCpp^LevelShiftExtEnabled"/>
