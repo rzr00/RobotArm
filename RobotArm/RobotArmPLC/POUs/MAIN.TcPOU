@@ -3,8 +3,9 @@
   <POU Name="MAIN" Id="{7789a14b-f04a-4336-890e-139d67d8cc44}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	TarAngle AT%I* : LREAL;
-	Angle AT%I* : LREAL;
+	ElbowTarAngle AT%I* : LREAL;
+	ElbowAngle AT%I* : LREAL;
+	ElbowAngleError : LREAL;
 	PlcStarted AT%Q* : BOOL := FALSE;
 	
 	wrist_pwm_out AT%I*: LREAL;
@@ -32,6 +33,7 @@ IF InitFinish AND ExtEnabledLevelShift AND ExtEnabledRotate THEN
 END_IF
 //Timer := Timer + 0.01;
 
+ElbowAngleError := ElbowTarAngle - ElbowAngle;
 wrist_error := wrist_tarAngle - wrist_angle;]]></ST>
     </Implementation>
   </POU>

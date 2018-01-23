@@ -68,8 +68,8 @@ void kinematics_forward(double* pos, double* r1)
 *
 * x ¡¢y			    Ä©¶ËÎ»ÖÃ£¨µ¥Î»£ºmm£©
 
+2018-01-23 ±©Á¦½â¾ö±¶¸£µÄsqrt_²»ÄÜÊäÈë¸ºÊýbug£¬µÈ´ýÐÞ¸´¡£ÐÞ¸´Ê§°Ü
 ***************************************************************/
-
 
 void kinematics_inverse(double x, double y, double phi, double* Ajoint)    //ÇóÄæ½â½Ç¶È
 {
@@ -161,3 +161,97 @@ void kinematics_inverse(double x, double y, double phi, double* Ajoint)    //ÇóÄ
 	}
 
 }
+
+//void kinematics_inverse(double x, double y, double phi, double* Ajoint)    //ÇóÄæ½â½Ç¶È
+//{
+//
+//	phi = phi/180.0*PI;
+//
+//	double r1, r2, r3;
+//	double joint[6];
+//	double s2, k1, k2;
+//
+//	/*
+//	joint[0]-ioint[2]Îª½â1
+//	joint[3]-ioint[5]Îª½â2
+//	*/
+//
+//	double actualAngle[3] = { 0 };	    // actual angle
+//
+//
+//	// solution 1
+//	double c2 = (pow_(x, 2) + pow_(y, 2) - pow_(L1, 2) - pow_(L2, 2)) / (2 * L1*L2);
+//	if ((1 - pow_(c2, 2)) > 0)
+//	{
+//		s2 = sqrt_(1 - pow_(c2, 2));//FIXME:±¶¸£C++µÄsqrt_²»ÄÜÊäÈë¸ºÊý
+//
+//		r2 = atan2_(s2, c2);
+//
+//		k1 = L1 + L2 * c2;
+//		k2 = L2*s2;
+//
+//		r1 = atan2_(y, x) - atan2_(k2, k1);
+//
+//		r3 = phi - r2 - r1;
+//
+//		joint[0] = r1 / PI*180.0;
+//		joint[1] = r2 / PI*180.0;
+//		joint[2] = r3 / PI*180.0;
+//
+//		//joint[0] = r1 * 180 / PI;
+//		//joint[1] = r2 * 180 / PI;
+//		//joint[2] = r3 * 180 / PI;
+//	}
+//
+//
+//
+//	// solution 2
+//	s2 = -s2;
+//	r2 = atan2_(s2, c2);
+//
+//
+//	k1 = L1 + L2 * c2;
+//	k2 = L2*s2;
+//
+//	r1 = atan2_(y, x) - atan2_(k2, k1);
+//
+//	r3 = phi - r2 - r1;
+//
+//	joint[3] = r1/PI*180.0;
+//	joint[4] = r2/PI*180.0;
+//	joint[5] = r3/PI*180.0;
+//
+//	//joint[3] = r1 * 180 / PI;
+//	//joint[4] = r2 * 180 / PI;
+//	//joint[5] = r3 * 180 / PI;
+//
+//
+//
+//	// standard
+//
+//	double AngleDSum[2];
+//
+//	AngleDSum[0] = fabs_(joint[0] - actualAngle[0]) + fabs_(joint[1] - actualAngle[1]) + fabs_(joint[2] - actualAngle[2]);	// sum of angle displacement
+//
+//	AngleDSum[1] = fabs_(joint[3] - actualAngle[0]) + fabs_(joint[4] - actualAngle[1]) + fabs_(joint[5] - actualAngle[2]);	// sum of angle displacement
+//
+//
+//	if ((AngleDSum[0] < AngleDSum[1]) && ((1 - pow_(c2, 2)) > 0))
+//	{
+//		for (int i = 0; i < 3; i++)
+//		{
+//			Ajoint[i] = joint[i];
+//		}
+//		//return joint;
+//
+//	}
+//	else if (AngleDSum[0] > AngleDSum[1])
+//	{
+//		for (int i = 0; i < 3; i++)
+//		{
+//			Ajoint[i] = joint[i + 3];
+//		}
+//		//return joint + 3;
+//	}
+//
+//}

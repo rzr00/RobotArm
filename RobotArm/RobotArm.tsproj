@@ -1775,11 +1775,11 @@ External Setpoint Generation:
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.TarAngle</Name>
+							<Name>MAIN.ElbowTarAngle</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.Angle</Name>
+							<Name>MAIN.ElbowAngle</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
@@ -5935,8 +5935,8 @@ Bit1: Value bigger/equal Limit2]]>
 				<Link VarA="PlcTask Outputs^GVL.AxisRotate.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TIXC^RobotArmCPP^RobotArmCPP_Obj1 (CRobotArmMain)">
-				<Link VarA="PlcTask Inputs^MAIN.Angle" VarB="CppToPlc^ElbowAngle"/>
-				<Link VarA="PlcTask Inputs^MAIN.TarAngle" VarB="CppToPlc^ElbowTarAngle"/>
+				<Link VarA="PlcTask Inputs^MAIN.ElbowAngle" VarB="CppToPlc^ElbowAngle"/>
+				<Link VarA="PlcTask Inputs^MAIN.ElbowTarAngle" VarB="CppToPlc^ElbowTarAngle"/>
 				<Link VarA="PlcTask Inputs^MAIN.hand_four_pwm" VarB="CppToPlc^hand_four_pwm"/>
 				<Link VarA="PlcTask Inputs^MAIN.hand_four_temp" VarB="CppToPlc^hand_four_temp"/>
 				<Link VarA="PlcTask Inputs^MAIN.hand_one_temp" VarB="CppToPlc^hand_one_temp"/>

@@ -101,24 +101,25 @@ CRobotArmMain::CRobotArmMain()
 	StopStartTime = 0;
 	StopStartM1 = 0;
 	StopStartM2 = 0;
-	for (int i = 0; i < 4; i++)
-	{
-		CurrentPositionData[i] = 0;
-		NextPositionData[i] = 0;
-	}
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			KinematicsInverseData[i][j] = 0;
-		}
-	}
+	//for (int i = 0; i < 100; i++)
+	//{
+	//	CurrentPositionData[i] = 0;
+	//	NextPositionData[i] = 0;
+	//}
+	//for (int i = 0; i < 100; i++)
+	//{
+	//	for (int j = 0; j < 5; j++)
+	//	{
+	//		KinematicsInverseData[i][j] = 0;
+	//	}
+	//}
 
 	wrist_pwm_max = 1000;//设定腕关节pwm输出最大值
 	wrist_pwm_min = 0;//设定腕关节pwm输出最小值
 	wrist_angle_max = 62;//设定腕关节角度最大值
 	wrist_error = .0;//设定腕关节角度最小值
 	wrist_motion_flag = 0;//腕关节到达预期位置标志位
+	hand_grip_time = 0;//手部抓握时间
 	time_one = time_two = time_three = time_four = 0;
 }
 
@@ -146,7 +147,7 @@ HRESULT CRobotArmMain::SetObjStatePS(PTComInitDataHdr pInitData)
 
 	// TODO: Add initialization code
 
-	PositionSize = 4 - 1;
+	PositionSize = 6 - 1;
 
 	m_Trace.Log(tlVerbose, FLEAVEA "hr=0x%08x", hr);
 	return hr;
@@ -207,8 +208,8 @@ HRESULT CRobotArmMain::SetObjStateSP()
 	return hr;
 }
 
-double KinematicsForwardData[4][3] = { { 0, 0, 0 }, { 0, 30, 0 }, { 0, 80, 50 }, { 0, 0, 0 } };	//正解数据值:肩、肘、腕角度、到达时间、离开时间
-double ElbowSpeed = 2;		//角度/秒
+double KinematicsForwardData[100][5] = { { 0, 0, 0, 5, 5 }, { 70, 100, 0, 25, 30 }, { 70, 100, 48, 55, 60 }, { 0, 0, 48, 75, 80 }, { 0, 0, 0, 82.5, 90 } };	//正解数据值:肩、肘、腕角度、到达时间、离开时间
+//double ElbowSpeed = 5;		//角度/秒
 
 int init_flag = 1;
 PID_Position wrist_pid_control(30, 1.3, 0.5, 0.01);//腕关节参数设置，前三项为pid参数，最后一项为周期
@@ -389,14 +390,20 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 							KinematicsInverseData[0][1],
 							KinematicsInverseData[0][2],
 							CurrentPositionData);
+						////拷贝时间
+						//KinematicsInverseData[0][3] = 5;
+						//KinematicsInverseData[0][4] = 10;
 						//拷贝时间
-						KinematicsInverseData[0][3] = 5;
-						KinematicsInverseData[0][4] = 10;
+						KinematicsInverseData[0][3] = KinematicsForwardData[0][3];
+						KinematicsInverseData[0][4] = KinematicsForwardData[0][4];
 					}
-					//运动时间计算。根据腕关节速度计算
-					KinematicsInverseData[PositionNum + 1][3] = KinematicsInverseData[PositionNum][4] +
-						fabs_(KinematicsForwardData[PositionNum + 1][1] - KinematicsForwardData[PositionNum][1]) / ElbowSpeed;
-					KinematicsInverseData[PositionNum + 1][4] = KinematicsInverseData[PositionNum + 1][3] + 5;
+					////运动时间计算。根据肘关节速度计算
+					//KinematicsInverseData[PositionNum + 1][3] = KinematicsInverseData[PositionNum][4] +
+					//	fabs_(KinematicsForwardData[PositionNum + 1][0] - KinematicsForwardData[PositionNum][0]) / ElbowSpeed;
+					//KinematicsInverseData[PositionNum + 1][4] = KinematicsInverseData[PositionNum + 1][3] + 5;
+					//拷贝时间
+					KinematicsInverseData[PositionNum + 1][3] = KinematicsForwardData[PositionNum + 1][3];
+					KinematicsInverseData[PositionNum + 1][4] = KinematicsForwardData[PositionNum + 1][4];
 					//正解
 					kinematics_forward(
 						KinematicsInverseData[PositionNum + 1],
@@ -435,7 +442,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 					{
 						double SetElbowAngle = ElbowPolynomial.pos(timer);
 						elbow.SetTargetAngle(SetElbowAngle);
-						elbow.run();
+						//elbow.run();
 						double SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(timer);
 						//double SetShoulderRotateAngle = WristPolynomial.pos(timer);
 						ShoulderSetTarAngle(SetShoulderLevelShiftAngle, 0);
@@ -546,6 +553,33 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 	//	//if (wrist_motion_flag == 1)
 	//	//{
 	//	//	hand_motion(time_one, time_two, time_three, time_four);
+	//	//}
+	//}
+
+	//if (m_PlcToCpp.PlcStarted == true)
+	//{
+	//	//if (init_flag == 1)
+	//	//{
+	//	//	wrist_init_angle = k*m_Inputs.wrist_resistor + b;
+	//	//	init_flag = 0;
+	//	//}
+	//	//wrist_motion_flag = wrist_motion(50);
+	//	//if (wrist_motion_flag == 1)
+	//	//{
+	//		++hand_grip_time;
+	//		if (hand_grip_time <= 3500)
+	//		{
+	//			hand_motion(time_one, time_two, time_three, time_four);
+	//		}
+	//		else
+	//		{
+	//			m_Outputs.hand_one = 0;//手部关闭
+	//			m_Outputs.hand_two = 0;
+	//			m_Outputs.hand_three = 0;
+	//			m_Outputs.hand_four = 0;
+	//			m_Outputs.hand_fan = 0;
+	//			i = 0;//腕关节角度检测延迟归位
+	//		}
 	//	//}
 	//}
 

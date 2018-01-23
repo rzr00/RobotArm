@@ -85,7 +85,7 @@ protected:
 
 	//运动规划测试数据
 	//TODO:将数组改为结构体，提高程序可读性
-	double KinematicsInverseData[4][5];																		//反解数据值：Ax, Ay, Aphi, t0, tf
+	double KinematicsInverseData[100][5];							//反解数据值：Ax, Ay, Aphi, t0, tf
 	double CurrentPositionData[3];									//当前的反解角度值: 肩、肘、腕
 	double NextPositionData[3];										//下一个位置的反解角度值: 肩、肘、腕
 	int PositionSize;
@@ -102,6 +102,7 @@ protected:
 	double const temp_k;//手部温度转换系数temp=temp_k*AN+temp_b
 	double const temp_b;//手部温度转换系数temp=temp_k*AN+temp_b
 	int i;//腕关节角度检测延迟
+	int hand_grip_time;//手部抓握时间
 	double wrist_init_angle;//腕关节初始角度
 	double wrist_target_angle;//腕关节目标角度,合并后删除
 	double wrist_fact_angle;//腕关节实际角度

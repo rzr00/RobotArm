@@ -44,7 +44,7 @@ CASE StatusLevelShift OF
 		END_IF
 	3:	//判断目标移动是否有问题
 		//Timer := Timer + 0.01;
-		IF TarPosLevelShift > 25 OR TarPosLevelShift < -15 THEN
+		IF TarPosLevelShift > 18 OR TarPosLevelShift < -15 THEN
 			ErrorCode := 1001;
 			ErrorTime := Timer;
 			StatusLevelShift := 4;						//跳转到错误处理状态
