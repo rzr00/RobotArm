@@ -18,13 +18,14 @@ double L2 = 367;
 
 ***************************************************************/
 
-void kinematics_forward(double* pos, double* r)
+void kinematics_forward(double* pos, double* r1)
 {
 	double R[9] = { 0 };
+	double r[3] = { 0 };
 	for (int i = 0; i<3; i++)
 	{
 		//角度化为弧度
-		r[i] = r[i] * PI / 180;
+		r[i] = r1[i] * PI / 180;
 	}
 
 	double c1 = cos_(r[0]);		double s1 = sin_(r[0]);

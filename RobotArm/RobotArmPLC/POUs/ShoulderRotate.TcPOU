@@ -48,9 +48,10 @@ CASE StatusRotate OF
 			StatusRotate := 4;						//跳转到错误处理状态
 		END_IF
 		ErrPosRotate := TarPosRotate - AxisRotate.NcToPlc.ActPos;//误差:目标角度减去实际角度
-		IF ABS(ErrPosRotate) < 1E-8 THEN			//移动距离过小认为不移动
+//		IF ABS(ErrPosRotate) < 1E-8 THEN			//移动距离过小认为不移动
 			//不移动
-		ELSIF ABS(ErrPosRotate) > 0.15 THEN
+//		ELSIF ABS(ErrPosRotate) > 0.15 THEN
+		IF ABS(ErrPosRotate) > 0.15 THEN
 			//安全保护。单次移动距离过大，即移动速度过快，停止运动。
 			//|maxV| = 15 mm/s; |maxv| = 0.15 mm / 0.01s;
 			ErrorCode := 1012;

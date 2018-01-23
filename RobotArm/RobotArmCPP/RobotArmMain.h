@@ -83,6 +83,20 @@ protected:
 
 	int ErrorCode;
 
+	//运动规划测试数据
+	//TODO:将数组改为结构体，提高程序可读性
+	double KinematicsInverseData[3][5];																		//反解数据值：Ax, Ay, Aphi, t0, tf
+	double CurrentPositionData[3];									//当前的反解角度值: 肩、肘、腕
+	double NextPositionData[3];										//下一个位置的反解角度值: 肩、肘、腕
+	int PositionSize;
+	int PositionNum;
+	int PositionStatus;
+	int InitElbowStatus;
+	int StopStatus;
+	double StopStartTime;
+	double StopStartM1;
+	double StopStartM2;
+
 	double const k;//角度与电阻转换公式jiaoud=k*res+b
 	double const b;//角度与电阻转换公式jiaodu=k*res+b
 	double const temp_k;//手部温度转换系数temp=temp_k*AN+temp_b

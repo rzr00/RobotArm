@@ -1795,10 +1795,6 @@ External Setpoint Generation:
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.wrist_two_temp</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.hand_three_temp</Name>
 							<Type>INT</Type>
 						</Var>
@@ -1811,15 +1807,7 @@ External Setpoint Generation:
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.wrist_two_pwm</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.hand_three_pwm</Name>
-							<Type>INT</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.wrist_four_pwm</Name>
 							<Type>INT</Type>
 						</Var>
 						<Var>
@@ -1937,6 +1925,18 @@ External Setpoint Generation:
 ]]>
 								</Comment>
 							</SubVar>
+						</Var>
+						<Var>
+							<Name>MAIN.hand_two_temp</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.hand_two_pwm</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.hand_four_pwm</Name>
+							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2">
@@ -5927,7 +5927,14 @@ Bit1: Value bigger/equal Limit2]]>
 			<OwnerB Name="TIXC^RobotArmCPP^RobotArmCPP_Obj1 (CRobotArmMain)">
 				<Link VarA="PlcTask Inputs^MAIN.Angle" VarB="CppToPlc^ElbowAngle"/>
 				<Link VarA="PlcTask Inputs^MAIN.TarAngle" VarB="CppToPlc^ElbowTarAngle"/>
+				<Link VarA="PlcTask Inputs^MAIN.hand_four_pwm" VarB="CppToPlc^hand_four_pwm"/>
+				<Link VarA="PlcTask Inputs^MAIN.hand_four_temp" VarB="CppToPlc^hand_four_temp"/>
 				<Link VarA="PlcTask Inputs^MAIN.hand_one_temp" VarB="CppToPlc^hand_one_temp"/>
+				<Link VarA="PlcTask Inputs^MAIN.hand_onepwm" VarB="CppToPlc^hand_one_pwm"/>
+				<Link VarA="PlcTask Inputs^MAIN.hand_three_pwm" VarB="CppToPlc^hand_three_pwm"/>
+				<Link VarA="PlcTask Inputs^MAIN.hand_three_temp" VarB="CppToPlc^hand_three_temp"/>
+				<Link VarA="PlcTask Inputs^MAIN.hand_two_pwm" VarB="CppToPlc^hand_two_pwm"/>
+				<Link VarA="PlcTask Inputs^MAIN.hand_two_temp" VarB="CppToPlc^hand_two_temp"/>
 				<Link VarA="PlcTask Inputs^MAIN.wrist_angle" VarB="CppToPlc^wrist_angle"/>
 				<Link VarA="PlcTask Inputs^MAIN.wrist_error" VarB="CppToPlc^wrist_error"/>
 				<Link VarA="PlcTask Inputs^MAIN.wrist_pwm_out" VarB="CppToPlc^wrist_pwm"/>

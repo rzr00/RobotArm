@@ -39,7 +39,7 @@ CASE InitStatusLevelShift OF
 		END_IF
 	2://move 移动到初始位置
 		MC_MoveAbsoluteLevelShift.Position := InitPosLevelShift;
-		MC_MoveAbsoluteLevelShift.Velocity := 2;
+		MC_MoveAbsoluteLevelShift.Velocity := 1;
 		MC_MoveAbsoluteLevelShift.Execute := TRUE;
 		IF MC_MoveAbsoluteLevelShift.Done THEN
 			MC_MoveAbsoluteLevelShift.Execute := FALSE;
@@ -73,7 +73,7 @@ CASE InitStatusRotate OF
 		END_IF
 	2://move 移动到初始位置
 		MC_MoveAbsoluteRotate.Position := InitPosLevelShift;
-		MC_MoveAbsoluteRotate.Velocity := 2;
+		MC_MoveAbsoluteRotate.Velocity := 1;
 		MC_MoveAbsoluteRotate.Execute := TRUE;
 		IF MC_MoveAbsoluteRotate.Done THEN
 			MC_MoveAbsoluteRotate.Execute := FALSE;
