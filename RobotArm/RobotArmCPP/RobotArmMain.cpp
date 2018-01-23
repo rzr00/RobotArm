@@ -208,7 +208,7 @@ HRESULT CRobotArmMain::SetObjStateSP()
 	return hr;
 }
 
-double KinematicsForwardData[100][5] = { { 0, 0, 0, 5, 5 }, { 70, 100, 0, 25, 30 }, { 70, 100, 48, 55, 60 }, { 0, 0, 48, 75, 80 }, { 0, 0, 0, 82.5, 90 } };	//正解数据值:肩、肘、腕角度、到达时间、离开时间
+double KinematicsForwardData[100][5] = { { 0, 0, 0, 5, 5 }, { 70, 100, 0, 25, 30 }, { 70, 100, 48, 55, 65 }, { 0, 0, 48, 80, 85 }, { 0, 0, 0, 90, 100 } };	//正解数据值:肩、肘、腕角度、到达时间、离开时间
 //double ElbowSpeed = 5;		//角度/秒
 
 int init_flag = 1;
@@ -219,145 +219,6 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 	HRESULT hr = S_OK;
 
 	// TODO: Replace the sample with your cyclic code
-
-	//UpdateInputs();
-	//if ((m_PlcToCpp.PlcStarted == true) && (m_PlcToCpp.ShoudlerInitFinish == true) && (m_PlcToCpp.LevelShiftExtEnabled == true))
-	//{
-	//	if ((timer > 0) && (timer < 5))      //肘关节初始化
-	//	{
-	//		elbow.SetM1(3.5 / 5.0 * timer);
-	//		elbow.SetM2(0.2 / 5.0 * timer);
-	//	}
-	//	else if (timer > 5)
-	//	{
-	//		if (PositionNum < PositionSize)
-	//		{
-	//			switch (PositionStatus)
-	//			{
-	//			case 0:	//反解角度，计算插值函数
-	//				if (PositionNum == 0)
-	//				{
-	//					//初始状态正解
-	//					kinematics_forward(
-	//						KinematicsInverseData[0],
-	//						KinematicsForwardData[0]);
-	//					//初始状态逆解
-	//					kinematics_inverse(
-	//						KinematicsInverseData[0][0],
-	//						KinematicsInverseData[0][1],
-	//						KinematicsInverseData[0][2],
-	//						CurrentPositionData);
-	//					//拷贝时间
-	//					KinematicsInverseData[0][3] = KinematicsForwardData[0][3];
-	//					KinematicsInverseData[0][4] = KinematicsForwardData[0][4];
-	//				}
-	//				kinematics_forward(
-	//					KinematicsInverseData[PositionNum + 1],
-	//					KinematicsForwardData[PositionNum + 1]);
-	//				//拷贝时间
-	//				KinematicsInverseData[PositionNum + 1][3] = KinematicsForwardData[PositionNum + 1][3];
-	//				KinematicsInverseData[PositionNum + 1][4] = KinematicsForwardData[PositionNum + 1][4];
-	//				kinematics_inverse(
-	//					KinematicsInverseData[PositionNum + 1][0],
-	//					KinematicsInverseData[PositionNum + 1][1],
-	//					KinematicsInverseData[PositionNum + 1][2],
-	//					NextPositionData);
-	//				//肩关节平移
-	//				ShoulderLevelShiftPolynomial.plan3rdProfileT(
-	//					KinematicsInverseData[PositionNum][4],
-	//					KinematicsInverseData[PositionNum + 1][3],
-	//					CurrentPositionData[0],
-	//					NextPositionData[0],
-	//					0, 0);
-	//				//肘关节平移
-	//				ElbowPolynomial.plan3rdProfileT(
-	//					KinematicsInverseData[PositionNum][4],
-	//					KinematicsInverseData[PositionNum + 1][3],
-	//					CurrentPositionData[1],
-	//					NextPositionData[1],
-	//					0, 0);
-	//				//腕关节平移
-	//				WristPolynomial.plan3rdProfileT(
-	//					KinematicsInverseData[PositionNum][4],
-	//					KinematicsInverseData[PositionNum + 1][3],
-	//					CurrentPositionData[2],
-	//					NextPositionData[2],
-	//					0, 0);
-	//				PositionStatus = 1;
-	//				//这里不需要加break，计算完插值表达式后就进入case1，给定角度。
-	//			case 1:
-	//				if ((timer > KinematicsInverseData[PositionNum][4]) && (timer < KinematicsInverseData[PositionNum + 1][3]))
-	//				{
-	//					double SetElbowAngle = ElbowPolynomial.pos(timer);
-	//					elbow.SetTargetAngle(SetElbowAngle);
-	//					elbow.run();
-	//
-	//					double SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(timer);
-	//					//double SetShoulderRotateAngle = WristPolynomial.pos(timer);
-	//					ShoulderSetTarAngle(SetShoulderLevelShiftAngle, 0);
-	//				}
-	//				else if (timer > KinematicsInverseData[PositionNum + 1][3])
-	//				{
-	//					//验证所有关节是否达到期望位置
-	//					if ((fabs_(AngleLevelShift - NextPositionData[0]) > 5))				//肩关节平移
-	//					{
-	//						ErrorCode = 1;
-	//						PositionStatus = 3;
-	//					}
-	//					//else if ((fabs_(AngleRotate - NextPositionData[2]) > 5))			//肩关节旋转
-	//					//{
-	//					//	ErrorCode = 2;
-	//					//	PositionStatus = 3;
-	//					//}
-	//					//if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))		//肘关节
-	//					else if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))		//肘关节
-	//					{
-	//						ErrorCode = 3;
-	//						PositionStatus = 3;
-	//					}
-	//					else  																//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
-	//					{
-	//						PositionStatus = 0;
-	//						PositionNum++;
-	//						for (int i = 0; i < 3; i++)
-	//						{
-	//							CurrentPositionData[i] = NextPositionData[i];				//各个关节都走到目标位置，则将目标位置拷贝至当前位置
-	//						}
-	//					}
-	//				}
-	//				break;
-	//			case 3://错误处理
-	//				break;
-	//			default:
-	//				break;
-	//			}
-	//		}
-	//		if (m_PlcToCpp.StopElbow == true)
-	//		{
-	//			//气动结束放气
-	//			switch (StopStatus)
-	//			{
-	//			case 0:
-	//				StopStartTime = timer;
-	//				StopStatus = 1;
-	//				StopStartM1 = elbow.ShowM1();
-	//				StopStartM2 = elbow.ShowM2();
-	//			case 1:
-	//				if ((timer - StopStartTime) < 5)
-	//				{
-	//					elbow.SetM1(StopStartM1 / 5.0 * (StopStartTime + 5 - timer));
-	//					elbow.SetM2(StopStartM2 / 5.0 * (StopStartTime + 5 - timer));
-	//				}
-	//				else if ((timer - StopStartTime) > 5)
-	//				{
-	//					//结束
-	//				}
-	//			}
-	//		}
-	//	}
-	//	UpdateOutputs();
-	//}
-
 	UpdateInputs();
 	if ((m_PlcToCpp.PlcStarted == true) && (m_PlcToCpp.ShoudlerInitFinish == true) && (m_PlcToCpp.LevelShiftExtEnabled == true))
 	{
@@ -380,65 +241,76 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 				case 0:	//反解角度，计算插值函数
 					if (PositionNum == 0)
 					{
-						//初始状态正解
-						kinematics_forward(
-							KinematicsInverseData[0],
-							KinematicsForwardData[0]);
-						//初始状态逆解
-						kinematics_inverse(
-							KinematicsInverseData[0][0],
-							KinematicsInverseData[0][1],
-							KinematicsInverseData[0][2],
-							CurrentPositionData);
+						////初始状态正解
+						//kinematics_forward(
+						//	KinematicsInverseData[0],
+						//	KinematicsForwardData[0]);
+						////初始状态逆解
+						//kinematics_inverse(
+						//	KinematicsInverseData[0][0],
+						//	KinematicsInverseData[0][1],
+						//	KinematicsInverseData[0][2],
+						//	CurrentPositionData);
+						//////拷贝时间
+						////KinematicsInverseData[0][3] = 5;
+						////KinematicsInverseData[0][4] = 10;
 						////拷贝时间
-						//KinematicsInverseData[0][3] = 5;
-						//KinematicsInverseData[0][4] = 10;
-						//拷贝时间
-						KinematicsInverseData[0][3] = KinematicsForwardData[0][3];
-						KinematicsInverseData[0][4] = KinematicsForwardData[0][4];
+						//KinematicsInverseData[0][3] = KinematicsForwardData[0][3];
+						//KinematicsInverseData[0][4] = KinematicsForwardData[0][4];
+
+						//拷贝当前位置数据
+						for (int i = 0; i < 3; i++)
+						{
+							CurrentPositionData[i] = KinematicsForwardData[0][i];
+						}
 					}
 					////运动时间计算。根据肘关节速度计算
 					//KinematicsInverseData[PositionNum + 1][3] = KinematicsInverseData[PositionNum][4] +
 					//	fabs_(KinematicsForwardData[PositionNum + 1][0] - KinematicsForwardData[PositionNum][0]) / ElbowSpeed;
 					//KinematicsInverseData[PositionNum + 1][4] = KinematicsInverseData[PositionNum + 1][3] + 5;
-					//拷贝时间
-					KinematicsInverseData[PositionNum + 1][3] = KinematicsForwardData[PositionNum + 1][3];
-					KinematicsInverseData[PositionNum + 1][4] = KinematicsForwardData[PositionNum + 1][4];
-					//正解
-					kinematics_forward(
-						KinematicsInverseData[PositionNum + 1],
-						KinematicsForwardData[PositionNum + 1]);
-					//反解
-					kinematics_inverse(
-						KinematicsInverseData[PositionNum + 1][0],
-						KinematicsInverseData[PositionNum + 1][1],
-						KinematicsInverseData[PositionNum + 1][2],
-						NextPositionData);
+					////拷贝时间
+					//KinematicsInverseData[PositionNum + 1][3] = KinematicsForwardData[PositionNum + 1][3];
+					//KinematicsInverseData[PositionNum + 1][4] = KinematicsForwardData[PositionNum + 1][4];
+					////正解
+					//kinematics_forward(
+					//	KinematicsInverseData[PositionNum + 1],
+					//	KinematicsForwardData[PositionNum + 1]);
+					////反解
+					//kinematics_inverse(
+					//	KinematicsInverseData[PositionNum + 1][0],
+					//	KinematicsInverseData[PositionNum + 1][1],
+					//	KinematicsInverseData[PositionNum + 1][2],
+					//	NextPositionData);
+					//拷贝下次位置数据
+					for (int i = 0; i < 3; i++)
+					{
+						NextPositionData[i] = KinematicsForwardData[PositionNum + 1][i];
+					}
 					//肩关节平移
 					ShoulderLevelShiftPolynomial.plan3rdProfileT(
-						KinematicsInverseData[PositionNum][4],
-						KinematicsInverseData[PositionNum + 1][3],
+						KinematicsForwardData[PositionNum][4],
+						KinematicsForwardData[PositionNum + 1][3],
 						CurrentPositionData[0],
 						NextPositionData[0],
 						0, 0);
 					//肘关节平移
 					ElbowPolynomial.plan3rdProfileT(
-						KinematicsInverseData[PositionNum][4],
-						KinematicsInverseData[PositionNum + 1][3],
+						KinematicsForwardData[PositionNum][4],
+						KinematicsForwardData[PositionNum + 1][3],
 						CurrentPositionData[1],
 						NextPositionData[1],
 						0, 0);
 					//腕关节平移
 					WristPolynomial.plan3rdProfileT(
-						KinematicsInverseData[PositionNum][4],
-						KinematicsInverseData[PositionNum + 1][3],
+						KinematicsForwardData[PositionNum][4],
+						KinematicsForwardData[PositionNum + 1][3],
 						CurrentPositionData[2],
 						NextPositionData[2],
 						0, 0);
 					PositionStatus = 1;
 					//这里不需要加break，计算完插值表达式后就进入case1，给定角度。
 				case 1:
-					if ((timer > KinematicsInverseData[PositionNum][4]) && (timer < KinematicsInverseData[PositionNum + 1][3]))
+					if ((timer > KinematicsForwardData[PositionNum][4]) && (timer < KinematicsForwardData[PositionNum + 1][3]))
 					{
 						double SetElbowAngle = ElbowPolynomial.pos(timer);
 						elbow.SetTargetAngle(SetElbowAngle);
@@ -450,7 +322,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 						wrist_target_angle = WristPolynomial.pos(timer);
 
 					}
-					else if (timer > KinematicsInverseData[PositionNum + 1][3])
+					else if (timer > KinematicsForwardData[PositionNum + 1][3])
 					{
 						//验证所有关节是否达到期望位置
 						if ((fabs_(AngleLevelShift - NextPositionData[0]) > 5))				//肩关节平移
@@ -517,6 +389,22 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 			m_CppToPlc.wrist_tarAngle = wrist_target_angle;
 			m_CppToPlc.wrist_angle = wrist_angle_out(m_Inputs.wrist_resistor);
 		}
+
+		//手控制
+		if ((timer > 55) && (timer < 80))
+		{
+			hand_motion(time_one, time_two, time_three, time_four);
+		}
+		else
+		{
+			m_Outputs.hand_one = 0;//手部关闭
+			m_Outputs.hand_two = 0;
+			m_Outputs.hand_three = 0;
+			m_Outputs.hand_four = 0;
+			m_Outputs.hand_fan = 0;
+			//i = 0;//腕关节角度检测延迟归位
+		}
+
 		UpdateOutputs();
 	}
 
