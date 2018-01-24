@@ -208,7 +208,7 @@ HRESULT CRobotArmMain::SetObjStateSP()
 	return hr;
 }
 
-double KinematicsForwardData[100][5] = { { 0, 0, 0, 5, 5 }, { 70, 100, 0, 25, 30 }, { 70, 100, 48, 55, 65 }, { 0, 0, 48, 80, 85 }, { 0, 0, 0, 90, 100 } };	//正解数据值:肩、肘、腕角度、到达时间、离开时间
+double KinematicsForwardData[100][5] = { { 0, 0, 0, 5, 5 }, { 70, 100, 0, 25, 27 }, { 70, 100, 50, 40, 60 }, { 0, 0, 48, 75, 77 }, { 0, 0, 0, 87, 90 } };	//正解数据值:肩、肘、腕角度、到达时间、离开时间
 //double ElbowSpeed = 5;		//角度/秒
 
 int init_flag = 1;
@@ -391,7 +391,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 		}
 
 		//手控制
-		if ((timer > 55) && (timer < 80))
+		if ((timer > 40) && (timer < 75))
 		{
 			hand_motion(time_one, time_two, time_three, time_four);
 		}
