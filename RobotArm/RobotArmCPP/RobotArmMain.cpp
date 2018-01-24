@@ -208,7 +208,20 @@ HRESULT CRobotArmMain::SetObjStateSP()
 	return hr;
 }
 
-double KinematicsForwardData[100][5] = { { 0, 0, 0, 5, 5 }, { 70, 100, 0, 25, 27 }, { 70, 100, 50, 40, 60 }, { 0, 0, 48, 75, 77 }, { 0, 0, 0, 87, 90 } };	//正解数据值:肩、肘、腕角度、到达时间、离开时间
+////存储运动角度信息，角度为绝对角度，单位度
+////TODO:这个形式不好给初始值，改结构体的优先级放后
+//struct AngleData
+//{
+//	double ShoulderLevelShift;		//肩关节平移角度
+//	double ShoulderRotate;			//肩关节旋转角度
+//	double Elbow;					//肘关节角度
+//	double Wrist;					//腕关节角度
+//	double ArriveTime;				//到达此角度时间
+//	double LeaveTime;				//离开此角度时间
+//};
+
+double KinematicsForwardData[100][5] = { { 0, 0, 0, 5, 5 }, { 70, 100, 0, 25, 27 }, { 70, 100, 50, 40, 60 }, { 0, 0, 50, 75, 77 }, { 0, 0, 0, 87, 90 } };	//正解数据值:肩、肘、腕角度、到达时间、离开时间
+//double KinematicsForwardData[100][5] = { { 0, 0, 0, 5, 5 }, { 50, 0, 0, 25, 30 }, { 0, 0, 0, 50, 55 }, { 0, 0, 0, 75, 80 }, { 0, 0, 0, 87, 90 } };	//正解数据值:肩、肘、腕角度、到达时间、离开时间
 //double ElbowSpeed = 5;		//角度/秒
 
 int init_flag = 1;
@@ -549,7 +562,7 @@ void CRobotArmMain::hand_motion(int time_one, int time_two, int time_three, int 
 		switch (time_one)
 		{
 		case 0: m_Outputs.hand_one = 550; break;
-		case 400: m_Outputs.hand_one = 400; break;
+		case 400: m_Outputs.hand_one = 420; break;
 		case 550: time_one = -1; break;
 		default:break;
 		}
@@ -609,7 +622,7 @@ void CRobotArmMain::hand_motion(int time_one, int time_two, int time_three, int 
 		switch (time_four)
 		{
 		case 0: m_Outputs.hand_four = 600; break;
-		case 400: m_Outputs.hand_four = 0; break;
+		case 400: m_Outputs.hand_four = 450; break;
 		case 450: time_four = -1; break;
 		default:break;
 		}

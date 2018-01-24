@@ -1775,6 +1775,14 @@ External Setpoint Generation:
 							<Type>INT</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.ElbowTarAngle</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.ElbowAngle</Name>
+							<Type>LREAL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.wrist_pwm_out</Name>
 							<Type>LREAL</Type>
 						</Var>
@@ -1933,14 +1941,6 @@ External Setpoint Generation:
 ]]>
 								</Comment>
 							</SubVar>
-						</Var>
-						<Var>
-							<Name>MAIN.ElbowTarAngle</Name>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.ElbowAngle</Name>
-							<Type>LREAL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2">
