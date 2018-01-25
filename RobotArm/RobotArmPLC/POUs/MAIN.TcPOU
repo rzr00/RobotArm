@@ -28,10 +28,10 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[PlcStarted := TRUE;
 
-IF InitFinish AND ExtEnabledLevelShift AND ExtEnabledRotate THEN
+(*IF InitFinish AND ExtEnabledLevelShift AND ExtEnabledRotate THEN
 	Timer := Timer + 0.01;
-END_IF
-//Timer := Timer + 0.01;
+END_IF*)
+Timer := Timer + 0.01;
 
 ElbowAngleError := ElbowTarAngle - ElbowAngle;
 wrist_error := wrist_tarAngle - wrist_angle;]]></ST>

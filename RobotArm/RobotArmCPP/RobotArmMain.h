@@ -37,6 +37,8 @@ public:
 
 	void ElbowUpdateInputs();	//更新肘关节c++输入
 	void ElbowUpdateOutputs();	//更新肘关节c++输出
+	void RobotArmRun();
+	//void PolyFun(double AngleData[][7]);	//计算四个关节多项式
 
 	double wrist_angle_out(double resistor);//腕关节角度计算
 	int wrist_motion(double target);//腕关节移动控制函数
@@ -69,15 +71,19 @@ protected:
 
 	// TODO: Custom variable
 	const double pi;
-	double timer;								//plc时间
+	double GlobalTime;							//系统总时间，从PLC开始运行开始计时。
+	double MoveTimer;							//运动计时，每个运动规划开始时，这个时间为0
+	double MoveStartTime;						//每个运动规划开始时间
 	double AngleLevelShift;
 	double AngleRotate;
 	double TarPosLevelShift;					//肩关节平移目标位置值
 	double TarPosRotate;						//肩关节旋转目标位置值
 	bool ShoulderInitFinish;
+	bool ElbowInitFinish;
 
 	Elbow elbow;
 	Polynomial ShoulderLevelShiftPolynomial;	//肩关节平移角度多项式
+	Polynomial ShoulderRotatePolynomial;		//肩关节旋转角度多项式
 	Polynomial ElbowPolynomial;					//肘关节角度多项式
 	Polynomial WristPolynomial;					//腕关节角度多项式
 
@@ -85,17 +91,22 @@ protected:
 
 	//运动规划测试数据
 	//TODO:将数组改为结构体，提高程序可读性
-	double KinematicsInverseData[100][5];							//反解数据值：Ax, Ay, Aphi, t0, tf
-	double CurrentPositionData[3];									//当前的反解角度值: 肩、肘、腕
-	double NextPositionData[3];										//下一个位置的反解角度值: 肩、肘、腕
+	//double KinematicsInverseData[100][5];							//反解数据值：Ax, Ay, Aphi, t0, tf
+	//double CurrentPositionData[3];									//当前的反解角度值: 肩、肘、腕
+	//double NextPositionData[3];										//下一个位置的反解角度值: 肩、肘、腕
 	int PositionSize;
 	int PositionNum;
 	int PositionStatus;
+	int GlobalStatus;				//总体状态变量
 	int InitElbowStatus;
-	int StopStatus;
-	double StopStartTime;
-	double StopStartM1;
-	double StopStartM2;
+	int ElbowStopStatus;
+	double ElbowStopStartTime;
+	double ElbowStopStartM1;
+	double ElbowStopStartM2;
+	bool HandHold;
+
+	bool ShoulderInitStart;				//肩关节开始初始化
+	double ElbowInitStartTime;			//肘关节开始初始化时间
 
 	double const k;//角度与电阻转换公式jiaoud=k*res+b
 	double const b;//角度与电阻转换公式jiaodu=k*res+b

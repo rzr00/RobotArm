@@ -29,6 +29,7 @@
 	Timer AT%Q*: LREAL := 0;											//时间 
 	
 	//错误记录
+	CppErrorCode AT%I*: INT := 0;
 	ErrorCode: INT := 0;												
 	ErrorTime: LREAL := 0;												//错误发生的时间，共4位
 																		//第一位无意义，第二位表示关节（0-3：肩、肘、腕、手）
@@ -41,7 +42,12 @@
 	ErrorTarPosLevelShift : LREAL := 0;									//错误发生时平移期望位置
 	ErrorTarPosRotate : LREAL := 0;										//错误发生时旋转期望位置
 	
-	StopElbow AT%Q* : BOOL := FALSE;											//气动放气标志量，手动在plc里设置
+	StopElbow AT%Q* : BOOL := FALSE;									//气动放气标志量，手动在plc里设置
+	StopWrist AT%Q* : BOOL := FALSE;
+	StopHand AT%Q* : BOOL := FALSE;
+	
+	ChooseAction AT%Q* : INT := 0;
+	IsRepeat AT%Q* : BOOL := FALSE;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
