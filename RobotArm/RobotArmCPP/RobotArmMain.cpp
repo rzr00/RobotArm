@@ -225,7 +225,7 @@ double All[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 70, 0, 100, 60, 0, 25, 30 }, { 
 //肘关节100度
 double ElbowHundredAngle[3][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 100, 0, 0, 25, 30 }, { 0, 0, 0, 0, 0, 55, 60 } };
 //肘关节任意角度
-double ElbowAnyAngle[3][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 60 } };
+double ElbowAnyAngle[3][7] = { 0 };
 //肘关节2度/秒
 double ElbowSpeed2Data[3][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 100, 0, 0, 50, 55 }, { 0, 0, 0, 0, 0, 105, 110 } };
 //肘关节4度/秒
@@ -304,6 +304,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 				ElbowAnyAngle[1][5] = ElbowAnyAngle[1][2] / 4;
 				ElbowAnyAngle[1][6] = ElbowAnyAngle[1][5] + 10;
 				ElbowAnyAngle[2][5] = ElbowAnyAngle[1][6] + ElbowAnyAngle[1][2] / 4;
+				ElbowAnyAngle[2][6] = ElbowAnyAngle[2][5] + 10;
 				GlobalStatus = 6;
 				break;
 			case 3://肘关节2度/秒
