@@ -26,7 +26,7 @@ VAR
 /////////////手部变量监测/////////
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[PlcStarted := TRUE;
+      <ST><![CDATA[//PlcStarted := TRUE;
 
 (*IF InitFinish AND ExtEnabledLevelShift AND ExtEnabledRotate THEN
 	Timer := Timer + 0.01;

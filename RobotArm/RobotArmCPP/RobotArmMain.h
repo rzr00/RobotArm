@@ -97,7 +97,8 @@ protected:
 	//double KinematicsInverseData[100][5];							//反解数据值：Ax, Ay, Aphi, t0, tf
 	//double CurrentPositionData[3];									//当前的反解角度值: 肩、肘、腕
 	//double NextPositionData[3];										//下一个位置的反解角度值: 肩、肘、腕
-	int PositionSize;
+	int PositionSizeForAll;
+	int PositionSizeForOthers;
 	int PositionNum;
 	int PositionStatus;
 	int GlobalStatus;				//总体状态变量
@@ -107,6 +108,7 @@ protected:
 	double ElbowStopStartM1;
 	double ElbowStopStartM2;
 	bool HandHold;
+	double ElbowMaxOut;
 
 	bool ShoulderInitStart;				//肩关节开始初始化
 	double ElbowInitStartTime;			//肘关节开始初始化时间
