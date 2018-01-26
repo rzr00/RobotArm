@@ -81,6 +81,8 @@ protected:
 	double TarPosRotate;						//肩关节旋转目标位置值
 	bool ShoulderInitFinish;
 	bool ElbowInitFinish;
+	double SetShoulderLevelShiftAngle;
+	double SetShoulderRotateAngle;
 
 	Elbow elbow;
 	Polynomial ShoulderLevelShiftPolynomial;	//肩关节平移角度多项式

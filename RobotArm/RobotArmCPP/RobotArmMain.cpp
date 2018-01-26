@@ -106,6 +106,8 @@ CRobotArmMain::CRobotArmMain()
 	ElbowInitFinish = false;
 	GlobalStatus = 0;
 	PositionStatus = 0;
+	SetShoulderLevelShiftAngle = 0;
+	SetShoulderRotateAngle = 0;
 
 	wrist_pwm_max = 1000;//设定腕关节pwm输出最大值
 	wrist_pwm_min = 0;//设定腕关节pwm输出最小值
@@ -219,12 +221,17 @@ HRESULT CRobotArmMain::SetObjStateSP()
 double All[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 70, 0, 100, 60, 0, 25, 30 }, { 70, 0, 100, 60, 1, 30.1, 50 }, { 70, 10, 100, 60, 1, 55, 60 }, { 70, 0, 100, 60, 1, 65, 67 }, { 0, 0, 0, 0, 1, 87, 90 }, { 0, 0, 0, 0, 0, 90.1, 100 } };
 //double All[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 20, 0, 0, 0, 0, 5, 6 }, { 0, 0, 0, 0, 0, 17, 37 }, { 0, 0, 0, 0, 0, 45, 50 }, { 0, 0, 0, 0, 0, 55, 70 } };
 //肘关节100度
-double ElbowHundredAngle[10][7];
-double ElbowSpeed2Data[10][7];		//肘关节2度/秒
-double ElbowSpeed4Data[10][7];		//肘关节4度/秒
-double ElbowSpeed6Data[10][7];		//肘关节6度/秒
-double WristSixtyAngle[10][7];		//腕关节60度
-double HandHold[10][7];				//手抓取
+double ElbowHundredAngle[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 100, 0, 0, 25, 30 }, { 0, 0, 0, 0, 0, 55, 60 } };
+//肘关节2度/秒
+double ElbowSpeed2Data[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 100, 0, 0, 50, 55 }, { 0, 0, 0, 0, 0, 105, 110 } };
+//肘关节4度/秒
+double ElbowSpeed4Data[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 100, 0, 0, 25, 30 }, { 0, 0, 0, 0, 0, 55, 60 } };
+//肘关节6度/秒
+double ElbowSpeed6Data[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 100, 0, 0, 16.67, 20 }, { 0, 0, 0, 0, 0, 36.67, 40 } };
+//腕关节60度
+double WristSixtyAngle[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 61, 0, 5, 100 }, { 0, 0, 0, 0, 0, 101, 102 } };
+//手抓取
+double HandHoldData[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 1, 80 }, { 0, 0, 0, 0, 0, 81, 90 } };
 double Move[10][7];
 
 int init_flag = 1;
@@ -256,7 +263,7 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 			ElbowInitStartTime = GlobalTime;	//记录肘关节开始初始化时间
 			break;
 		case 2:	//肘关节初始化
-			if (ElbowInitFinish == false)
+			if (ElbowInitFinish == false)//已经处于初始化状态则不重新初始化
 			{
 				if (((GlobalTime - ElbowInitStartTime) > 0) && ((GlobalTime - ElbowInitStartTime) < 5))
 				{
@@ -273,13 +280,35 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 					}
 				}
 			}
+			else if (ElbowInitFinish == true)
+			{
+				GlobalStatus = 3;
+			}
 			break;
 		case 3://切换动作
 			MoveStartTime = GlobalTime + 0.01;			//记录运动开始时间，下一个循环开始运动，所以加0.01
 			switch (m_PlcToCpp.ChooseAction)
 			{
-			case 0:
+			case 0://整体动作
 				GlobalStatus = 4;
+				break;
+			case 1://肘关节100度
+				GlobalStatus = 5;
+				break;
+			case 2://肘关节2度/秒
+				GlobalStatus = 6;
+				break;
+			case 3://肘关节4度/秒
+				GlobalStatus = 7;
+				break;
+			case 4://肘关节6度/秒
+				GlobalStatus = 8;
+				break;
+			case 5://腕关节60度
+				GlobalStatus = 9;
+				break;
+			case 6://手抓取80s
+				GlobalStatus = 10;
 				break;
 			default:
 				break;
@@ -329,9 +358,9 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 					if ((MoveTimer >= All[PositionNum][6]) && (MoveTimer <= All[PositionNum + 1][5]))
 					{
 						//肩关节
-						double SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(MoveTimer);
-						double SetShoulderRotateAngle = ShoulderRotatePolynomial.pos(MoveTimer);
-						ShoulderSetTarAngle(SetShoulderLevelShiftAngle, SetShoulderRotateAngle);
+						SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(MoveTimer);
+						SetShoulderRotateAngle = ShoulderRotatePolynomial.pos(MoveTimer);
+						
 						//肘关节
 						double SetElbowAngle = ElbowPolynomial.pos(MoveTimer);
 						elbow.SetTargetAngle(SetElbowAngle);
@@ -390,12 +419,652 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 			}
 			else if (PositionNum >= PositionSize)
 			{
-				GlobalStatus = 10;
+				GlobalStatus = 20;
 			}
 			break;
 		case 5:	//肘关节100度
+			if (PositionNum < PositionSize)
+			{
+				if (PositionNum == 1)
+				{
+					double stop = 1;
+				}
+				switch (PositionStatus)
+				{
+				case 0:	//计算多项式函数
+					//肩关节平移
+					ShoulderLevelShiftPolynomial.plan3rdProfileT(
+						ElbowHundredAngle[PositionNum][6],
+						ElbowHundredAngle[PositionNum + 1][5],
+						ElbowHundredAngle[PositionNum][0],
+						ElbowHundredAngle[PositionNum + 1][0],
+						0, 0);
+					//肩关节旋转
+					ShoulderRotatePolynomial.plan3rdProfileT(
+						ElbowHundredAngle[PositionNum][6],
+						ElbowHundredAngle[PositionNum + 1][5],
+						ElbowHundredAngle[PositionNum][1],
+						ElbowHundredAngle[PositionNum + 1][1],
+						0, 0);
+					//肘关节平移
+					ElbowPolynomial.plan3rdProfileT(
+						ElbowHundredAngle[PositionNum][6],
+						ElbowHundredAngle[PositionNum + 1][5],
+						ElbowHundredAngle[PositionNum][2],
+						ElbowHundredAngle[PositionNum + 1][2],
+						0, 0);
+					//腕关节平移
+					WristPolynomial.plan3rdProfileT(
+						ElbowHundredAngle[PositionNum][6],
+						ElbowHundredAngle[PositionNum + 1][5],
+						ElbowHundredAngle[PositionNum][3],
+						ElbowHundredAngle[PositionNum + 1][3],
+						0, 0);
+					PositionStatus = 1;
+					//这里不需要加break，计算完插值表达式后就进入case1，给定角度。
+				case 1:
+					if ((MoveTimer >= ElbowHundredAngle[PositionNum][6]) && (MoveTimer <= ElbowHundredAngle[PositionNum + 1][5]))
+					{
+						//肩关节
+						SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(MoveTimer);
+						SetShoulderRotateAngle = ShoulderRotatePolynomial.pos(MoveTimer);
+						//肘关节
+						double SetElbowAngle = ElbowPolynomial.pos(MoveTimer);
+						elbow.SetTargetAngle(SetElbowAngle);
+						//腕关节
+						wrist_target_angle = WristPolynomial.pos(MoveTimer);
+						//手
+						if (ElbowHundredAngle[PositionNum + 1][4] == 1)
+						{
+							HandHold = true;
+						}
+						else if (ElbowHundredAngle[PositionNum + 1][4] == 0)
+						{
+							HandHold = false;
+						}
+
+					}
+					else if (MoveTimer > ElbowHundredAngle[PositionNum + 1][5])
+					{
+						//验证所有关节是否达到期望位置
+						//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
+						if ((fabs_(AngleLevelShift - ElbowHundredAngle[PositionNum + 1][0]) > 5))				//肩关节平移
+						{
+							ErrorCode = 2001;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(AngleRotate - ElbowHundredAngle[PositionNum + 1][1]) > 5))			//肩关节旋转
+						else if ((fabs_(AngleRotate - ElbowHundredAngle[PositionNum + 1][1]) > 5))			//肩关节旋转
+						{
+							ErrorCode = 2101;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))			//肘关节
+						else if ((fabs_(elbow.ShowAngle() - ElbowHundredAngle[PositionNum + 1][2]) > 5))		//肘关节
+						{
+							ErrorCode = 2201;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(wrist_target_angle - ElbowHundredAngle[PositionNum + 1][3]) > 5))	//腕关节
+						else if ((fabs_(wrist_target_angle - ElbowHundredAngle[PositionNum + 1][3]) > 5))		//腕关节
+						{
+							ErrorCode = 2301;
+							PositionStatus = 3;
+						}
+						else
+						{
+							PositionStatus = 0;
+							PositionNum++;
+						}
+					}
+					break;
+				case 3://错误处理
+					break;
+				default:
+					break;
+				}
+			}
+			else if (PositionNum >= PositionSize)
+			{
+				GlobalStatus = 20;
+			}
 			break;
-		case 10:	//判断程序是否重复执行
+		case 6:	//肘关节2度/秒
+			if (PositionNum < PositionSize)
+			{
+				if (PositionNum == 1)
+				{
+					double stop = 1;
+				}
+				switch (PositionStatus)
+				{
+				case 0:	//计算多项式函数
+					//肩关节平移
+					ShoulderLevelShiftPolynomial.plan3rdProfileT(
+						ElbowSpeed2Data[PositionNum][6],
+						ElbowSpeed2Data[PositionNum + 1][5],
+						ElbowSpeed2Data[PositionNum][0],
+						ElbowSpeed2Data[PositionNum + 1][0],
+						0, 0);
+					//肩关节旋转
+					ShoulderRotatePolynomial.plan3rdProfileT(
+						ElbowSpeed2Data[PositionNum][6],
+						ElbowSpeed2Data[PositionNum + 1][5],
+						ElbowSpeed2Data[PositionNum][1],
+						ElbowSpeed2Data[PositionNum + 1][1],
+						0, 0);
+					//肘关节平移
+					ElbowPolynomial.plan3rdProfileT(
+						ElbowSpeed2Data[PositionNum][6],
+						ElbowSpeed2Data[PositionNum + 1][5],
+						ElbowSpeed2Data[PositionNum][2],
+						ElbowSpeed2Data[PositionNum + 1][2],
+						0, 0);
+					//腕关节平移
+					WristPolynomial.plan3rdProfileT(
+						ElbowSpeed2Data[PositionNum][6],
+						ElbowSpeed2Data[PositionNum + 1][5],
+						ElbowSpeed2Data[PositionNum][3],
+						ElbowSpeed2Data[PositionNum + 1][3],
+						0, 0);
+					PositionStatus = 1;
+					//这里不需要加break，计算完插值表达式后就进入case1，给定角度。
+				case 1:
+					if ((MoveTimer >= ElbowSpeed2Data[PositionNum][6]) && (MoveTimer <= ElbowSpeed2Data[PositionNum + 1][5]))
+					{
+						//肩关节
+						SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(MoveTimer);
+						SetShoulderRotateAngle = ShoulderRotatePolynomial.pos(MoveTimer);
+						//肘关节
+						double SetElbowAngle = ElbowPolynomial.pos(MoveTimer);
+						elbow.SetTargetAngle(SetElbowAngle);
+						//腕关节
+						wrist_target_angle = WristPolynomial.pos(MoveTimer);
+						//手
+						if (ElbowSpeed2Data[PositionNum + 1][4] == 1)
+						{
+							HandHold = true;
+						}
+						else if (ElbowSpeed2Data[PositionNum + 1][4] == 0)
+						{
+							HandHold = false;
+						}
+
+					}
+					else if (MoveTimer > ElbowSpeed2Data[PositionNum + 1][5])
+					{
+						//验证所有关节是否达到期望位置
+						//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
+						if ((fabs_(AngleLevelShift - ElbowSpeed2Data[PositionNum + 1][0]) > 5))				//肩关节平移
+						{
+							ErrorCode = 2001;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(AngleRotate - ElbowSpeed2Data[PositionNum + 1][1]) > 5))			//肩关节旋转
+						else if ((fabs_(AngleRotate - ElbowSpeed2Data[PositionNum + 1][1]) > 5))			//肩关节旋转
+						{
+							ErrorCode = 2101;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))			//肘关节
+						else if ((fabs_(elbow.ShowAngle() - ElbowSpeed2Data[PositionNum + 1][2]) > 5))		//肘关节
+						{
+							ErrorCode = 2201;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(wrist_target_angle - ElbowSpeed2Data[PositionNum + 1][3]) > 5))	//腕关节
+						else if ((fabs_(wrist_target_angle - ElbowSpeed2Data[PositionNum + 1][3]) > 5))		//腕关节
+						{
+							ErrorCode = 2301;
+							PositionStatus = 3;
+						}
+						else
+						{
+							PositionStatus = 0;
+							PositionNum++;
+						}
+					}
+					break;
+				case 3://错误处理
+					break;
+				default:
+					break;
+				}
+			}
+			else if (PositionNum >= PositionSize)
+			{
+				GlobalStatus = 20;
+			}
+			break;
+		case 7:	//肘关节4度/秒
+			if (PositionNum < PositionSize)
+			{
+				if (PositionNum == 1)
+				{
+					double stop = 1;
+				}
+				switch (PositionStatus)
+				{
+				case 0:	//计算多项式函数
+					//肩关节平移
+					ShoulderLevelShiftPolynomial.plan3rdProfileT(
+						ElbowSpeed4Data[PositionNum][6],
+						ElbowSpeed4Data[PositionNum + 1][5],
+						ElbowSpeed4Data[PositionNum][0],
+						ElbowSpeed4Data[PositionNum + 1][0],
+						0, 0);
+					//肩关节旋转
+					ShoulderRotatePolynomial.plan3rdProfileT(
+						ElbowSpeed4Data[PositionNum][6],
+						ElbowSpeed4Data[PositionNum + 1][5],
+						ElbowSpeed4Data[PositionNum][1],
+						ElbowSpeed4Data[PositionNum + 1][1],
+						0, 0);
+					//肘关节平移
+					ElbowPolynomial.plan3rdProfileT(
+						ElbowSpeed4Data[PositionNum][6],
+						ElbowSpeed4Data[PositionNum + 1][5],
+						ElbowSpeed4Data[PositionNum][2],
+						ElbowSpeed4Data[PositionNum + 1][2],
+						0, 0);
+					//腕关节平移
+					WristPolynomial.plan3rdProfileT(
+						ElbowSpeed4Data[PositionNum][6],
+						ElbowSpeed4Data[PositionNum + 1][5],
+						ElbowSpeed4Data[PositionNum][3],
+						ElbowSpeed4Data[PositionNum + 1][3],
+						0, 0);
+					PositionStatus = 1;
+					//这里不需要加break，计算完插值表达式后就进入case1，给定角度。
+				case 1:
+					if ((MoveTimer >= ElbowSpeed4Data[PositionNum][6]) && (MoveTimer <= ElbowSpeed4Data[PositionNum + 1][5]))
+					{
+						//肩关节
+						SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(MoveTimer);
+						SetShoulderRotateAngle = ShoulderRotatePolynomial.pos(MoveTimer);
+						//肘关节
+						double SetElbowAngle = ElbowPolynomial.pos(MoveTimer);
+						elbow.SetTargetAngle(SetElbowAngle);
+						//腕关节
+						wrist_target_angle = WristPolynomial.pos(MoveTimer);
+						//手
+						if (ElbowSpeed4Data[PositionNum + 1][4] == 1)
+						{
+							HandHold = true;
+						}
+						else if (ElbowSpeed4Data[PositionNum + 1][4] == 0)
+						{
+							HandHold = false;
+						}
+
+					}
+					else if (MoveTimer > ElbowSpeed4Data[PositionNum + 1][5])
+					{
+						//验证所有关节是否达到期望位置
+						//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
+						if ((fabs_(AngleLevelShift - ElbowSpeed4Data[PositionNum + 1][0]) > 5))				//肩关节平移
+						{
+							ErrorCode = 2001;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(AngleRotate - ElbowSpeed4Data[PositionNum + 1][1]) > 5))			//肩关节旋转
+						else if ((fabs_(AngleRotate - ElbowSpeed4Data[PositionNum + 1][1]) > 5))			//肩关节旋转
+						{
+							ErrorCode = 2101;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))			//肘关节
+						else if ((fabs_(elbow.ShowAngle() - ElbowSpeed4Data[PositionNum + 1][2]) > 5))		//肘关节
+						{
+							ErrorCode = 2201;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(wrist_target_angle - ElbowSpeed4Data[PositionNum + 1][3]) > 5))	//腕关节
+						else if ((fabs_(wrist_target_angle - ElbowSpeed4Data[PositionNum + 1][3]) > 5))		//腕关节
+						{
+							ErrorCode = 2301;
+							PositionStatus = 3;
+						}
+						else
+						{
+							PositionStatus = 0;
+							PositionNum++;
+						}
+					}
+					break;
+				case 3://错误处理
+					break;
+				default:
+					break;
+				}
+			}
+			else if (PositionNum >= PositionSize)
+			{
+				GlobalStatus = 20;
+			}
+			break;
+		case 8:	//肘关节6度/秒
+			if (PositionNum < PositionSize)
+			{
+				if (PositionNum == 1)
+				{
+					double stop = 1;
+				}
+				switch (PositionStatus)
+				{
+				case 0:	//计算多项式函数
+					//肩关节平移
+					ShoulderLevelShiftPolynomial.plan3rdProfileT(
+						ElbowSpeed6Data[PositionNum][6],
+						ElbowSpeed6Data[PositionNum + 1][5],
+						ElbowSpeed6Data[PositionNum][0],
+						ElbowSpeed6Data[PositionNum + 1][0],
+						0, 0);
+					//肩关节旋转
+					ShoulderRotatePolynomial.plan3rdProfileT(
+						ElbowSpeed6Data[PositionNum][6],
+						ElbowSpeed6Data[PositionNum + 1][5],
+						ElbowSpeed6Data[PositionNum][1],
+						ElbowSpeed6Data[PositionNum + 1][1],
+						0, 0);
+					//肘关节平移
+					ElbowPolynomial.plan3rdProfileT(
+						ElbowSpeed6Data[PositionNum][6],
+						ElbowSpeed6Data[PositionNum + 1][5],
+						ElbowSpeed6Data[PositionNum][2],
+						ElbowSpeed6Data[PositionNum + 1][2],
+						0, 0);
+					//腕关节平移
+					WristPolynomial.plan3rdProfileT(
+						ElbowSpeed6Data[PositionNum][6],
+						ElbowSpeed6Data[PositionNum + 1][5],
+						ElbowSpeed6Data[PositionNum][3],
+						ElbowSpeed6Data[PositionNum + 1][3],
+						0, 0);
+					PositionStatus = 1;
+					//这里不需要加break，计算完插值表达式后就进入case1，给定角度。
+				case 1:
+					if ((MoveTimer >= ElbowSpeed6Data[PositionNum][6]) && (MoveTimer <= ElbowSpeed6Data[PositionNum + 1][5]))
+					{
+						//肩关节
+						SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(MoveTimer);
+						SetShoulderRotateAngle = ShoulderRotatePolynomial.pos(MoveTimer);
+						//肘关节
+						double SetElbowAngle = ElbowPolynomial.pos(MoveTimer);
+						elbow.SetTargetAngle(SetElbowAngle);
+						//腕关节
+						wrist_target_angle = WristPolynomial.pos(MoveTimer);
+						//手
+						if (ElbowSpeed6Data[PositionNum + 1][4] == 1)
+						{
+							HandHold = true;
+						}
+						else if (ElbowSpeed6Data[PositionNum + 1][4] == 0)
+						{
+							HandHold = false;
+						}
+
+					}
+					else if (MoveTimer > ElbowSpeed6Data[PositionNum + 1][5])
+					{
+						//验证所有关节是否达到期望位置
+						//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
+						if ((fabs_(AngleLevelShift - ElbowSpeed6Data[PositionNum + 1][0]) > 5))				//肩关节平移
+						{
+							ErrorCode = 2001;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(AngleRotate - ElbowSpeed6Data[PositionNum + 1][1]) > 5))			//肩关节旋转
+						else if ((fabs_(AngleRotate - ElbowSpeed6Data[PositionNum + 1][1]) > 5))			//肩关节旋转
+						{
+							ErrorCode = 2101;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))			//肘关节
+						else if ((fabs_(elbow.ShowAngle() - ElbowSpeed6Data[PositionNum + 1][2]) > 5))		//肘关节
+						{
+							ErrorCode = 2201;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(wrist_target_angle - ElbowSpeed6Data[PositionNum + 1][3]) > 5))	//腕关节
+						else if ((fabs_(wrist_target_angle - ElbowSpeed6Data[PositionNum + 1][3]) > 5))		//腕关节
+						{
+							ErrorCode = 2301;
+							PositionStatus = 3;
+						}
+						else
+						{
+							PositionStatus = 0;
+							PositionNum++;
+						}
+					}
+					break;
+				case 3://错误处理
+					break;
+				default:
+					break;
+				}
+			}
+			else if (PositionNum >= PositionSize)
+			{
+				GlobalStatus = 20;
+			}
+			break;
+		case 9:	//腕关节60度
+			if (PositionNum < PositionSize)
+			{
+				if (PositionNum == 1)
+				{
+					double stop = 1;
+				}
+				switch (PositionStatus)
+				{
+				case 0:	//计算多项式函数
+					//肩关节平移
+					ShoulderLevelShiftPolynomial.plan3rdProfileT(
+						WristSixtyAngle[PositionNum][6],
+						WristSixtyAngle[PositionNum + 1][5],
+						WristSixtyAngle[PositionNum][0],
+						WristSixtyAngle[PositionNum + 1][0],
+						0, 0);
+					//肩关节旋转
+					ShoulderRotatePolynomial.plan3rdProfileT(
+						WristSixtyAngle[PositionNum][6],
+						WristSixtyAngle[PositionNum + 1][5],
+						WristSixtyAngle[PositionNum][1],
+						WristSixtyAngle[PositionNum + 1][1],
+						0, 0);
+					//肘关节平移
+					ElbowPolynomial.plan3rdProfileT(
+						WristSixtyAngle[PositionNum][6],
+						WristSixtyAngle[PositionNum + 1][5],
+						WristSixtyAngle[PositionNum][2],
+						WristSixtyAngle[PositionNum + 1][2],
+						0, 0);
+					//腕关节平移
+					WristPolynomial.plan3rdProfileT(
+						WristSixtyAngle[PositionNum][6],
+						WristSixtyAngle[PositionNum + 1][5],
+						WristSixtyAngle[PositionNum][3],
+						WristSixtyAngle[PositionNum + 1][3],
+						0, 0);
+					PositionStatus = 1;
+					//这里不需要加break，计算完插值表达式后就进入case1，给定角度。
+				case 1:
+					if ((MoveTimer >= WristSixtyAngle[PositionNum][6]) && (MoveTimer <= WristSixtyAngle[PositionNum + 1][5]))
+					{
+						//肩关节
+						SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(MoveTimer);
+						SetShoulderRotateAngle = ShoulderRotatePolynomial.pos(MoveTimer);
+						//肘关节
+						double SetElbowAngle = ElbowPolynomial.pos(MoveTimer);
+						elbow.SetTargetAngle(SetElbowAngle);
+						//腕关节
+						wrist_target_angle = WristPolynomial.pos(MoveTimer);
+						//手
+						if (WristSixtyAngle[PositionNum + 1][4] == 1)
+						{
+							HandHold = true;
+						}
+						else if (WristSixtyAngle[PositionNum + 1][4] == 0)
+						{
+							HandHold = false;
+						}
+
+					}
+					else if (MoveTimer > WristSixtyAngle[PositionNum + 1][5])
+					{
+						//验证所有关节是否达到期望位置
+						//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
+						if ((fabs_(AngleLevelShift - WristSixtyAngle[PositionNum + 1][0]) > 5))				//肩关节平移
+						{
+							ErrorCode = 2001;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(AngleRotate - WristSixtyAngle[PositionNum + 1][1]) > 5))			//肩关节旋转
+						else if ((fabs_(AngleRotate - WristSixtyAngle[PositionNum + 1][1]) > 5))			//肩关节旋转
+						{
+							ErrorCode = 2101;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))			//肘关节
+						else if ((fabs_(elbow.ShowAngle() - WristSixtyAngle[PositionNum + 1][2]) > 5))		//肘关节
+						{
+							ErrorCode = 2201;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(wrist_target_angle - WristSixtyAngle[PositionNum + 1][3]) > 5))	//腕关节
+						else if ((fabs_(wrist_target_angle - WristSixtyAngle[PositionNum + 1][3]) > 5))		//腕关节
+						{
+							ErrorCode = 2301;
+							PositionStatus = 3;
+						}
+						else
+						{
+							PositionStatus = 0;
+							PositionNum++;
+						}
+					}
+					break;
+				case 3://错误处理
+					break;
+				default:
+					break;
+				}
+			}
+			else if (PositionNum >= PositionSize)
+			{
+				GlobalStatus = 20;
+			}
+			break;
+		case 10:	//手抓取80s
+			if (PositionNum < PositionSize)
+			{
+				if (PositionNum == 1)
+				{
+					double stop = 1;
+				}
+				switch (PositionStatus)
+				{
+				case 0:	//计算多项式函数
+					//肩关节平移
+					ShoulderLevelShiftPolynomial.plan3rdProfileT(
+						HandHoldData[PositionNum][6],
+						HandHoldData[PositionNum + 1][5],
+						HandHoldData[PositionNum][0],
+						HandHoldData[PositionNum + 1][0],
+						0, 0);
+					//肩关节旋转
+					ShoulderRotatePolynomial.plan3rdProfileT(
+						HandHoldData[PositionNum][6],
+						HandHoldData[PositionNum + 1][5],
+						HandHoldData[PositionNum][1],
+						HandHoldData[PositionNum + 1][1],
+						0, 0);
+					//肘关节平移
+					ElbowPolynomial.plan3rdProfileT(
+						HandHoldData[PositionNum][6],
+						HandHoldData[PositionNum + 1][5],
+						HandHoldData[PositionNum][2],
+						HandHoldData[PositionNum + 1][2],
+						0, 0);
+					//腕关节平移
+					WristPolynomial.plan3rdProfileT(
+						HandHoldData[PositionNum][6],
+						HandHoldData[PositionNum + 1][5],
+						HandHoldData[PositionNum][3],
+						HandHoldData[PositionNum + 1][3],
+						0, 0);
+					PositionStatus = 1;
+					//这里不需要加break，计算完插值表达式后就进入case1，给定角度。
+				case 1:
+					if ((MoveTimer >= HandHoldData[PositionNum][6]) && (MoveTimer <= HandHoldData[PositionNum + 1][5]))
+					{
+						//肩关节
+						SetShoulderLevelShiftAngle = ShoulderLevelShiftPolynomial.pos(MoveTimer);
+						SetShoulderRotateAngle = ShoulderRotatePolynomial.pos(MoveTimer);
+						//肘关节
+						double SetElbowAngle = ElbowPolynomial.pos(MoveTimer);
+						elbow.SetTargetAngle(SetElbowAngle);
+						//腕关节
+						wrist_target_angle = WristPolynomial.pos(MoveTimer);
+						//手
+						if (HandHoldData[PositionNum + 1][4] == 1)
+						{
+							HandHold = true;
+						}
+						else if (HandHoldData[PositionNum + 1][4] == 0)
+						{
+							HandHold = false;
+						}
+
+					}
+					else if (MoveTimer > HandHoldData[PositionNum + 1][5])
+					{
+						//验证所有关节是否达到期望位置
+						//这里判断方式有问题，因为角度可能存在超调，将会在第一次到达时认为到达目标点，而不是在稳定后认为到达目标点。
+						if ((fabs_(AngleLevelShift - HandHoldData[PositionNum + 1][0]) > 5))				//肩关节平移
+						{
+							ErrorCode = 2001;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(AngleRotate - HandHoldData[PositionNum + 1][1]) > 5))			//肩关节旋转
+						else if ((fabs_(AngleRotate - HandHoldData[PositionNum + 1][1]) > 5))			//肩关节旋转
+						{
+							ErrorCode = 2101;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(elbow.ShowAngle() - NextPositionData[1]) > 5))			//肘关节
+						else if ((fabs_(elbow.ShowAngle() - HandHoldData[PositionNum + 1][2]) > 5))		//肘关节
+						{
+							ErrorCode = 2201;
+							PositionStatus = 3;
+						}
+						//if ((fabs_(wrist_target_angle - HandHoldData[PositionNum + 1][3]) > 5))	//腕关节
+						else if ((fabs_(wrist_target_angle - HandHoldData[PositionNum + 1][3]) > 5))		//腕关节
+						{
+							ErrorCode = 2301;
+							PositionStatus = 3;
+						}
+						else
+						{
+							PositionStatus = 0;
+							PositionNum++;
+						}
+					}
+					break;
+				case 3://错误处理
+					break;
+				default:
+					break;
+				}
+			}
+			else if (PositionNum >= PositionSize)
+			{
+				GlobalStatus = 20;
+			}
+			break;
+		case 20:	//判断程序是否重复执行
 			if (m_PlcToCpp.IsRepeat)
 			{
 				PositionNum = 0;
@@ -648,6 +1317,7 @@ void CRobotArmMain::ElbowUpdateOutputs()
 
 void CRobotArmMain::RobotArmRun()
 {
+	ShoulderSetTarAngle(SetShoulderLevelShiftAngle, SetShoulderRotateAngle);
 	if (m_PlcToCpp.StopElbow == false)
 	{
 		if (ElbowInitFinish == true)

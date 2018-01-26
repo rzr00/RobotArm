@@ -45,7 +45,7 @@
 	StopWrist AT%Q* : BOOL := FALSE;
 	StopHand AT%Q* : BOOL := FALSE;
 	
-	ChooseAction AT%Q* : INT := 0;
+	ChooseAction AT%Q* : INT := 1;
 	IsRepeat AT%Q* : BOOL := FALSE;
 END_VAR]]></Declaration>
   </GVL>
