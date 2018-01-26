@@ -2048,6 +2048,13 @@ External Setpoint Generation:
 							<Name>GVL.IsRepeat</Name>
 							<Type>BOOL</Type>
 						</Var>
+						<Var>
+							<Name>GVL.SetTarAngle</Name>
+							<Comment>
+								<![CDATA[角度定位]]>
+							</Comment>
+							<Type>LREAL</Type>
+						</Var>
 					</Vars>
 				</Instance>
 			</Project>
@@ -2266,7 +2273,7 @@ External Setpoint Generation:
 								<AreaNo AreaType="InputDst">2</AreaNo>
 								<Name>PlcToCpp</Name>
 								<ContextId>1</ContextId>
-								<ByteSize>42</ByteSize>
+								<ByteSize>50</ByteSize>
 								<Symbol>
 									<Name>PosLevelShift</Name>
 									<BitSize>64</BitSize>
@@ -2344,6 +2351,12 @@ External Setpoint Generation:
 									<BitSize>8</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
 									<BitOffs>328</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>SetTarAngle</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<BitOffs>336</BitOffs>
 								</Symbol>
 							</DataArea>
 							<DataArea>
@@ -6022,6 +6035,7 @@ Bit1: Value bigger/equal Limit2]]>
 				<Link VarA="PlcTask Outputs^GVL.IsRepeat" VarB="PlcToCpp^IsRepeat"/>
 				<Link VarA="PlcTask Outputs^GVL.PosLevelShift" VarB="PlcToCpp^PosLevelShift"/>
 				<Link VarA="PlcTask Outputs^GVL.PosRotate" VarB="PlcToCpp^PosRotate"/>
+				<Link VarA="PlcTask Outputs^GVL.SetTarAngle" VarB="PlcToCpp^SetTarAngle"/>
 				<Link VarA="PlcTask Outputs^GVL.ShoulderInitFinish" VarB="PlcToCpp^ShoulderInitFinish"/>
 				<Link VarA="PlcTask Outputs^GVL.StopElbow" VarB="PlcToCpp^StopElbow"/>
 				<Link VarA="PlcTask Outputs^GVL.StopHand" VarB="PlcToCpp^StopHand"/>
