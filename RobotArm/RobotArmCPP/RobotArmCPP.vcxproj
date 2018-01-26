@@ -101,7 +101,7 @@
     </Midl>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2c84d413-fa48-44e2-9b42-a32381d63f0a}</ProjectGuid>
+    <ProjectGuid>{a3123e42-a52e-48f1-b172-07d2939a1339}</ProjectGuid>
     <RootNamespace>RobotArmCPP</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -183,9 +183,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|TwinCAT RT (x86)'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|TwinCAT UM (x64)'">
   </ItemDefinitionGroup>

@@ -1250,7 +1250,7 @@ External Setpoint Generation:
 			</Relations>
 		</DataType>
 		<DataType>
-			<Name GUID="{048B80D6-9702-4CA8-8B06-535AC9AE515D}" Namespace="Tc2_SerialCom" AutoDeleteType="true">KL6inData22B</Name>
+			<Name GUID="{F302FD94-895D-47F5-B6E1-C135CB99F989}" Namespace="Tc2_SerialCom" AutoDeleteType="true">KL6inData22B</Name>
 			<Comment>
 				<![CDATA[ This data type is corresponding to the
    KL-6xxx data structure used in the
@@ -1278,7 +1278,7 @@ External Setpoint Generation:
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{E7A4E0CC-95BD-437A-BDE9-5E024B12DFA2}" Namespace="Tc2_SerialCom" AutoDeleteType="true">KL6outData22B</Name>
+			<Name GUID="{C99821A8-E146-4D9E-B46F-350E583099D7}" Namespace="Tc2_SerialCom" AutoDeleteType="true">KL6outData22B</Name>
 			<Comment>
 				<![CDATA[ This data type is corresponding to the
    KL-6xxx data structure used in the
@@ -1315,7 +1315,7 @@ External Setpoint Generation:
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000c40e0000c40e000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffffffffffffffffff79999997ffffffff99977999ffffffff9998ff89ffffffff99999fffffffffff999997ffff777777999999ffff777777799999ffff877777fffffffffff77777ffffffff78ff8777ffffffff77777777ffffffff77777777ffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{D000D309-45CE-4F96-A431-0911E0352A25}" TargetNetId="5.36.3.8.1.1">
+	<Project ProjectGUID="{775022F2-68E1-44BF-A7FE-AB4F3BF46E41}" TargetNetId="5.36.3.8.1.1">
 		<System>
 			<Settings>
 				<Debugger Priority="61"/>
@@ -1339,7 +1339,7 @@ External Setpoint Generation:
 					<Vars VarGrpType="2" InsertType="1">
 						<Name>Outputs</Name>
 					</Vars>
-					<Image Id="5" AddrType="1" ImageType="1">
+					<Image Id="6" AddrType="1" ImageType="1">
 						<Name>Image</Name>
 					</Image>
 				</SafTask>
@@ -1347,10 +1347,9 @@ External Setpoint Generation:
 					<Name>NC-Task 1 SVB</Name>
 				</SvbTask>
 				<Axis CreateSymbols="true" AxisType="1" Id="1">
-					<Name>Axis 1</Name>
+					<Name>AxisShoulderLevelShift</Name>
 					<AxisPara>
-						<Dynamic Acceleration="28.8746" Deceleration="28.8746" Jerk="128.268"/>
-						<Velo SlowManual="0.5" FastManual="2" Maximum="13"/>
+						<Velo SlowManual="0.5" FastManual="2" Maximum="8"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
@@ -1419,7 +1418,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
 						<DrvPara MaxCount="#xffffffff">
-							<Analog VeloReferenz="12"/>
+							<Analog VeloReferenz="7"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -1553,9 +1552,9 @@ External Setpoint Generation:
 					</Vars>
 				</Axis>
 				<Axis CreateSymbols="true" AxisType="1" Id="2">
-					<Name>Axis 2</Name>
+					<Name>AxisShoulderRotate</Name>
 					<AxisPara>
-						<Velo SlowManual="0.5" FastManual="2" Maximum="13"/>
+						<Velo SlowManual="0.5" FastManual="2" Maximum="8"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
@@ -1624,7 +1623,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
 						<DrvPara MaxCount="#xffffffff">
-							<Analog VeloReferenz="12"/>
+							<Analog VeloReferenz="7"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -1762,7 +1761,7 @@ External Setpoint Generation:
 			</NC>
 		</Motion>
 		<Plc>
-			<Project GUID="{D0F588DE-5E4D-4AB1-89B7-D55FA1786C63}" Name="RobotArmPLC" PrjFilePath="RobotArmPLC\RobotArmPLC.plcproj" TmcFilePath="RobotArmPLC\RobotArmPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
+			<Project GUID="{B4103B68-08BF-490C-95CA-9C9CF1F5EE02}" Name="RobotArmPLC" PrjFilePath="RobotArmPLC\RobotArmPLC.plcproj" TmcFilePath="RobotArmPLC\RobotArmPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
 				<Instance Id="#x01010010" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
 					<Name>RobotArmPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
@@ -1832,7 +1831,14 @@ External Setpoint Generation:
 							<Comment>
 								<![CDATA[读取编码器角度]]>
 							</Comment>
-							<Type GUID="{048B80D6-9702-4CA8-8B06-535AC9AE515D}" Namespace="Tc2_SerialCom">KL6inData22B</Type>
+							<Type GUID="{F302FD94-895D-47F5-B6E1-C135CB99F989}" Namespace="Tc2_SerialCom">KL6inData22B</Type>
+						</Var>
+						<Var>
+							<Name>GVL.ShoulderInitStart</Name>
+							<Comment>
+								<![CDATA[肩关节初始化启动]]>
+							</Comment>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>ShoulderLevelShift.TarPosLevelShift</Name>
@@ -1840,6 +1846,13 @@ External Setpoint Generation:
 								<![CDATA[平移目标位置，C++给定]]>
 							</Comment>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.CppErrorCode</Name>
+							<Comment>
+								<![CDATA[C++错误代码，在PLC显示，容易看到。]]>
+							</Comment>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>ShoulderRotate.TarPosRotate</Name>
@@ -1943,13 +1956,6 @@ External Setpoint Generation:
 								</Comment>
 							</SubVar>
 						</Var>
-						<Var>
-							<Name>GVL.CppErrorCode</Name>
-							<Comment>
-								<![CDATA[错误记录]]>
-							</Comment>
-							<Type>INT</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="2">
 						<Name>PlcTask Outputs</Name>
@@ -1963,7 +1969,7 @@ External Setpoint Generation:
 						</Var>
 						<Var>
 							<Name>SerialRecieve.EL6_22Bout_PC1</Name>
-							<Type GUID="{E7A4E0CC-95BD-437A-BDE9-5E024B12DFA2}" Namespace="Tc2_SerialCom">KL6outData22B</Type>
+							<Type GUID="{C99821A8-E146-4D9E-B46F-350E583099D7}" Namespace="Tc2_SerialCom">KL6outData22B</Type>
 						</Var>
 						<Var>
 							<Name>SerialRecieve.JIAODU</Name>
@@ -1973,10 +1979,7 @@ External Setpoint Generation:
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>GVL.InitFinish</Name>
-							<Comment>
-								<![CDATA[肩关节初始化完成标志量]]>
-							</Comment>
+							<Name>GVL.ShoulderInitFinish</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -2001,10 +2004,6 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL.StopWrist</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>GVL.AxisLevelShift.PlcToNc</Name>
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
@@ -2020,16 +2019,12 @@ External Setpoint Generation:
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
+							<Name>GVL.StopWrist</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL.StopHand</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.IsRepeat</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.ChooseAction</Name>
-							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>GVL.PosRotate</Name>
@@ -2045,17 +2040,25 @@ External Setpoint Generation:
 							</Comment>
 							<Type>LREAL</Type>
 						</Var>
+						<Var>
+							<Name>GVL.ChooseAction</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>GVL.IsRepeat</Name>
+							<Type>BOOL</Type>
+						</Var>
 					</Vars>
 				</Instance>
 			</Project>
 		</Plc>
 		<Cpp>
-			<Project GUID="{2C84D413-FA48-44E2-9B42-A32381D63F0A}" Name="RobotArmCPP" PrjFilePath="RobotArmCPP\RobotArmCPP.vcxproj" TmcFilePath="RobotArmCPP\RobotArmCPP.tmc">
-				<Instance Id="#x01010030">
+			<Project GUID="{A3123E42-A52E-48F1-B172-07D2939A1339}" Name="RobotArmCPP" PrjFilePath="RobotArmCPP\RobotArmCPP.vcxproj" TmcFilePath="RobotArmCPP\RobotArmCPP.tmc">
+				<Instance Id="#x01010020">
 					<Name>RobotArmCPP_Obj1 (CRobotArmMain)</Name>
-					<TmcDesc GUID="{1392FF5C-890D-4D06-802B-D07BEFF93E9C}">
+					<TmcDesc GUID="{033F118B-3DF0-455D-A9F4-423B7B50D6DB}">
 						<Name>CRobotArmMain</Name>
-						<CLSID ClassFactory="RobotArmCPP">{1392FF5C-890D-4D06-802B-D07BEFF93E9C}</CLSID>
+						<CLSID ClassFactory="RobotArmCPP">{033F118B-3DF0-455D-A9F4-423B7B50D6DB}</CLSID>
 						<Licenses>
 							<License>
 								<LicenseId>{304D006A-8299-4560-AB79-438534B50288}</LicenseId>
@@ -2283,7 +2286,7 @@ External Setpoint Generation:
 									<BitOffs>128</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>ShoudlerInitFinish</Name>
+									<Name>ShoulderInitFinish</Name>
 									<BitSize>8</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
 									<BitOffs>192</BitOffs>
@@ -2344,10 +2347,10 @@ External Setpoint Generation:
 								</Symbol>
 							</DataArea>
 							<DataArea>
-								<AreaNo AreaType="OutputSrc">3</AreaNo>
+								<AreaNo AreaType="OutputSrc">4</AreaNo>
 								<Name>CppToPlc</Name>
 								<ContextId>1</ContextId>
-								<ByteSize>82</ByteSize>
+								<ByteSize>83</ByteSize>
 								<Symbol>
 									<Name>TarPosLevelShift</Name>
 									<BitSize>64</BitSize>
@@ -2421,19 +2424,19 @@ External Setpoint Generation:
 									<BitOffs>512</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>hand_three_pwm</Name>
+									<Name>hand_two_pwm</Name>
 									<BitSize>16</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
 									<BitOffs>528</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>hand_four_pwm</Name>
+									<Name>hand_three_pwm</Name>
 									<BitSize>16</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
 									<BitOffs>544</BitOffs>
 								</Symbol>
 								<Symbol>
-									<Name>hand_two_pwm</Name>
+									<Name>hand_four_pwm</Name>
 									<BitSize>16</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
 									<BitOffs>560</BitOffs>
@@ -2449,6 +2452,12 @@ External Setpoint Generation:
 									<BitSize>16</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
 									<BitOffs>640</BitOffs>
+								</Symbol>
+								<Symbol>
+									<Name>ShoulderInitStart</Name>
+									<BitSize>8</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+									<BitOffs>656</BitOffs>
 								</Symbol>
 							</DataArea>
 						</DataAreas>
@@ -2539,7 +2548,7 @@ External Setpoint Generation:
 				<Image Id="1" AddrType="9" ImageType="3">
 					<Name>Image</Name>
 				</Image>
-				<Image Id="6" AddrType="10" ImageType="3">
+				<Image Id="5" AddrType="10" ImageType="3">
 					<Name>Image-2</Name>
 				</Image>
 				<Box BoxType="9099" Id="1">
@@ -3438,8 +3447,8 @@ External Setpoint Generation:
 							<CoeProfile ProfileNo="401"/>
 						</EtherCAT>
 					</Box>
-					<Box BoxType="9099" Id="13">
-						<Name>Term 13 (EL2502)</Name>
+					<Box BoxType="9099" Id="5">
+						<Name>Term 5 (EL2502)</Name>
 						<ImageId>1001</ImageId>
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x001a0000" InfoDataAddr="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2K. PWM Ausgang, 24V" Desc="EL2502" PortABoxInfo="#x01000004">
 							<SyncMan>001080002600010001000000000000008000001026010000</SyncMan>
@@ -3493,10 +3502,10 @@ External Setpoint Generation:
 							</Pdo>
 						</EtherCAT>
 					</Box>
-					<Box BoxType="9099" Id="14">
-						<Name>Term 14 (EL2502)</Name>
+					<Box BoxType="9099" Id="6">
+						<Name>Term 6 (EL2502)</Name>
 						<ImageId>1001</ImageId>
-						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x00110000" InfoDataAddr="true" TimeoutMailbox2="2000" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2Ch. PWM Output, 24V" Desc="EL2502" PortABoxInfo="#x0100000d">
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x00110000" InfoDataAddr="true" TimeoutMailbox2="2000" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2Ch. PWM Output, 24V" Desc="EL2502" PortABoxInfo="#x01000005">
 							<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000800080008000801022010000</SyncMan>
 							<SyncMan>001104002400010003000000000000000400001124010000</SyncMan>
@@ -3538,10 +3547,10 @@ External Setpoint Generation:
 							<CoeProfile ProfileNo="16389001"/>
 						</EtherCAT>
 					</Box>
-					<Box BoxType="9099" Id="15">
-						<Name>Term 15 (EL2502)</Name>
+					<Box BoxType="9099" Id="7">
+						<Name>Term 7 (EL2502)</Name>
 						<ImageId>1001</ImageId>
-						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x00110000" InfoDataAddr="true" TimeoutMailbox2="2000" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2Ch. PWM Output, 24V" Desc="EL2502" PortABoxInfo="#x0100000e">
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x00110000" InfoDataAddr="true" TimeoutMailbox2="2000" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2Ch. PWM Output, 24V" Desc="EL2502" PortABoxInfo="#x01000006">
 							<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000800080008000801022010000</SyncMan>
 							<SyncMan>001104002400010003000000000000000400001124010000</SyncMan>
@@ -3583,10 +3592,10 @@ External Setpoint Generation:
 							<CoeProfile ProfileNo="16389001"/>
 						</EtherCAT>
 					</Box>
-					<Box BoxType="9099" Id="16">
-						<Name>Term 16 (EL3008)</Name>
+					<Box BoxType="9099" Id="8">
+						<Name>Term 8 (EL3008)</Name>
 						<ImageId>1004</ImageId>
-						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x0bc03052" RevisionNo="#x00140000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3008 8Ch. Ana. Input +/-10V" Desc="EL3008" PortABoxInfo="#x0100000f">
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x0bc03052" RevisionNo="#x00140000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3008 8Ch. Ana. Input +/-10V" Desc="EL3008" PortABoxInfo="#x01000007">
 							<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000800080008000801022010000</SyncMan>
 							<SyncMan>001100000400000003000000000000000000001104000000</SyncMan>
@@ -4100,10 +4109,10 @@ Bit1: Value bigger/equal Limit2]]>
 							<CoeProfile ProfileNo="19665801"/>
 						</EtherCAT>
 					</Box>
-					<Box BoxType="9099" Id="17">
-						<Name>Term 17 (EL2502)</Name>
+					<Box BoxType="9099" Id="9">
+						<Name>Term 9 (EL2502)</Name>
 						<ImageId>1001</ImageId>
-						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x00150000" InfoDataAddr="true" TimeoutMailbox2="2000" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2Ch. PWM output, 24V" Desc="EL2502" PortABoxInfo="#x01000010">
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x00150000" InfoDataAddr="true" TimeoutMailbox2="2000" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2Ch. PWM output, 24V" Desc="EL2502" PortABoxInfo="#x01000008">
 							<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000800080008000801022010000</SyncMan>
 							<SyncMan>001104002400010003000000000000000400001124010000</SyncMan>
@@ -4169,10 +4178,10 @@ Bit1: Value bigger/equal Limit2]]>
 							<CoeProfile ProfileNo="16389001"/>
 						</EtherCAT>
 					</Box>
-					<Box BoxType="9099" Id="18">
-						<Name>Term 18 (EL2502)</Name>
+					<Box BoxType="9099" Id="10">
+						<Name>Term 10 (EL2502)</Name>
 						<ImageId>1001</ImageId>
-						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x001a0000" InfoDataAddr="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2K. PWM Ausgang, 24V" Desc="EL2502" PortABoxInfo="#x01000011">
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x001a0000" InfoDataAddr="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2K. PWM Ausgang, 24V" Desc="EL2502" PortABoxInfo="#x01000009">
 							<SyncMan>001080002600010001000000000000008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000000000008000801022010000</SyncMan>
 							<SyncMan>001104002400010003000000000000000400001124010000</SyncMan>
@@ -4224,10 +4233,10 @@ Bit1: Value bigger/equal Limit2]]>
 							</Pdo>
 						</EtherCAT>
 					</Box>
-					<Box BoxType="9099" Id="19">
-						<Name>Term 19 (EL2502)</Name>
+					<Box BoxType="9099" Id="11">
+						<Name>Term 11 (EL2502)</Name>
 						<ImageId>1001</ImageId>
-						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x001a0000" InfoDataAddr="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2K. PWM Ausgang, 24V" Desc="EL2502" PortABoxInfo="#x01000012">
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x001a0000" InfoDataAddr="true" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2K. PWM Ausgang, 24V" Desc="EL2502" PortABoxInfo="#x0100000a">
 							<SyncMan>001080002600010001000000000000008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000000000008000801022010000</SyncMan>
 							<SyncMan>001104002400010003000000000000000400001124010000</SyncMan>
@@ -4279,10 +4288,10 @@ Bit1: Value bigger/equal Limit2]]>
 							</Pdo>
 						</EtherCAT>
 					</Box>
-					<Box BoxType="9099" Id="20">
-						<Name>Term 20 (EL2502)</Name>
+					<Box BoxType="9099" Id="12">
+						<Name>Term 12 (EL2502)</Name>
 						<ImageId>1001</ImageId>
-						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x00190000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2Ch. PWM output, 24V" Desc="EL2502" PortABoxInfo="#x01000013">
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x09c63052" RevisionNo="#x00190000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL2502 2Ch. PWM output, 24V" Desc="EL2502" PortABoxInfo="#x0100000b">
 							<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000800080008000801022010000</SyncMan>
 							<SyncMan>001104002400010003000000000000000400001124010000</SyncMan>
@@ -4348,10 +4357,10 @@ Bit1: Value bigger/equal Limit2]]>
 							<CoeProfile ProfileNo="16389001"/>
 						</EtherCAT>
 					</Box>
-					<Box BoxType="9099" Id="21">
-						<Name>Term 21 (EL3692)</Name>
+					<Box BoxType="9099" Id="13">
+						<Name>Term 13 (EL3692)</Name>
 						<ImageId>1004</ImageId>
-						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x0e6c3052" RevisionNo="#x00140000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3692 2Ch. resistance measurement terminal" Desc="EL3692" PortABoxInfo="#x01000014">
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="7" FoeType="1" VendorId="#x00000002" ProductCode="#x0e6c3052" RevisionNo="#x00140000" InfoDataAddr="true" TimeoutMailbox2="2000" CheckRevisionNoType="3" PortPhys="51" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL3692 2Ch. resistance measurement terminal" Desc="EL3692" PortABoxInfo="#x0100000c">
 							<SyncMan>001080002600010001000000800080008000001026010000</SyncMan>
 							<SyncMan>801080002200010002000000800080008000801022010000</SyncMan>
 							<SyncMan>001100002400000003000000000000000400001124010000</SyncMan>
@@ -4614,16 +4623,16 @@ Bit1: Value bigger/equal Limit2]]>
 							<CoeProfile ProfileNo="23597961" DisplayName="Scintific analog inp"/>
 						</EtherCAT>
 					</Box>
-					<Box BoxType="9099" Id="5">
-						<Name>Term 5 (EL9011)</Name>
+					<Box BoxType="9099" Id="14">
+						<Name>Term 14 (EL9011)</Name>
 						<ImageId>1005</ImageId>
-						<EtherCAT CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x23333050" InfoDataState="false" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL9011 End Terminal" Desc="EL9011" PortABoxInfo="#x01000015"/>
+						<EtherCAT CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x23333050" InfoDataState="false" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EL9011 End Terminal" Desc="EL9011" PortABoxInfo="#x0100000d"/>
 					</Box>
 				</Box>
 				<EtherCAT/>
 			</Device>
-			<Device DevType="111" DevFlags="#x0003" AmsPort="28677" AmsNetId="5.36.3.8.6.1" RemoteName="Device 5 (EtherCAT)" Id="5">
-				<Name>Device 5 (EtherCAT)</Name>
+			<Device DevType="111" DevFlags="#x0003" AmsPort="28676" AmsNetId="5.36.3.8.5.1" RemoteName="Device 4 (EtherCAT)" Id="4">
+				<Name>Device 4 (EtherCAT)</Name>
 				<AddressInfo>
 					<Pnp>
 						<DeviceDesc>Local Area Connection (TwinCAT-Intel PCI Ethernet A</DeviceDesc>
@@ -4631,11 +4640,11 @@ Bit1: Value bigger/equal Limit2]]>
 						<DeviceData>00010522b144</DeviceData>
 					</Pnp>
 				</AddressInfo>
-				<Image Id="4" AddrType="9" ImageType="3">
+				<Image Id="3" AddrType="9" ImageType="3">
 					<Name>Image</Name>
 				</Image>
-				<Box BoxType="9099" Id="6">
-					<Name>Drive 6 (Elmo Drive)</Name>
+				<Box BoxType="9099" Id="15">
+					<Name>Drive 1 (Elmo Drive)</Name>
 					<ImageId>1006</ImageId>
 					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" CoeType="47" EoeType="1" FoeType="1" VendorId="#x0000009a" ProductCode="#x00030924" RevisionNo="#x000103f6" InfoDataAddr="true" InfoDataSoeDS401="true" InfoDataDcTimes="true" DdTime0420="10000" EnableWdDivider0400="true" EnableWdTime0410="true" EnableWdTime0420="true" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="Gold EtherCAT GCON Drive Rev:0x000103F6" Desc="Elmo Drive" PortABoxInfo="#x00ffffff">
 						<SyncMan>00188c0026000100010000008c008c008c00001826010000</SyncMan>
@@ -5249,10 +5258,10 @@ Bit1: Value bigger/equal Limit2]]>
 						<CoeProfile ProfileNo="402"/>
 					</EtherCAT>
 				</Box>
-				<Box BoxType="9099" Id="7">
-					<Name>Drive 7 (Elmo Drive)</Name>
+				<Box BoxType="9099" Id="16">
+					<Name>Drive 2 (Elmo Drive)</Name>
 					<ImageId>1006</ImageId>
-					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" CoeType="47" EoeType="1" FoeType="1" VendorId="#x0000009a" ProductCode="#x00030924" RevisionNo="#x000103f6" InfoDataAddr="true" InfoDataSoeDS401="true" InfoDataDcTimes="true" DdTime0420="10000" EnableWdDivider0400="true" EnableWdTime0410="true" EnableWdTime0420="true" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="Gold EtherCAT GCON Drive Rev:0x000103F6" Desc="Elmo Drive" PortABoxInfo="#x01000006">
+					<EtherCAT SlaveType="2" PdiType="#x0c05" CycleMBoxPolling="true" CoeType="47" EoeType="1" FoeType="1" VendorId="#x0000009a" ProductCode="#x00030924" RevisionNo="#x000103f6" InfoDataAddr="true" InfoDataSoeDS401="true" InfoDataDcTimes="true" DdTime0420="10000" EnableWdDivider0400="true" EnableWdTime0410="true" EnableWdTime0420="true" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="Gold EtherCAT GCON Drive Rev:0x000103F6" Desc="Elmo Drive" PortABoxInfo="#x0100000f">
 						<SyncMan>00188c0026000100010000008c008c008c00001826010000</SyncMan>
 						<SyncMan>00198c0022000100020000008c008c008c00001922010000</SyncMan>
 						<SyncMan>00110a006400010003000000000020002000001164010000</SyncMan>
@@ -5869,38 +5878,37 @@ Bit1: Value bigger/equal Limit2]]>
 		</Io>
 	</Project>
 	<Mappings>
-		<MappingInfo Identifier="{00000000-0010-0304-3000-010110000403}" Id="#x03070030"/>
-		<MappingInfo Identifier="{02010060-0011-0101-3000-010110000101}" Id="#x03070060" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{05000010-0011-0101-5000-040310000101}" Id="#x03070050" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{00000000-0030-0304-5000-040330000403}" Id="#x03070020"/>
-		<MappingInfo Identifier="{00000000-0040-0304-5000-040340000403}" Id="#x03070010"/>
-		<MappingInfo Identifier="{00000000-0011-0101-1000-010160000403}" Id="#x03070040"/>
+		<MappingInfo Identifier="{00000000-0010-0304-2000-010110000403}" Id="#x03070040"/>
+		<MappingInfo Identifier="{05000010-0011-0101-6000-040310000101}" Id="#x03070030" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{00000000-0011-0101-1000-010150000403}" Id="#x03070050"/>
+		<MappingInfo Identifier="{00000000-0040-0304-6000-040340000403}" Id="#x03070020"/>
+		<MappingInfo Identifier="{00000000-0030-0304-6000-040330000403}" Id="#x03070010"/>
 		<OwnerA Name="TIID^Device 1 (EtherCAT)">
 			<OwnerB Name="TIXC^RobotArmCPP^RobotArmCPP_Obj1 (CRobotArmMain)">
-				<Link VarA="Term 1 (EK1200)^Term 13 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^hand_one"/>
-				<Link VarA="Term 1 (EK1200)^Term 13 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^hand_two"/>
-				<Link VarA="Term 1 (EK1200)^Term 14 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^hand_three"/>
-				<Link VarA="Term 1 (EK1200)^Term 14 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^hand_four"/>
-				<Link VarA="Term 1 (EK1200)^Term 15 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^hand_fan"/>
-				<Link VarA="Term 1 (EK1200)^Term 16 (EL3008)^AI Standard Channel 1^Value" VarB="Inputs^hand_one_temp"/>
-				<Link VarA="Term 1 (EK1200)^Term 16 (EL3008)^AI Standard Channel 2^Value" VarB="Inputs^hand_two_temp"/>
-				<Link VarA="Term 1 (EK1200)^Term 16 (EL3008)^AI Standard Channel 3^Value" VarB="Inputs^hand_three_temp"/>
-				<Link VarA="Term 1 (EK1200)^Term 16 (EL3008)^AI Standard Channel 4^Value" VarB="Inputs^hand_four_temp"/>
-				<Link VarA="Term 1 (EK1200)^Term 17 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^wrist_one"/>
-				<Link VarA="Term 1 (EK1200)^Term 17 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^wrist_two"/>
-				<Link VarA="Term 1 (EK1200)^Term 18 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^wrist_three"/>
-				<Link VarA="Term 1 (EK1200)^Term 18 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^wrist_four"/>
-				<Link VarA="Term 1 (EK1200)^Term 19 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^wrist_five"/>
-				<Link VarA="Term 1 (EK1200)^Term 19 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^wrist_six"/>
-				<Link VarA="Term 1 (EK1200)^Term 20 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^wrist_seven"/>
-				<Link VarA="Term 1 (EK1200)^Term 20 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^wrist_eight"/>
-				<Link VarA="Term 1 (EK1200)^Term 21 (EL3692)^SAI Inputs Real Channel 1^Value" VarB="Inputs^wrist_resistor"/>
+				<Link VarA="Term 1 (EK1200)^Term 10 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^wrist_three"/>
+				<Link VarA="Term 1 (EK1200)^Term 10 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^wrist_four"/>
+				<Link VarA="Term 1 (EK1200)^Term 11 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^wrist_five"/>
+				<Link VarA="Term 1 (EK1200)^Term 11 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^wrist_six"/>
+				<Link VarA="Term 1 (EK1200)^Term 12 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^wrist_seven"/>
+				<Link VarA="Term 1 (EK1200)^Term 12 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^wrist_eight"/>
+				<Link VarA="Term 1 (EK1200)^Term 13 (EL3692)^SAI Inputs Real Channel 1^Value" VarB="Inputs^wrist_resistor"/>
 				<Link VarA="Term 1 (EK1200)^Term 4 (EL4102)^Channel 1^Output" VarB="Outputs^ElbowOutM1"/>
 				<Link VarA="Term 1 (EK1200)^Term 4 (EL4102)^Channel 2^Output" VarB="Outputs^ElbowOutM2"/>
+				<Link VarA="Term 1 (EK1200)^Term 5 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^hand_one"/>
+				<Link VarA="Term 1 (EK1200)^Term 5 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^hand_two"/>
+				<Link VarA="Term 1 (EK1200)^Term 6 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^hand_three"/>
+				<Link VarA="Term 1 (EK1200)^Term 6 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^hand_four"/>
+				<Link VarA="Term 1 (EK1200)^Term 7 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^hand_fan"/>
+				<Link VarA="Term 1 (EK1200)^Term 8 (EL3008)^AI Standard Channel 1^Value" VarB="Inputs^hand_one_temp"/>
+				<Link VarA="Term 1 (EK1200)^Term 8 (EL3008)^AI Standard Channel 2^Value" VarB="Inputs^hand_two_temp"/>
+				<Link VarA="Term 1 (EK1200)^Term 8 (EL3008)^AI Standard Channel 3^Value" VarB="Inputs^hand_three_temp"/>
+				<Link VarA="Term 1 (EK1200)^Term 8 (EL3008)^AI Standard Channel 4^Value" VarB="Inputs^hand_four_temp"/>
+				<Link VarA="Term 1 (EK1200)^Term 9 (EL2502)^PWM Outputs Channel 1^PWM output" VarB="Outputs^wrist_one"/>
+				<Link VarA="Term 1 (EK1200)^Term 9 (EL2502)^PWM Outputs Channel 2^PWM output" VarB="Outputs^wrist_two"/>
 			</OwnerB>
 		</OwnerA>
-		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
-			<OwnerB Name="TIID^Device 5 (EtherCAT)^Drive 6 (Elmo Drive)">
+		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^AxisShoulderLevelShift">
+			<OwnerB Name="TIID^Device 4 (EtherCAT)^Drive 1 (Elmo Drive)">
 				<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
 				<Link VarA="Drive^Inputs^In^nState1" VarB="Inputs^Status word"/>
 				<Link VarA="Drive^Inputs^In^nState2" VarB="Inputs^Status word" Size="8" OffsB="8"/>
@@ -5915,8 +5923,8 @@ Bit1: Value bigger/equal Limit2]]>
 				<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^WcState"/>
 			</OwnerB>
 		</OwnerA>
-		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis 2">
-			<OwnerB Name="TIID^Device 5 (EtherCAT)^Drive 7 (Elmo Drive)">
+		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^AxisShoulderRotate">
+			<OwnerB Name="TIID^Device 4 (EtherCAT)^Drive 2 (Elmo Drive)">
 				<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
 				<Link VarA="Drive^Inputs^In^nState1" VarB="Inputs^Status word"/>
 				<Link VarA="Drive^Inputs^In^nState2" VarB="Inputs^Status word" Size="8" OffsB="8"/>
@@ -5933,7 +5941,6 @@ Bit1: Value bigger/equal Limit2]]>
 		</OwnerA>
 		<OwnerA Name="TIPC^RobotArmPLC^RobotArmPLC Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL6001)">
-				<Link VarA="PlcTask Inputs^SerialRecieve.EL6_22Bin_PC1" VarB="COM Inputs^Status"/>
 				<Link VarA="PlcTask Inputs^SerialRecieve.EL6_22Bin_PC1^D" VarB="COM Inputs^Data In 0"/>
 				<Link VarA="PlcTask Inputs^SerialRecieve.EL6_22Bin_PC1^D" VarB="COM Inputs^Data In 1" Size="8" OffsA="8"/>
 				<Link VarA="PlcTask Inputs^SerialRecieve.EL6_22Bin_PC1^D" VarB="COM Inputs^Data In 10" Size="8" OffsA="80"/>
@@ -5956,6 +5963,7 @@ Bit1: Value bigger/equal Limit2]]>
 				<Link VarA="PlcTask Inputs^SerialRecieve.EL6_22Bin_PC1^D" VarB="COM Inputs^Data In 7" Size="8" OffsA="56"/>
 				<Link VarA="PlcTask Inputs^SerialRecieve.EL6_22Bin_PC1^D" VarB="COM Inputs^Data In 8" Size="8" OffsA="64"/>
 				<Link VarA="PlcTask Inputs^SerialRecieve.EL6_22Bin_PC1^D" VarB="COM Inputs^Data In 9" Size="8" OffsA="72"/>
+				<Link VarA="PlcTask Inputs^SerialRecieve.EL6_22Bin_PC1^Status" VarB="COM Inputs^Status"/>
 				<Link VarA="PlcTask Outputs^SerialRecieve.EL6_22Bout_PC1^Ctrl" VarB="COM Outputs^Ctrl"/>
 				<Link VarA="PlcTask Outputs^SerialRecieve.EL6_22Bout_PC1^D" VarB="COM Outputs^Data Out 0"/>
 				<Link VarA="PlcTask Outputs^SerialRecieve.EL6_22Bout_PC1^D" VarB="COM Outputs^Data Out 1" Size="8" OffsA="8"/>
@@ -5980,16 +5988,17 @@ Bit1: Value bigger/equal Limit2]]>
 				<Link VarA="PlcTask Outputs^SerialRecieve.EL6_22Bout_PC1^D" VarB="COM Outputs^Data Out 8" Size="8" OffsA="64"/>
 				<Link VarA="PlcTask Outputs^SerialRecieve.EL6_22Bout_PC1^D" VarB="COM Outputs^Data Out 9" Size="8" OffsA="72"/>
 			</OwnerB>
-			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
+			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^AxisShoulderLevelShift">
 				<Link VarA="PlcTask Inputs^GVL.AxisLevelShift.NcToPlc" VarB="Outputs^ToPlc"/>
 				<Link VarA="PlcTask Outputs^GVL.AxisLevelShift.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
-			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 2">
+			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^AxisShoulderRotate">
 				<Link VarA="PlcTask Inputs^GVL.AxisRotate.NcToPlc" VarB="Outputs^ToPlc"/>
 				<Link VarA="PlcTask Outputs^GVL.AxisRotate.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TIXC^RobotArmCPP^RobotArmCPP_Obj1 (CRobotArmMain)">
 				<Link VarA="PlcTask Inputs^GVL.CppErrorCode" VarB="CppToPlc^ErrorCode"/>
+				<Link VarA="PlcTask Inputs^GVL.ShoulderInitStart" VarB="CppToPlc^ShoulderInitStart"/>
 				<Link VarA="PlcTask Inputs^MAIN.ElbowAngle" VarB="CppToPlc^ElbowAngle"/>
 				<Link VarA="PlcTask Inputs^MAIN.ElbowTarAngle" VarB="CppToPlc^ElbowTarAngle"/>
 				<Link VarA="PlcTask Inputs^MAIN.hand_four_pwm" VarB="CppToPlc^hand_four_pwm"/>
@@ -6009,10 +6018,10 @@ Bit1: Value bigger/equal Limit2]]>
 				<Link VarA="PlcTask Outputs^GVL.ChooseAction" VarB="PlcToCpp^ChooseAction"/>
 				<Link VarA="PlcTask Outputs^GVL.ExtEnabledLevelShift" VarB="PlcToCpp^LevelShiftExtEnabled"/>
 				<Link VarA="PlcTask Outputs^GVL.ExtEnabledRotate" VarB="PlcToCpp^RotateExtEnabled"/>
-				<Link VarA="PlcTask Outputs^GVL.InitFinish" VarB="PlcToCpp^ShoudlerInitFinish"/>
 				<Link VarA="PlcTask Outputs^GVL.IsRepeat" VarB="PlcToCpp^IsRepeat"/>
 				<Link VarA="PlcTask Outputs^GVL.PosLevelShift" VarB="PlcToCpp^PosLevelShift"/>
 				<Link VarA="PlcTask Outputs^GVL.PosRotate" VarB="PlcToCpp^PosRotate"/>
+				<Link VarA="PlcTask Outputs^GVL.ShoulderInitFinish" VarB="PlcToCpp^ShoulderInitFinish"/>
 				<Link VarA="PlcTask Outputs^GVL.StopElbow" VarB="PlcToCpp^StopElbow"/>
 				<Link VarA="PlcTask Outputs^GVL.StopHand" VarB="PlcToCpp^StopHand"/>
 				<Link VarA="PlcTask Outputs^GVL.StopWrist" VarB="PlcToCpp^StopWrist"/>

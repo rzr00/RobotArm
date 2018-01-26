@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <POU Name="ShoulderRotate" Id="{9bd5770b-0aea-48d6-bcd6-18af5cf533d9}" SpecialFunc="None">
+  <POU Name="ShoulderRotate" Id="{02ae2d78-8e67-4ede-97d6-f3cad5a39bfd}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM ShoulderRotate
 VAR
 	MC_ExtSetPointGenDisableRotate: MC_ExtSetPointGenDisable;
@@ -27,7 +27,7 @@ PosRotate := AxisRotate.NcToPlc.ActPos;
 
 CASE StatusRotate OF
 	0:	//判断是否完成初始化
-		IF InitFinish THEN
+		IF ShoulderInitFinish THEN
 			StatusRotate := 1;
 		END_IF
 	1:	//外部给定模块使能给低电平

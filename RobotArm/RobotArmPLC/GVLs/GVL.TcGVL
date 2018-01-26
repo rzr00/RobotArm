@@ -1,11 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <GVL Name="GVL" Id="{e94d4da4-2ecf-4111-ac55-19058514cf77}">
+  <GVL Name="GVL" Id="{10c1e170-61a9-4037-a692-87623324711f}">
     <Declaration><![CDATA[VAR_GLOBAL
-	//运动公共变量
-	PlcCycleTime: LREAL := 0.01;										//PLC循环时间
-	EachTime: LREAL := 2;												//距离曲线离散后,时间间隔T
-	
 	//肩关节水平移动自由度变量
 	AxisLevelShift: AXIS_REF;											//运动轴
 	MC_PowerLevelShift: MC_Power;										//电源模块
@@ -21,7 +17,8 @@
 	PosRotate AT%Q* : LREAL;											//旋转移动位置.输出给C++
 	
 	//肩关节初始化完成标志量
-	InitFinish AT%Q*: BOOL := FALSE;
+	ShoulderInitStart AT%I* : BOOL := FALSE;							//肩关节初始化启动
+	ShoulderInitFinish AT%Q*: BOOL := FALSE;
 	ExtEnabledLevelShift AT%Q* : BOOL := FALSE;							//平移外部给定模块已使能
 	ExtEnabledRotate AT%Q* : BOOL := FALSE;								//旋转外部给定模块已使能
 	
@@ -29,16 +26,18 @@
 	Timer AT%Q*: LREAL := 0;											//时间 
 	
 	//错误记录
-	CppErrorCode AT%I*: INT := 0;
-	ErrorCode: INT := 0;												
+	CppErrorCode AT%I*: INT := 0;										//C++错误代码，在PLC显示，容易看到。
+	ErrorCode: INT := 0;												//PLC错误代码，TODO:研究可持续写入的变量，类似字符串。
 	ErrorTime: LREAL := 0;												//错误发生的时间，共4位
-																		//第一位无意义，第二位表示关节（0-3：肩、肘、腕、手）
+																		//第一位无意义，第二位表示关节（0-4：肩平移、肩旋转、肘、腕、手）
 																		//第三位表示关节自由度（例如肩关节0表示平移自由度，1表示旋转自由度）
 																		//第四位表示错误信息
-																		//1001：肩关节平移自由度位置超过限制
-																		//1002：肩关节平移自由度速度超过限制
-																		//1011：肩关节旋转自由度位置超过限制
-																		//1012：肩关节平移自由度速度超过限制
+																		//1000：平移初始化电源使能错误
+																		//1001：平移位置超过限制
+																		//1002：平移速度超过限制
+																		//1100：旋转初始化电源使能错误
+																		//1101：旋转位置超过限制
+																		//1102：旋转速度超过限制
 	ErrorTarPosLevelShift : LREAL := 0;									//错误发生时平移期望位置
 	ErrorTarPosRotate : LREAL := 0;										//错误发生时旋转期望位置
 	

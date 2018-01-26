@@ -3,16 +3,16 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{d0f588de-5e4d-4ab1-89b7-d55fa1786c63}</ProjectGuid>
+    <ProjectGuid>{b4103b68-08bf-490c-95ca-9c9cf1f5ee02}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <Name>RobotArmPLC</Name>
     <ProgramVersion>3.1.0.8</ProgramVersion>
-    <Application>{d5a894a3-7de0-45c6-bb01-bda21172c0ff}</Application>
-    <TypeSystem>{aa064a5b-df84-4c71-a8f3-3d78561eb2fd}</TypeSystem>
-    <Implicit_Task_Info>{70931c56-18b8-4bef-8b65-f776ddd78d28}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{9f45941b-3744-445b-a374-fa305cc8c10b}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{044e8c07-2cf3-4d8d-9fb1-d7d30dd8e41f}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{23f403fe-eff4-4ced-b887-d87433887f3a}</LibraryReferences>
+    <Application>{2c6493dc-ba55-4153-bb44-709ce333e7d0}</Application>
+    <TypeSystem>{07d034c2-e0d0-40ea-ad8c-fd3ef94ec677}</TypeSystem>
+    <Implicit_Task_Info>{b6202dac-d05d-488b-a7ea-eb13e9e0a38d}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{00f9f587-c67e-442e-b510-9fba46ef1316}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{1b7647c7-e1e2-4bfb-9499-5e1b09610846}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{9026009d-d48c-41b6-ad39-a374bdbd4710}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GVLs\GVL.TcGVL">
@@ -82,8 +82,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{40450F57-0AA3-4216-96F3-5444ECB29763}</v>
@@ -98,13 +98,13 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

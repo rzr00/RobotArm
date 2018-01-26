@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <POU Name="SerialRecieve" Id="{5fdbaa9d-ce03-4836-8ef7-4141a88c1b21}" SpecialFunc="None">
+  <POU Name="SerialRecieve" Id="{e323f4c6-8cf7-44c0-8000-0e96e3f83b49}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM SerialRecieve
 VAR
 	//读取编码器角度

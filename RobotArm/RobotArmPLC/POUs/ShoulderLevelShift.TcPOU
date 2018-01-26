@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <POU Name="ShoulderLevelShift" Id="{bd49b112-7644-47fc-aa7c-e265237affc9}" SpecialFunc="None">
+  <POU Name="ShoulderLevelShift" Id="{a3fc9908-8e1c-4308-aadd-2938280c1f51}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM ShoulderLevelShift
 VAR
 	MC_ExtSetPointGenDisableLevelShift: MC_ExtSetPointGenDisable;		//外部给定运动禁止
@@ -29,7 +29,7 @@ PosLevelShift := AxisLevelShift.NcToPlc.ActPos;
 
 CASE StatusLevelShift OF
 	0:	//判断是否完成初始化
-		IF InitFinish THEN
+		IF ShoulderInitFinish THEN
 			StatusLevelShift := 1;
 		END_IF
 	1:	//外部给定模块使能给低电平

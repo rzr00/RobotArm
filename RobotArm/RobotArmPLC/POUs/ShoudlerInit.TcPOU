@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <POU Name="ShoudlerInit" Id="{ce7de579-4c89-491a-8f08-2b8813b1c241}" SpecialFunc="None">
+  <POU Name="ShoudlerInit" Id="{2ccea6c9-40f6-4b06-9ccd-1f10f1d21f3f}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM ShoudlerInit
 VAR
 	InitPosLevelShift: LREAL := 0;			//平移自由度.初始化位置
@@ -25,30 +25,35 @@ MC_MoveAbsoluteLevelShift(
 	Axis:= AxisLevelShift, );
 
 CASE InitStatusLevelShift OF
-	0://init 初始化
+	0://等待初始化命令
+		IF ShoulderInitStart THEN
+			InitStatusLevelShift := 1;
+		END_IF
+	1://init 初始化
 		MC_PowerLevelShift.Enable := FALSE;
 		MC_MoveAbsoluteLevelShift.Execute := FALSE;
-		InitStatusLevelShift := 1;
-	1://power 使能
+		InitStatusLevelShift := 2;
+	2://power 使能
 		MC_PowerLevelShift.Enable := TRUE;
 		IF MC_PowerLevelShift.Status THEN
-			InitStatusLevelShift := 2;
+			InitStatusLevelShift := 3;
 		END_IF
 		IF AxisLevelShift.Status.Error THEN
-			InitStatusLevelShift := 4;
+			ErrorTime := Timer;
+			InitStatusLevelShift := 5;
 		END_IF
-	2://move 移动到初始位置
+	3://move 移动到初始位置
 		MC_MoveAbsoluteLevelShift.Position := InitPosLevelShift;
 		MC_MoveAbsoluteLevelShift.Velocity := 1;
 		MC_MoveAbsoluteLevelShift.Execute := TRUE;
 		IF MC_MoveAbsoluteLevelShift.Done THEN
 			MC_MoveAbsoluteLevelShift.Execute := FALSE;
-			InitStatusLevelShift := 3;
+			InitStatusLevelShift := 4;
 		END_IF
-	3://finishInit 初始化完成
+	4://finishInit 初始化完成
 		InitFinishLevelShift := TRUE;
-	4://error
-		
+	5://error
+		ErrorCode := 1000;
 END_CASE
 
 
@@ -62,29 +67,39 @@ MC_MoveAbsoluteRotate(
 	Axis:= AxisRotate, );
 
 CASE InitStatusRotate OF
-	0://init 初始化
+	0://等待初始化命令
+		IF ShoulderInitStart THEN
+			InitStatusRotate := 1;
+		END_IF
+	1://init 初始化
 		MC_PowerRotate.Enable := FALSE;
 		MC_MoveAbsoluteRotate.Execute := FALSE;
-		InitStatusRotate := 1;
-	1://power 使能
+		InitStatusRotate := 2;
+	2://power 使能
 		MC_PowerRotate.Enable := TRUE;
 		IF MC_PowerRotate.Status THEN
-			InitStatusRotate := 2;
+			InitStatusRotate := 3;
 		END_IF
-	2://move 移动到初始位置
+		IF AxisLevelShift.Status.Error THEN
+			ErrorTime := Timer;
+			InitStatusRotate := 5;
+		END_IF
+	3://move 移动到初始位置
 		MC_MoveAbsoluteRotate.Position := InitPosLevelShift;
 		MC_MoveAbsoluteRotate.Velocity := 1;
 		MC_MoveAbsoluteRotate.Execute := TRUE;
 		IF MC_MoveAbsoluteRotate.Done THEN
 			MC_MoveAbsoluteRotate.Execute := FALSE;
-			InitStatusRotate := 3;
+			InitStatusRotate := 4;
 		END_IF
-	3://finishInit 初始化完成
+	4://finishInit 初始化完成
 		InitFinishRotate := TRUE;
+	5://error
+		ErrorCode := 1100;
 END_CASE
 		
 IF InitFinishLevelShift AND InitFinishRotate THEN
-	InitFinish := TRUE;
+	ShoulderInitFinish := TRUE;
 END_IF]]></ST>
     </Implementation>
   </POU>

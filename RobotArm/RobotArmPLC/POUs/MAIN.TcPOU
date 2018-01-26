@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
-  <POU Name="MAIN" Id="{7789a14b-f04a-4336-890e-139d67d8cc44}" SpecialFunc="None">
+  <POU Name="MAIN" Id="{9298dae1-402e-4358-84ac-dd3fdc3276d5}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	ElbowTarAngle AT%I* : LREAL;

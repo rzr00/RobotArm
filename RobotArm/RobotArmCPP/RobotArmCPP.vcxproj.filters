@@ -2,19 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{e213af31-e595-4fbe-8c0b-07c349027f31}</UniqueIdentifier>
+      <UniqueIdentifier>{5b77290a-0262-4e4f-8905-8f11961f224f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{85c8e375-eb92-4aa4-89a7-bb85857bba5d}</UniqueIdentifier>
+      <UniqueIdentifier>{e1a3154e-4512-41c4-9917-5a4c542dde93}</UniqueIdentifier>
     </Filter>
     <Filter Include="TwinCAT UM Files">
-      <UniqueIdentifier>{886b6a10-07bf-4c26-bd9f-5316aeb3ce51}</UniqueIdentifier>
+      <UniqueIdentifier>{54bbcd68-1d1f-45c4-b93e-a59d8ffa03f5}</UniqueIdentifier>
     </Filter>
     <Filter Include="TwinCAT RT Files">
-      <UniqueIdentifier>{c3eaa85d-dcd7-4c4c-9af7-b13889cd6050}</UniqueIdentifier>
+      <UniqueIdentifier>{5a4475ed-061f-4b6c-8a19-1fb6e201cf33}</UniqueIdentifier>
     </Filter>
     <Filter Include="TMC Files">
-      <UniqueIdentifier>{19eb74d9-b1a2-4289-8ced-d8d19513f300}</UniqueIdentifier>
+      <UniqueIdentifier>{a674fcd8-474e-4e32-86d6-4128cb02085d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +74,6 @@
     <ClCompile Include="RobotArmMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Elbow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="kinematics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,6 +81,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="3rdinterpolate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Elbow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
