@@ -72,6 +72,7 @@ typedef struct _RobotArmMainPlcToCpp
 	SHORT ChooseAction;
 	bool IsRepeat;
 	double SetTarAngle;
+	double SetTarSpeed;
 } RobotArmMainPlcToCpp, *PRobotArmMainPlcToCpp;
 #pragma pack(pop)
 

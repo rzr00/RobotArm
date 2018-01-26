@@ -47,7 +47,8 @@
 	
 	ChooseAction AT%Q* : INT := -1;
 	IsRepeat AT%Q* : BOOL := FALSE;
-	SetTarAngle AT%Q* : LREAL := 30;										//角度定位
+	SetTarAngle AT%Q* : LREAL := 90;									//角度定位
+	SetTarSpeed AT%Q* : LREAL := 4;										//速度设置，到达100度
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
