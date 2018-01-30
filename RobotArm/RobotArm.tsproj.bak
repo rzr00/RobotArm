@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4018.5">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4020.28">
 	<DataTypes>
 		<DataType>
 			<Name GUID="{18071995-0000-0000-0000-000000000035}" TcBaseType="true" HideType="true">UINTARR2</Name>
@@ -482,8 +482,14 @@ Drive Status 4 (manually linked):
 				<BitSize>1</BitSize>
 				<BitOffs>31</BitOffs>
 			</SubItem>
-			<Format>
+			<Format Name="Short">
+				<Printf>%08x</Printf>
+			</Format>
+			<Format Name="Cpp">
 				<Printf>0x%08x</Printf>
+			</Format>
+			<Format Name="IEC">
+				<Printf>16#%08X</Printf>
 			</Format>
 		</DataType>
 		<DataType>
@@ -798,8 +804,14 @@ Drive Status 4 (manually linked):
 				<BitSize>1</BitSize>
 				<BitOffs>31</BitOffs>
 			</SubItem>
-			<Format>
+			<Format Name="Short">
+				<Printf>%08x</Printf>
+			</Format>
+			<Format Name="Cpp">
 				<Printf>0x%08x</Printf>
+			</Format>
+			<Format Name="IEC">
+				<Printf>16#%08X</Printf>
 			</Format>
 		</DataType>
 		<DataType>
@@ -917,8 +929,14 @@ Drive Status 4 (manually linked):
 				<BitSize>1</BitSize>
 				<BitOffs>0</BitOffs>
 			</SubItem>
-			<Format>
+			<Format Name="Short">
+				<Printf>%08x</Printf>
+			</Format>
+			<Format Name="Cpp">
 				<Printf>0x%08x</Printf>
+			</Format>
+			<Format Name="IEC">
+				<Printf>16#%08X</Printf>
 			</Format>
 		</DataType>
 		<DataType>
@@ -936,8 +954,14 @@ Drive Status 4 (manually linked):
 				<BitSize>32</BitSize>
 				<BitOffs>0</BitOffs>
 			</SubItem>
-			<Format>
+			<Format Name="Short">
+				<Printf>%08x</Printf>
+			</Format>
+			<Format Name="Cpp">
 				<Printf>0x%08x</Printf>
+			</Format>
+			<Format Name="IEC">
+				<Printf>16#%08X</Printf>
 			</Format>
 		</DataType>
 		<DataType>
@@ -950,7 +974,7 @@ Drive Status 4 (manually linked):
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}" Namespace="MC" TcBaseType="true">NCTOPLC_AXIS_REF</Name>
+			<Name GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}" Namespace="MC" TcBaseType="true">NCTOPLC_AXIS_REF_OLD3</Name>
 			<BitSize>2048</BitSize>
 			<SubItem>
 				<Name>StateDWord</Name>
@@ -1247,10 +1271,13 @@ External Setpoint Generation:
 				<Relation Priority="100">
 					<Type GUID="{40BD39B2-C3EA-4F74-9F4F-5F1982786F7C}"/>
 				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}"/>
+				</Relation>
 			</Relations>
 		</DataType>
 		<DataType>
-			<Name GUID="{F302FD94-895D-47F5-B6E1-C135CB99F989}" Namespace="Tc2_SerialCom" AutoDeleteType="true">KL6inData22B</Name>
+			<Name GUID="{D9AAB874-6793-4DCF-A152-912601B67C6C}" Namespace="TC2_SERIALCOM" AutoDeleteType="true">KL6inData22B</Name>
 			<Comment>
 				<![CDATA[ This data type is corresponding to the
    KL-6xxx data structure used in the
@@ -1278,7 +1305,357 @@ External Setpoint Generation:
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{C99821A8-E146-4D9E-B46F-350E583099D7}" Namespace="Tc2_SerialCom" AutoDeleteType="true">KL6outData22B</Name>
+			<Name GUID="{BA9D9D0F-1A4A-4A27-A19F-3032626A8491}" Namespace="MC" TcBaseType="true" HideType="true">NCTOPLC_AXIS_REF_CAMCOUPLINGSTATE</Name>
+			<BitSize>8</BitSize>
+			<SubItem>
+				<Name>CamActivationPending</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamDeactivationPending</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>1</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamActive</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>2</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamDataQueued</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>6</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamScalingPending</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>7</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-000000000039}" TcBaseType="true" HideType="true">UINTARR8</Name>
+			<BitSize>128</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>8</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC" TcBaseType="true">NCTOPLC_AXIS_REF</Name>
+			<BitSize>2048</BitSize>
+			<SubItem>
+				<Name>StateDWord</Name>
+				<Type GUID="{4C3FC5AC-D5AA-44C6-AC5A-159774BA0F6D}" Namespace="MC">NCTOPLC_AXIS_REF_STATE</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ErrorCode</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<Comment>
+					<![CDATA[Present State Of The Axis Movement (continuous axis):
+0  = INACTIVE:		axis has no job
+1  = RUNNING:		axis is executing a motion job
+2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
+3  = PHASE_VELOCONST:	axis is moving at constant velocity
+4  = PHASE_ACCPOS:	axis is accelerating
+5  = PHASE_ACCNEG:	axis is decelerating
+Slaves only:
+11 = PREPHASE:		slave axis is in a motion pre-phase
+12 = SYNCHRONIZING:	slave axis is synchronizing
+13 = SYNCHRONOUS:	slave axis is moving synchronously
+External Setpoint Generation:
+41 = EXTSETGEN_MODE1:	external setpoint generation active
+42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
+]]>
+				</Comment>
+				<BitSize>32</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisModeConfirmation</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>96</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>HomingState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<Comment>
+					<![CDATA[Axis Homing Status:
+0: idle
+1: start homing
+2: searching home switch
+3: stopping on home switch
+4: moving off home switch
+5: searching sync pulse
+6: stopping after homing
+]]>
+				</Comment>
+				<BitSize>32</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CoupleState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<Comment>
+					<![CDATA[Axis Coupling Status:
+0: axis is a single axis (not coupled)
+1: axis is a master axis
+2: axis is master and slave
+3: axis is a slave axis
+]]>
+				</Comment>
+				<BitSize>32</BitSize>
+				<BitOffs>160</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SvbEntries</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>192</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SafEntries</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>224</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>AxisId</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>256</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>OpModeDWord</Name>
+				<Type GUID="{6EF49753-C72C-4F50-AA44-3C7498E76CFE}" Namespace="MC">NCTOPLC_AXIS_REF_OPMODE</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>288</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>320</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ModuloActPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>384</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActiveControlLoopIndex</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>448</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ControlLoopIndex</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>464</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ModuloActTurns</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>480</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActVelo</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>512</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>PosDiff</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>576</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>640</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetVelo</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>704</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetAcc</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>768</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>TargetPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>832</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ModuloSetPos</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>896</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ModuloSetTurns</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>960</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CmdNo</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>992</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CmdState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>1008</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetJerk</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1024</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetTorque</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1088</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActTorque</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1152</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>StateDWord2</Name>
+				<Type GUID="{669F3788-48FD-42CF-8A59-2DA946853FB6}" Namespace="MC">NCTOPLC_AXIS_REF_STATE2</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>1216</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>StateDWord3</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000007}">DWORD</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>1248</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>TouchProbeState</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000007}">DWORD</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>1280</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>TouchProbeCounter</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000007}">DWORD</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>1312</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamCouplingState</Name>
+				<Type GUID="{BA9D9D0F-1A4A-4A27-A19F-3032626A8491}" Namespace="MC">NCTOPLC_AXIS_REF_CAMCOUPLINGSTATE</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>8</Elements>
+				</ArrayInfo>
+				<BitSize>64</BitSize>
+				<BitOffs>1344</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>CamCouplingTableID</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000039}">UINTARR8</Type>
+				<BitSize>128</BitSize>
+				<BitOffs>1408</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActTorqueDerivative</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1536</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SetTorqueDerivative</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1600</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActPosWithoutPosCorrection</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1792</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ActAcc</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>1856</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>DcTimeStamp</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>1920</BitOffs>
+			</SubItem>
+			<Properties>
+				<Property>
+					<Name>NcStructType</Name>
+					<Value>2</Value>
+				</Property>
+			</Properties>
+			<Relations>
+				<Relation Priority="100">
+					<Type GUID="{429B767E-373B-40AE-BFA5-E1C08B444DF3}">NCAXLESTRUCT_TOPLC</Type>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{E8DA524A-605F-4879-82E6-B86EF6986572}">NCAXLESTRUCT_TOPLC2</Type>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{B507963E-69F3-4B64-BB8C-2BD7A560976D}">NCAXLESTRUCT_TOPLC3</Type>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{F794B740-82D7-4637-848E-4F74A711D038}">NCAXLESTRUCT_TOPLC4</Type>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{40BD39B0-C3EA-4F74-9F4F-5F1982786F7C}"/>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{40BD39B2-C3EA-4F74-9F4F-5F1982786F7C}"/>
+				</Relation>
+				<Relation Priority="100">
+					<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}"/>
+				</Relation>
+			</Relations>
+		</DataType>
+		<DataType>
+			<Name GUID="{78C158BD-B8EB-4832-AB30-960230BC29DB}" Namespace="TC2_SERIALCOM" AutoDeleteType="true">KL6outData22B</Name>
 			<Comment>
 				<![CDATA[ This data type is corresponding to the
    KL-6xxx data structure used in the
@@ -1305,6 +1682,120 @@ External Setpoint Generation:
 				<BitOffs>16</BitOffs>
 			</SubItem>
 		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000001}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..0] OF BIT</Name>
+			<BitSize>1</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>1</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000004}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..3] OF BIT</Name>
+			<BitSize>4</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>4</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000006}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..5] OF BIT</Name>
+			<BitSize>6</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>6</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000005}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..4] OF BIT</Name>
+			<BitSize>5</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>5</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000002}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..1] OF BIT</Name>
+			<BitSize>2</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>2</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-000300000001}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..0] OF BYTE</Name>
+			<BitSize>8</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>1</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{85DC3E7A-8ADA-435B-9479-25573909A7DB}" Namespace="AX5000" TcBaseType="true">E_AX5000_P_0275_ActiveFeedbackAndMemory</Name>
+			<BitSize>8</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<EnumInfo>
+				<Text>
+					<![CDATA[EAX5000_P_0275_MEMORY_NONE]]>
+				</Text>
+				<Enum>0</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[EAX5000_P_0275_FEEDBACK1_MEMORY_ENCODER]]>
+				</Text>
+				<Enum>1</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[EAX5000_P_0275_FEEDBACK1_MEMORY_DRIVE]]>
+				</Text>
+				<Enum>2</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[EAX5000_P_0275_FEEDBACK2_MEMORY_ENCODER]]>
+				</Text>
+				<Enum>8</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[EAX5000_P_0275_FEEDBACK2_MEMORY_DRIVE]]>
+				</Text>
+				<Enum>16</Enum>
+			</EnumInfo>
+			<Hides>
+				<Hide GUID="{F1A82E04-2D76-4E5D-BB15-437337214D25}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{D7D16A25-71D5-48E0-882D-56AB4D826BC2}" Namespace="AX5000" PersistentType="true">ST_AX5000_P_0275</Name>
+			<BitSize>16</BitSize>
+			<SubItem>
+				<Name>ActiveFeedbackAndMemory</Name>
+				<Type GUID="{85DC3E7A-8ADA-435B-9479-25573909A7DB}" Namespace="AX5000">E_AX5000_P_0275_ActiveFeedbackAndMemory</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>InitializationErrorBehavior</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>8</BitOffs>
+			</SubItem>
+			<Hides>
+				<Hide GUID="{0D1A14D3-018F-4F48-88A7-90B490A317B5}"/>
+				<Hide GUID="{43B3CFF1-FA94-4CC1-8B03-C73EF940373B}"/>
+				<Hide GUID="{81B09CD0-943C-4070-AA5B-0A6818251CEB}"/>
+				<Hide GUID="{B6598B95-DC2C-454C-9B12-DE628B32D897}"/>
+			</Hides>
+		</DataType>
 	</DataTypes>
 	<ImageDatas>
 		<ImageData Id="1000">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ff808080808080808080808080808080808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c000ffffc0c0c000ffff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0ff0000c0c0c0ff0000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c00000ffc0c0c00000ff808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0000000c0c0c0000000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0008000c0c0c0008000808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ff0000c00000c0ffffffc0c0c0c0c0c0c0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ff</ImageData>
@@ -1315,7 +1806,7 @@ External Setpoint Generation:
 		<ImageData Id="1005">424dd6020000000000003600000028000000100000000e0000000100180000000000a0020000c40e0000c40e00000000000000000000ff00ffff00ffff00ffff00ffff00ffff00ff808080808080808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffff00ffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff007fff007fff007fff007fff007fff007fffc0c0c0c0c0c0808080ff00ffff00ffff00ffff00ffff00ffff00ffff00ff</ImageData>
 		<ImageData Id="1006">424de6000000000000007600000028000000100000000e000000010004000000000070000000c40e0000c40e000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffffffffffffffffff79999997ffffffff99977999ffffffff9998ff89ffffffff99999fffffffffff999997ffff777777999999ffff777777799999ffff877777fffffffffff77777ffffffff78ff8777ffffffff77777777ffffffff77777777ffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{775022F2-68E1-44BF-A7FE-AB4F3BF46E41}" TargetNetId="5.36.3.8.1.1">
+	<Project ProjectGUID="{775022F2-68E1-44BF-A7FE-AB4F3BF46E41}" TargetNetId="5.36.3.8.1.1" ShowHideConfigurations="#x106">
 		<System>
 			<Settings>
 				<Debugger Priority="61"/>
@@ -1502,7 +1993,7 @@ Drive Status 4 (manually linked):
 						<Name>Outputs</Name>
 						<Var>
 							<Name>ToPlc</Name>
-							<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}" Namespace="MC">NCTOPLC_AXIS_REF_OLD3</Type>
 							<SubVar>
 								<Name>AxisState</Name>
 								<Comment>
@@ -1708,7 +2199,7 @@ Drive Status 4 (manually linked):
 						<Name>Outputs</Name>
 						<Var>
 							<Name>ToPlc</Name>
-							<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}" Namespace="MC">NCTOPLC_AXIS_REF_OLD3</Type>
 							<BitOffs>2688</BitOffs>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -1768,13 +2259,6 @@ External Setpoint Generation:
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>MAIN.hand_one_temp</Name>
-							<Comment>
-								<![CDATA[////////////腕关节变量监测/////]]>
-							</Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.ElbowTarAngle</Name>
 							<Type>LREAL</Type>
 						</Var>
@@ -1797,6 +2281,13 @@ External Setpoint Generation:
 						<Var>
 							<Name>MAIN.wrist_error</Name>
 							<Type>LREAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.hand_one_temp</Name>
+							<Comment>
+								<![CDATA[////////////腕关节变量监测/////]]>
+							</Comment>
+							<Type>INT</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.hand_two_temp</Name>
@@ -1831,7 +2322,7 @@ External Setpoint Generation:
 							<Comment>
 								<![CDATA[读取编码器角度]]>
 							</Comment>
-							<Type GUID="{F302FD94-895D-47F5-B6E1-C135CB99F989}" Namespace="Tc2_SerialCom">KL6inData22B</Type>
+							<Type GUID="{D9AAB874-6793-4DCF-A152-912601B67C6C}" Namespace="TC2_SERIALCOM">KL6inData22B</Type>
 						</Var>
 						<Var>
 							<Name>GVL.ShoulderInitStart</Name>
@@ -1848,19 +2339,12 @@ External Setpoint Generation:
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
-							<Name>GVL.CppErrorCode</Name>
-							<Comment>
-								<![CDATA[C++错误代码，在PLC显示，容易看到。]]>
-							</Comment>
-							<Type>INT</Type>
-						</Var>
-						<Var>
 							<Name>ShoulderRotate.TarPosRotate</Name>
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
 							<Name>GVL.AxisLevelShift.NcToPlc</Name>
-							<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
 								<Comment>
@@ -1909,7 +2393,7 @@ External Setpoint Generation:
 						</Var>
 						<Var>
 							<Name>GVL.AxisRotate.NcToPlc</Name>
-							<Type GUID="{8CDE0C45-AB9D-42DB-BC94-1CF7521AB268}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
 								<Comment>
@@ -1956,6 +2440,13 @@ External Setpoint Generation:
 								</Comment>
 							</SubVar>
 						</Var>
+						<Var>
+							<Name>GVL.CppErrorCode</Name>
+							<Comment>
+								<![CDATA[C++错误代码，在PLC显示，容易看到。]]>
+							</Comment>
+							<Type>INT</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2">
 						<Name>PlcTask Outputs</Name>
@@ -1969,7 +2460,7 @@ External Setpoint Generation:
 						</Var>
 						<Var>
 							<Name>SerialRecieve.EL6_22Bout_PC1</Name>
-							<Type GUID="{C99821A8-E146-4D9E-B46F-350E583099D7}" Namespace="Tc2_SerialCom">KL6outData22B</Type>
+							<Type GUID="{78C158BD-B8EB-4832-AB30-960230BC29DB}" Namespace="TC2_SERIALCOM">KL6outData22B</Type>
 						</Var>
 						<Var>
 							<Name>SerialRecieve.JIAODU</Name>
@@ -1990,20 +2481,6 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL.ExtEnabledRotate</Name>
-							<Comment>
-								<![CDATA[旋转外部给定模块已使能]]>
-							</Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.StopElbow</Name>
-							<Comment>
-								<![CDATA[气动放气标志量，手动在plc里设置]]>
-							</Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>GVL.AxisLevelShift.PlcToNc</Name>
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
@@ -2019,11 +2496,17 @@ External Setpoint Generation:
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
-							<Name>GVL.StopWrist</Name>
+							<Name>GVL.ExtEnabledRotate</Name>
+							<Comment>
+								<![CDATA[旋转外部给定模块已使能]]>
+							</Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL.StopHand</Name>
+							<Name>GVL.StopElbow</Name>
+							<Comment>
+								<![CDATA[气动放气标志量，手动在plc里设置]]>
+							</Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -2041,6 +2524,14 @@ External Setpoint Generation:
 							<Type>LREAL</Type>
 						</Var>
 						<Var>
+							<Name>GVL.StopWrist</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.StopHand</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL.ChooseAction</Name>
 							<Type>INT</Type>
 						</Var>
@@ -2049,20 +2540,23 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL.SetTarSpeed</Name>
-							<Comment>
-								<![CDATA[速度设置，到达100度]]>
-							</Comment>
-							<Type>LREAL</Type>
-						</Var>
-						<Var>
 							<Name>GVL.SetTarAngle</Name>
 							<Comment>
 								<![CDATA[角度定位]]>
 							</Comment>
 							<Type>LREAL</Type>
 						</Var>
+						<Var>
+							<Name>GVL.SetTarSpeed</Name>
+							<Comment>
+								<![CDATA[速度设置，到达100度]]>
+							</Comment>
+							<Type>LREAL</Type>
+						</Var>
 					</Vars>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x01010011"/>
+					</TaskPouOids>
 				</Instance>
 			</Project>
 		</Plc>
@@ -2085,6 +2579,8 @@ External Setpoint Generation:
 								<ManualConfig>
 									<OTCID>#x02010060</OTCID>
 								</ManualConfig>
+								<Priority>1</Priority>
+								<CycleTime>10000000</CycleTime>
 							</Context>
 						</Contexts>
 						<Interfaces>
@@ -2805,7 +3301,7 @@ External Setpoint Generation:
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__Input length" Index="#x6000" Sub="#x09">
 									<Type>USINT</Type>
@@ -2904,7 +3400,7 @@ External Setpoint Generation:
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__Input length" Index="#x6001" Sub="#x09">
 									<Type>USINT</Type>
@@ -3195,7 +3691,7 @@ External Setpoint Generation:
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="Ctrl__">
-									<Type>ARRAY [0..3] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000004}">ARRAY [0..3] OF BIT</Type>
 								</Entry>
 								<Entry Name="Ctrl__Output length" Index="#x7000" Sub="#x09">
 									<Type>USINT</Type>
@@ -3285,7 +3781,7 @@ External Setpoint Generation:
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="Ctrl__">
-									<Type>ARRAY [0..3] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000004}">ARRAY [0..3] OF BIT</Type>
 								</Entry>
 								<Entry Name="Ctrl__Output length" Index="#x7001" Sub="#x09">
 									<Type>USINT</Type>
@@ -3664,10 +4160,10 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..5] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__TxPDO State" Index="#x6000" Sub="#x0f">
 									<Type>BIT</Type>
@@ -3726,10 +4222,10 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..5] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__TxPDO State" Index="#x6010" Sub="#x0f">
 									<Type>BIT</Type>
@@ -3788,10 +4284,10 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..5] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__TxPDO State" Index="#x6020" Sub="#x0f">
 									<Type>BIT</Type>
@@ -3850,10 +4346,10 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..5] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__TxPDO State" Index="#x6030" Sub="#x0f">
 									<Type>BIT</Type>
@@ -3912,10 +4408,10 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..5] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__TxPDO State" Index="#x6040" Sub="#x0f">
 									<Type>BIT</Type>
@@ -3974,10 +4470,10 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..5] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__TxPDO State" Index="#x6050" Sub="#x0f">
 									<Type>BIT</Type>
@@ -4036,10 +4532,10 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..5] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__TxPDO State" Index="#x6060" Sub="#x0f">
 									<Type>BIT</Type>
@@ -4098,10 +4594,10 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..5] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000006}">ARRAY [0..5] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__TxPDO State" Index="#x6070" Sub="#x0f">
 									<Type>BIT</Type>
@@ -4439,7 +4935,7 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__Steady state" Index="#x6000" Sub="#x09">
 									<Type>BIT</Type>
@@ -4448,7 +4944,7 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..4] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000005}">ARRAY [0..4] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__TxPDO State" Index="#x6000" Sub="#x0f">
 									<Type>BIT</Type>
@@ -4462,13 +4958,13 @@ Bit1: Value bigger/equal Limit2]]>
 							</Pdo>
 							<Pdo Name="SAI Range Channel 1" Index="#x1a01" Flags="#x0010" SyncMan="3">
 								<Entry Name="Settings__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Settings__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Settings__">
-									<Type>ARRAY [0..1] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000002}">ARRAY [0..1] OF BIT</Type>
 								</Entry>
 								<Entry Name="Settings__Mode" Index="#x6001" Sub="#x05">
 									<Type>BIT4</Type>
@@ -4535,7 +5031,7 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__Steady state" Index="#x6010" Sub="#x09">
 									<Type>BIT</Type>
@@ -4544,7 +5040,7 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Status__">
-									<Type>ARRAY [0..4] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000005}">ARRAY [0..4] OF BIT</Type>
 								</Entry>
 								<Entry Name="Status__TxPDO State" Index="#x6010" Sub="#x0f">
 									<Type>BIT</Type>
@@ -4558,13 +5054,13 @@ Bit1: Value bigger/equal Limit2]]>
 							</Pdo>
 							<Pdo Name="SAI Range Channel 2" Index="#x1a04" Flags="#x0010" SyncMan="3">
 								<Entry Name="Settings__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Settings__">
-									<Type>ARRAY [0..0] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000001}">ARRAY [0..0] OF BIT</Type>
 								</Entry>
 								<Entry Name="Settings__">
-									<Type>ARRAY [0..1] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000002}">ARRAY [0..1] OF BIT</Type>
 								</Entry>
 								<Entry Name="Settings__Mode" Index="#x6011" Sub="#x05">
 									<Type>BIT4</Type>
@@ -4595,7 +5091,7 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Control__">
-									<Type>ARRAY [0..1] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000002}">ARRAY [0..1] OF BIT</Type>
 								</Entry>
 								<Entry Name="Control__Start conversion" Index="#x7000" Sub="#x04">
 									<Type>BIT</Type>
@@ -4624,7 +5120,7 @@ Bit1: Value bigger/equal Limit2]]>
 									</Comment>
 								</Entry>
 								<Entry Name="Control__">
-									<Type>ARRAY [0..1] OF BIT</Type>
+									<Type GUID="{18071995-0000-0000-0000-002000000002}">ARRAY [0..1] OF BIT</Type>
 								</Entry>
 								<Entry Name="Control__Start conversion" Index="#x7010" Sub="#x04">
 									<Type>BIT</Type>
@@ -4738,7 +5234,7 @@ Bit1: Value bigger/equal Limit2]]>
 								<Type>SINT</Type>
 							</Entry>
 							<Entry>
-								<Type>ARRAY [0..0] OF BYTE</Type>
+								<Type GUID="{18071995-0000-0000-0000-000300000001}">ARRAY [0..0] OF BYTE</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Inputs" Index="#x1a03" Flags="#x0010">
@@ -4780,7 +5276,7 @@ Bit1: Value bigger/equal Limit2]]>
 								<Type>SINT</Type>
 							</Entry>
 							<Entry>
-								<Type>ARRAY [0..0] OF BYTE</Type>
+								<Type GUID="{18071995-0000-0000-0000-000300000001}">ARRAY [0..0] OF BYTE</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Inputs" Index="#x1a07" Flags="#x0000">
@@ -4845,7 +5341,7 @@ Bit1: Value bigger/equal Limit2]]>
 								<Type>SINT</Type>
 							</Entry>
 							<Entry>
-								<Type>ARRAY [0..0] OF BYTE</Type>
+								<Type GUID="{18071995-0000-0000-0000-000300000001}">ARRAY [0..0] OF BYTE</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Inputs" Index="#x1a0c" Flags="#x0010">
@@ -5175,7 +5671,7 @@ Bit1: Value bigger/equal Limit2]]>
 								<Type>SINT</Type>
 							</Entry>
 							<Entry>
-								<Type>ARRAY [0..0] OF BYTE</Type>
+								<Type GUID="{18071995-0000-0000-0000-000300000001}">ARRAY [0..0] OF BYTE</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Outputs" Index="#x160c" InOut="1" Flags="#x0010">
@@ -5263,7 +5759,7 @@ Bit1: Value bigger/equal Limit2]]>
 								<Type>USINT</Type>
 							</Entry>
 							<Entry>
-								<Type>ARRAY [0..0] OF BYTE</Type>
+								<Type GUID="{18071995-0000-0000-0000-000300000001}">ARRAY [0..0] OF BYTE</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Outputs" Index="#x161f" InOut="1" Flags="#x0010">
@@ -5353,7 +5849,7 @@ Bit1: Value bigger/equal Limit2]]>
 								<Type>SINT</Type>
 							</Entry>
 							<Entry>
-								<Type>ARRAY [0..0] OF BYTE</Type>
+								<Type GUID="{18071995-0000-0000-0000-000300000001}">ARRAY [0..0] OF BYTE</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Inputs" Index="#x1a03" Flags="#x0010">
@@ -5395,7 +5891,7 @@ Bit1: Value bigger/equal Limit2]]>
 								<Type>SINT</Type>
 							</Entry>
 							<Entry>
-								<Type>ARRAY [0..0] OF BYTE</Type>
+								<Type GUID="{18071995-0000-0000-0000-000300000001}">ARRAY [0..0] OF BYTE</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Inputs" Index="#x1a07" Flags="#x0000">
@@ -5460,7 +5956,7 @@ Bit1: Value bigger/equal Limit2]]>
 								<Type>SINT</Type>
 							</Entry>
 							<Entry>
-								<Type>ARRAY [0..0] OF BYTE</Type>
+								<Type GUID="{18071995-0000-0000-0000-000300000001}">ARRAY [0..0] OF BYTE</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Inputs" Index="#x1a0c" Flags="#x0010">
@@ -5790,7 +6286,7 @@ Bit1: Value bigger/equal Limit2]]>
 								<Type>SINT</Type>
 							</Entry>
 							<Entry>
-								<Type>ARRAY [0..0] OF BYTE</Type>
+								<Type GUID="{18071995-0000-0000-0000-000300000001}">ARRAY [0..0] OF BYTE</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Outputs" Index="#x160c" InOut="1" Flags="#x0010">
@@ -5878,7 +6374,7 @@ Bit1: Value bigger/equal Limit2]]>
 								<Type>USINT</Type>
 							</Entry>
 							<Entry>
-								<Type>ARRAY [0..0] OF BYTE</Type>
+								<Type GUID="{18071995-0000-0000-0000-000300000001}">ARRAY [0..0] OF BYTE</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="Outputs" Index="#x161f" InOut="1" Flags="#x0010">

@@ -220,8 +220,10 @@ HRESULT CRobotArmMain::SetObjStateSP()
 //double ElbowSpeed = 5;		//角度/秒
 
 //整体动作
-double All[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 70, 0, 100, 60, 0, 25, 30 }, { 70, 0, 100, 60, 1, 30.1, 50 }, { 70, 10, 100, 60, 1, 55, 60 }, { 70, 0, 100, 60, 1, 65, 67 }, { 0, 0, 0, 0, 1, 87, 90 }, { 0, 0, 0, 0, 0, 90.1, 100 } };
+double All[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 70, 0, 100, 40, 0, 25, 30 }, { 70, 0, 100, 40, 1, 30.1, 50 }, { 70, 10, 100, 40, 1, 55, 60 }, { 70, 0, 100, 40, 1, 65, 67 }, { 0, 0, 0, 0, 1, 87, 90 }, { 0, 0, 0, 0, 0, 92, 100 } };
 //double All[10][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 20, 0, 0, 0, 0, 5, 6 }, { 0, 0, 0, 0, 0, 17, 37 }, { 0, 0, 0, 0, 0, 45, 50 }, { 0, 0, 0, 0, 0, 55, 70 } };
+//不抬手
+//double All[10][7] = { { 0, 0, 0, 0, 0, 0, 0 },{ 70, 0, 100, 40, 0, 25, 30 },{ 70, 0, 100, 40, 1, 31, 50 },{ 0, 0, 0, 0, 1, 75, 76 },{ 0, 0, 0, 0, 0, 77, 100 } };
 //肘关节100度
 double ElbowHundredAngle[3][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 100, 0, 0, 25, 30 }, { 0, 0, 0, 0, 0, 55, 60 } };
 //肘关节任意角度
@@ -848,13 +850,13 @@ void CRobotArmMain::hand_motion(int time_one, int time_two, int time_three, int 
 	m_CppToPlc.hand_one_pwm = m_Outputs.hand_one; m_CppToPlc.hand_two_pwm = m_Outputs.hand_two;//手部pwm变量传递
 	m_CppToPlc.hand_three_pwm = m_Outputs.hand_three; m_CppToPlc.hand_four_pwm = m_Outputs.hand_four;//手部pwm变量传递
 	/////////////////////////////////////////////hand_one////////////////////////////////////////////////
-	if (hand_temp_out(m_Inputs.hand_one_temp) > 30)
+	if (hand_temp_out(m_Inputs.hand_one_temp) > 31.5)
 	{
 		switch (time_one)
 		{
 		case 0: m_Outputs.hand_one = 550; break;
 		case 400: m_Outputs.hand_one = 420; break;
-		case 550: time_one = -1; break;
+		case 450: time_one = -1; break;
 		default:break;
 		}
 		time_one = time_one + 1;
@@ -868,12 +870,12 @@ void CRobotArmMain::hand_motion(int time_one, int time_two, int time_three, int 
 	/////////////////////////////////////////////hand_one/////////////////////////////////////////////////////////////
 
 	////////////////////////////////////////////hand_two///////////////////////////////////////////////	
-	if (hand_temp_out(m_Inputs.hand_two_temp) > 32)
+	if (hand_temp_out(m_Inputs.hand_two_temp) > 33.5)
 	{
 		switch (time_two)
 		{
 		case 0: m_Outputs.hand_two = 580; break;
-		case 400: m_Outputs.hand_two = 400; break;
+		case 400: m_Outputs.hand_two = 420; break;
 		case 450: time_two = -1; break;
 		default:break;
 		}
@@ -893,7 +895,7 @@ void CRobotArmMain::hand_motion(int time_one, int time_two, int time_three, int 
 		switch (time_three)
 		{
 		case 0: m_Outputs.hand_three = 500; break;
-		case 400: m_Outputs.hand_three = 400; break;
+		case 400: m_Outputs.hand_three = 430; break;
 		case 450: time_three = -1; break;
 		default:break;
 		}
@@ -1012,8 +1014,8 @@ void CRobotArmMain::ElbowUpdateOutputs()
 	///* 输出个PLC用来观察的 */
 	//if (elbow.ShowAngle() > 0)
 	//{
-	//	m_CppToPlc.ElbowTarAngle = elbow.ShowTarAngle();
-	//	m_CppToPlc.ElbowAngle = elbow.ShowAngle();
+		m_CppToPlc.ElbowTarAngle = elbow.ShowTarAngle();
+		m_CppToPlc.ElbowAngle = elbow.ShowAngle();
 	//}
 	//m_Outputs.m1v = elbow.ShowM1();
 	//m_Outputs.m2v = elbow.ShowM2();
