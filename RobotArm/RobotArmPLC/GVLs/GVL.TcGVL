@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.38">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <GVL Name="GVL" Id="{10c1e170-61a9-4037-a692-87623324711f}">
     <Declaration><![CDATA[VAR_GLOBAL
 	//肩关节水平移动自由度变量
@@ -47,8 +47,8 @@
 	
 	ChooseAction AT%Q* : INT := -1;
 	IsRepeat AT%Q* : BOOL := FALSE;
-	SetTarAngle AT%Q* : LREAL := 90;									//角度定位
-	SetTarSpeed AT%Q* : LREAL := 4;										//速度设置，到达100度
+	SetTarAngle AT%Q* : LREAL := 30;									//角度定位
+	SetTarSpeed AT%Q* : LREAL := 2;										//速度设置，到达100度
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

@@ -113,7 +113,7 @@ CRobotArmMain::CRobotArmMain()
 
 	wrist_pwm_max = 1000;//设定腕关节pwm输出最大值
 	wrist_pwm_min = 0;//设定腕关节pwm输出最小值
-	wrist_angle_max = 62;//设定腕关节角度最大值
+	wrist_angle_max = 65;//设定腕关节角度最大值
 	wrist_error = .0;//设定腕关节角度最小值
 	wrist_motion_flag = 0;//腕关节到达预期位置标志位
 	hand_grip_time = 0;//手部抓握时间
@@ -231,7 +231,7 @@ double ElbowAnyAngle[3][7] = { 0 };
 //肘关节任意速度
 double ElbowAnySpeed[3][7] = { 0 };
 //腕关节60度
-double WristSixtyAngle[3][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 61, 0, 5, 100 }, { 0, 0, 0, 0, 0, 101, 102 } };
+double WristSixtyAngle[3][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 50, 0, 5, 35 }, { 0, 0, 0, 62, 0, 40, 201 } };
 //手抓取
 double HandHoldData[3][7] = { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 1, 80 }, { 0, 0, 0, 0, 0, 81, 90 } };
 double Move[10][7];
@@ -424,22 +424,53 @@ HRESULT CRobotArmMain::CycleUpdate(ITcTask* ipTask, ITcUnknown* ipCaller, ULONG_
 			}
 			break;
 		case 5://肘关节100度
-			if ((MoveTimer > 0) && (MoveTimer < 10))
+			//if ((MoveTimer > 0) && (MoveTimer < 10))
+			//{
+			//	elbow.SetM1(3.3 / 10.0 * (10 - MoveTimer) + 0.2);
+			//	elbow.SetM2(3.8 / 10.0 * MoveTimer + 0.2);
+			//}
+			//else if ((MoveTimer > 10) && (MoveTimer < 15))
+			//{
+			//	elbow.SetM1(0.2);
+			//	elbow.SetM2(4.0);
+			//}
+			//else if ((MoveTimer > 15) && (MoveTimer < 25))
+			//{
+			//	elbow.SetM1(3.3 / 10.0 * (MoveTimer - 15) + 0.2);
+			//	elbow.SetM2(3.8 / 10.0 * (25 - MoveTimer) + 0.2);
+			//}
+			//else if (MoveTimer > 30)
+			//{
+			//	GlobalStatus = 20;
+			//}
+			//break;
+			if ((MoveTimer > 0) && (MoveTimer < 4.5))
 			{
 				elbow.SetM1(3.3 / 10.0 * (10 - MoveTimer) + 0.2);
 				elbow.SetM2(3.8 / 10.0 * MoveTimer + 0.2);
 			}
-			else if ((MoveTimer > 10) && (MoveTimer < 15))
+			else if ((MoveTimer > 4.5) && (MoveTimer < 34.5))
+			{
+				elbow.SetM1(3.3 / 10.0 * 5.5 + 0.2);
+				elbow.SetM2(3.8 / 10.0 * 4.5 + 0.2);
+			}
+			else if ((MoveTimer > 34.5) && (MoveTimer < 40))
+			{
+				elbow.SetM1(3.3 / 10.0 * (40 - MoveTimer) + 0.2);
+				elbow.SetM2(3.8 / 10.0 * (MoveTimer - 30) + 0.2);
+			}
+			else if ((MoveTimer > 40) && (MoveTimer < 60))
 			{
 				elbow.SetM1(0.2);
 				elbow.SetM2(4.0);
 			}
-			else if ((MoveTimer > 15) && (MoveTimer < 25))
+			else if ((MoveTimer > 60) && (MoveTimer < 70))
 			{
-				elbow.SetM1(3.3 / 10.0 * (MoveTimer - 15) + 0.2);
-				elbow.SetM2(3.8 / 10.0 * (25 - MoveTimer) + 0.2);
+				elbow.SetM1(3.3 / 10.0 * (MoveTimer - 60) + 0.2);
+				elbow.SetM2(3.8 / 10.0 * (70 - MoveTimer) + 0.2);
 			}
-			else if (MoveTimer > 30)
+
+			else if (MoveTimer > 70)
 			{
 				GlobalStatus = 20;
 			}
